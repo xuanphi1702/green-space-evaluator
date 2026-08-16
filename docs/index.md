@@ -44,6 +44,15 @@ Sau khi cài đặt thành công, Plugin có thể được mở từ menu **Plu
 
 ## 3. Dữ liệu đầu vào
 
+<div style="margin:16px 0 20px;">
+  <figure style="margin:0 auto;max-width:920px;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
+    <img src="./images/giao_dien_chinh_plugin.png" alt="Giao diện chính plugin Green Space Evaluator" style="width:100%;height:auto;border-radius:8px;display:block;" />
+    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
+      Hình 1. Giao diện chính của plugin Green Space Evaluator
+    </figcaption>
+  </figure>
+</div>
+
 Trong tab **Dữ liệu đầu vào**, người dùng cung cấp 5 nhóm dữ liệu:
 
 | STT | Dữ liệu | Kiểu dữ liệu | Vai trò |
@@ -63,6 +72,15 @@ Vector khu vực nghiên cứu nên sử dụng hệ tọa độ phẳng phù h�
 ## 4. Cài đặt tham số
 
 Nhấn nút **Cài đặt** trên giao diện chính để mở cửa sổ cấu hình.
+
+<div style="margin:16px 0 20px;">
+  <figure style="margin:0 auto;max-width:920px;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
+    <img src="./images/cai_dat_nang_cao.png" alt="Cửa sổ cài đặt nâng cao của plugin" style="width:100%;height:auto;border-radius:8px;display:block;" />
+    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
+      Hình 2. Cửa sổ cài đặt nâng cao của plugin
+    </figcaption>
+  </figure>
+</div>
 
 | Tham số | Giá trị mặc định | Ý nghĩa |
 |---|---:|---|
@@ -88,30 +106,6 @@ Người dùng có thể thay đổi các giá trị này trong cửa sổ **Cà
 
 Ngoài các tham số trên, người dùng có thể chỉ định đường dẫn lưu các sản phẩm trung gian như raster MNDWI, SAVI, mặt nước, thực vật, raster dân số đã chuẩn hóa và các biểu đồ Histogram. Nếu không cần lưu các sản phẩm trung gian, có thể để trống các trường này.
 
-### Hình minh họa giao diện và kết quả Plugin
-
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:20px 0;">
-  <figure style="margin:0;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
-    <img src="./images/giao_dien_chinh_plugin.png" alt="Giao diện chính plugin Green Space Evaluator" style="width:100%;height:auto;border-radius:8px;display:block;" />
-    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
-      Hình 1. Giao diện chính của Plugin Green Space Evaluator
-    </figcaption>
-  </figure>
-
-  <figure style="margin:0;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
-    <img src="./images/cai_dat_nang_cao.png" alt="Cửa sổ cài đặt nâng cao của plugin" style="width:100%;height:auto;border-radius:8px;display:block;" />
-    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
-      Hình 2. Cửa sổ cài đặt nâng cao của Plugin
-    </figcaption>
-  </figure>
-
-  <figure style="margin:0;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
-    <img src="./images/ket_qua_plugin_2.png" alt="Kết quả plugin 2" style="width:100%;height:auto;border-radius:8px;display:block;" />
-    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
-      Hình 3. Kết quả phân tích Plugin.
-    </figcaption>
-  </figure>
-</div>
 ---
 
 ## 5. Thiết lập sản phẩm đầu ra
@@ -138,6 +132,15 @@ Nếu để trống đường dẫn, Plugin sử dụng đầu ra tạm thời t
 6. Sau khi hoàn tất, kiểm tra các lớp kết quả được nạp vào QGIS và các file đã được lưu tại đường dẫn đã chọn.
 
 Trong Module 3, Plugin tính ma trận khoảng cách Euclid từ mảng xanh và đánh giá sức tải theo bán kính. Hai biên của miền tìm kiếm được kiểm tra trước; khi cần thiết, thuật toán tìm kiếm nhị phân được sử dụng để xác định bán kính lớn nhất mà sức tải vẫn đạt ngưỡng mục tiêu. Nếu không tồn tại bán kính thỏa điều kiện trong miền tìm kiếm, thông tin tương ứng được ghi trong nhật ký tiến trình.
+
+<div style="margin:16px 0 20px;">
+  <figure style="margin:0 auto;max-width:920px;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
+    <img src="./images/ket_qua_plugin_2.png" alt="Kết quả phân tích Plugin 2" style="width:100%;height:auto;border-radius:8px;display:block;" />
+    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
+      Hình 3. Kết quả sau khi phân tích bằng Plugin.
+    </figcaption>
+  </figure>
+</div>
 
 ---
 
