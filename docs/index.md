@@ -47,8 +47,8 @@ Sau khi cài đặt thành công, Plugin có thể được mở từ menu **Plu
 <div style="margin:16px 0 20px;">
   <figure style="margin:0 auto;max-width:920px;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
     <img src="./images/giao_dien_chinh_plugin.png" alt="Giao diện chính plugin Green Space Evaluator" style="width:100%;height:auto;border-radius:8px;display:block;" />
-    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
-      Hình 1. Giao diện chính của plugin Green Space Evaluator
+    <figcaption style="margin-top:8px;font-size:12px;color:#374151;text-align:center;font-style:italic;">
+      <strong>Hình 1.</strong> Giao diện chính của plugin Green Space Evaluator
     </figcaption>
   </figure>
 </div>
@@ -76,8 +76,8 @@ Nhấn nút **Cài đặt** trên giao diện chính để mở cửa sổ cấu
 <div style="margin:16px 0 20px;">
   <figure style="margin:0 auto;max-width:920px;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
     <img src="./images/cai_dat_nang_cao.png" alt="Cửa sổ cài đặt nâng cao của plugin" style="width:100%;height:auto;border-radius:8px;display:block;" />
-    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
-      Hình 2. Cửa sổ cài đặt nâng cao của plugin
+    <figcaption style="margin-top:8px;font-size:12px;color:#374151;text-align:center;font-style:italic;">
+      <strong>Hình 2.</strong> Cửa sổ cài đặt nâng cao của plugin
     </figcaption>
   </figure>
 </div>
@@ -136,8 +136,8 @@ Trong Module 3, Plugin tính ma trận khoảng cách Euclid từ mảng xanh v�
 <div style="margin:16px 0 20px;">
   <figure style="margin:0 auto;max-width:920px;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
     <img src="./images/ket_qua_plugin_2.png" alt="Kết quả phân tích Plugin 2" style="width:100%;height:auto;border-radius:8px;display:block;" />
-    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
-      Hình 3. Kết quả sau khi phân tích bằng Plugin.
+    <figcaption style="margin-top:8px;font-size:12px;color:#374151;text-align:center;font-style:italic;">
+      <strong>Hình 3.</strong> Kết quả phân tích Plugin 2
     </figcaption>
   </figure>
 </div>
