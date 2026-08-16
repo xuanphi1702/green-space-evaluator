@@ -1,3 +1,70 @@
+<style>
+body { line-height: 1.65; }
+
+h2 {
+  margin-top: 34px;
+  margin-bottom: 14px;
+}
+
+h3 {
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  margin: 10px 0 14px;
+}
+
+ul, ol {
+  margin-top: 8px;
+  margin-bottom: 18px;
+}
+
+table {
+  width: 100%;
+  margin: 16px 0 26px;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 8px 10px;
+  vertical-align: top;
+}
+
+.figure {
+  margin: 24px auto 30px;
+  max-width: 920px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.figure-caption {
+  margin-top: 9px;
+  margin-bottom: 0;
+  font-size: 0.88em;
+  line-height: 1.45;
+  color: #4b5563;
+  text-align: center;
+  font-style: italic;
+}
+
+hr {
+  margin: 32px 0;
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+}
+</style>
+
 # HƯỚNG DẪN SỬ DỤNG PLUGIN GREEN SPACE EVALUATOR
 
 > **Đồ án tốt nghiệp:** Xây dựng Plugin trên QGIS hỗ trợ tự động hóa đánh giá mức độ phục vụ của mảng xanh đô thị  
@@ -44,13 +111,11 @@ Sau khi cài đặt thành công, Plugin có thể được mở từ menu **Plu
 
 ## 3. Dữ liệu đầu vào
 
-<div style="margin:16px 0 20px;">
-  <figure style="margin:0 auto;max-width:920px;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
-    <img src="./images/giao_dien_chinh_plugin.png" alt="Giao diện chính plugin Green Space Evaluator" style="width:100%;height:auto;border-radius:8px;display:block;" />
-    <figcaption style="margin-top:8px;font-size:12px;color:#374151;text-align:center;font-style:italic;">
-      <strong>Hình 1.</strong> Giao diện chính của plugin Green Space Evaluator
-    </figcaption>
-  </figure>
+<div class="figure">
+  <img src="./images/giao_dien_chinh_plugin.png" alt="Giao diện chính Plugin Green Space Evaluator">
+  <div class="figure-caption">
+    <strong>Hình 1.</strong> Giao diện chính của Plugin Green Space Evaluator
+  </div>
 </div>
 
 Trong tab **Dữ liệu đầu vào**, người dùng cung cấp 5 nhóm dữ liệu:
@@ -73,13 +138,11 @@ Vector khu vực nghiên cứu nên sử dụng hệ tọa độ phẳng phù h�
 
 Nhấn nút **Cài đặt** trên giao diện chính để mở cửa sổ cấu hình.
 
-<div style="margin:16px 0 20px;">
-  <figure style="margin:0 auto;max-width:920px;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
-    <img src="./images/cai_dat_nang_cao.png" alt="Cửa sổ cài đặt nâng cao của plugin" style="width:100%;height:auto;border-radius:8px;display:block;" />
-    <figcaption style="margin-top:8px;font-size:12px;color:#374151;text-align:center;font-style:italic;">
-      <strong>Hình 2.</strong> Cửa sổ cài đặt nâng cao của plugin
-    </figcaption>
-  </figure>
+<div class="figure">
+  <img src="./images/cai_dat_nang_cao.png" alt="Cửa sổ cài đặt nâng cao của Plugin">
+  <div class="figure-caption">
+    <strong>Hình 2.</strong> Cửa sổ cài đặt nâng cao của Plugin
+  </div>
 </div>
 
 | Tham số | Giá trị mặc định | Ý nghĩa |
@@ -104,7 +167,7 @@ Trong cấu hình mặc định phục vụ thử nghiệm tại Biên Hòa:
 
 Người dùng có thể thay đổi các giá trị này trong cửa sổ **Cài đặt** khi áp dụng Plugin cho mục đích hoặc khu vực nghiên cứu khác.
 
-Ngoài các tham số trên, người dùng có thể chỉ định đường dẫn lưu các sản phẩm trung gian như raster MNDWI, SAVI, mặt nước, thực vật, raster dân số đã chuẩn hóa và các biểu đồ Histogram. Nếu không cần lưu các sản phẩm trung gian, có thể để trống các trường này.
+Ngoài các tham số trên, người dùng có thể chỉ định đường dẫn lưu các sản phẩm trung gian như raster MNDWI, SAVI, mặt nước, thực vật, raster dân số đã chuẩn hóa và các biểu đồ histogram. Nếu không cần lưu các sản phẩm trung gian, có thể để trống các trường này.
 
 ---
 
@@ -133,20 +196,18 @@ Nếu để trống đường dẫn, Plugin sử dụng đầu ra tạm thời t
 
 Trong Module 3, Plugin tính ma trận khoảng cách Euclid từ mảng xanh và đánh giá sức tải theo bán kính. Hai biên của miền tìm kiếm được kiểm tra trước; khi cần thiết, thuật toán tìm kiếm nhị phân được sử dụng để xác định bán kính lớn nhất mà sức tải vẫn đạt ngưỡng mục tiêu. Nếu không tồn tại bán kính thỏa điều kiện trong miền tìm kiếm, thông tin tương ứng được ghi trong nhật ký tiến trình.
 
-<div style="margin:16px 0 20px;">
-  <figure style="margin:0 auto;max-width:920px;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
-    <img src="./images/ket_qua_plugin_2.png" alt="Kết quả phân tích Plugin 2" style="width:100%;height:auto;border-radius:8px;display:block;" />
-    <figcaption style="margin-top:8px;font-size:12px;color:#374151;text-align:center;font-style:italic;">
-      <strong>Hình 3.</strong> Kết quả phân tích Plugin 2
-    </figcaption>
-  </figure>
+<div class="figure">
+  <img src="./images/ket_qua_plugin_2.png" alt="Kết quả phân tích của Plugin">
+  <div class="figure-caption">
+    <strong>Hình 3.</strong> Minh họa kết quả phân tích của Plugin
+  </div>
 </div>
 
 ---
 
 ## 7. Sản phẩm và chỉ tiêu thống kê
 
-Các sản phẩm trung gian có thể gồm ảnh Sentinel-2 đã chuẩn hóa, raster dân số, MNDWI, SAVI, mặt nước, thực vật, Histogram và raster dân số trong không gian xây dựng.
+Các sản phẩm trung gian có thể gồm ảnh Sentinel-2 đã chuẩn hóa, raster dân số, MNDWI, SAVI, mặt nước, thực vật, histogram và raster dân số trong không gian xây dựng.
 
 Các sản phẩm chính gồm raster mảng xanh đô thị, vector vùng phục vụ, vector không gian xây dựng trong/ngoài vùng phục vụ và vector thống kê theo đơn vị hành chính.
 
