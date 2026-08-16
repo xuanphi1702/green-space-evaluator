@@ -88,6 +88,30 @@ Người dùng có thể thay đổi các giá trị này trong cửa sổ **Cà
 
 Ngoài các tham số trên, người dùng có thể chỉ định đường dẫn lưu các sản phẩm trung gian như raster MNDWI, SAVI, mặt nước, thực vật, raster dân số đã chuẩn hóa và các biểu đồ Histogram. Nếu không cần lưu các sản phẩm trung gian, có thể để trống các trường này.
 
+### Hình minh họa giao diện và kết quả Plugin
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:20px 0;">
+  <figure style="margin:0;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
+    <img src="./images/giao_dien_chinh_plugin.png" alt="Giao diện chính plugin Green Space Evaluator" style="width:100%;height:auto;border-radius:8px;display:block;" />
+    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
+      Hình 1. Giao diện chính của Plugin Green Space Evaluator
+    </figcaption>
+  </figure>
+
+  <figure style="margin:0;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
+    <img src="./images/cai_dat_nang_cao.png" alt="Cửa sổ cài đặt nâng cao của plugin" style="width:100%;height:auto;border-radius:8px;display:block;" />
+    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
+      Hình 2. Cửa sổ cài đặt nâng cao của Plugin
+    </figcaption>
+  </figure>
+
+  <figure style="margin:0;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa;">
+    <img src="./images/ket_qua_plugin_2.png" alt="Kết quả plugin 2" style="width:100%;height:auto;border-radius:8px;display:block;" />
+    <figcaption style="margin-top:8px;font-size:14px;color:#374151;text-align:center;">
+      Hình 3. Kết quả phân tích Plugin.
+    </figcaption>
+  </figure>
+</div>
 ---
 
 ## 5. Thiết lập sản phẩm đầu ra
