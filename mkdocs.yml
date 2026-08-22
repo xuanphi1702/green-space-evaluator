@@ -1,0 +1,42 @@
+site_name: Green Space Evaluator
+site_description: Hướng dẫn sử dụng Plugin đánh giá mức độ phục vụ mảng xanh đô thị
+site_author: Huỳnh Hoàng Xuân Phi
+
+theme:
+  name: material
+  language: vi
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - toc.follow
+    - search.highlight
+
+nav:
+  - Trang chủ: index.md
+  - Bắt đầu:
+      - Cài đặt Plugin: cai-dat.md
+      - Dữ liệu đầu vào: du-lieu-dau-vao.md
+  - Phân tích:
+      - Cài đặt tham số: tham-so.md
+      - Chạy phân tích: chay-phan-tich.md
+  - Kết quả:
+      - Sản phẩm & chỉ tiêu thống kê: san-pham.md
+  - Lưu ý khi sử dụng: luu-y.md
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+extra_css:
+  - stylesheets/extra.css
+
+copyright: Copyright &copy; 2026 Huỳnh Hoàng Xuân Phi
+
+site_url: https://xuanphi1702.github.io/green-space-evaluator/
+repo_url: https://github.com/xuanphi1702/green-space-evaluator
