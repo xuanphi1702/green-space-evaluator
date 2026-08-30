@@ -23,7 +23,9 @@ nav:
       - Chạy phân tích: chay-phan-tich.md
   - Kết quả:
       - Sản phẩm & chỉ tiêu thống kê: san-pham.md
-  - Lưu ý khi sử dụng: luu-y.md
+  - Hỗ trợ:
+      - Lưu ý khi sử dụng: luu-y.md
+      - Lỗi thường gặp: loi-thuong-gap.md
 
 markdown_extensions:
   - tables
@@ -32,6 +34,14 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 extra_css:
   - stylesheets/extra.css

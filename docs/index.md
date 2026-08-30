@@ -1,6 +1,6 @@
 # Green Space Evaluator
 
-**Green Space Evaluator** là Plugin chạy trên nền tảng QGIS, hỗ trợ tự động hóa quy trình xử lý ảnh Sentinel-2, trích xuất mảng xanh đô thị, mô hình hóa vùng phục vụ theo khoảng cách Euclid, phân tích không gian xây dựng và tổng hợp kết quả thống kê theo đơn vị hành chính.
+**Green Space Evaluator (Urban Green Space Service Evaluator)** là Plugin chạy trên nền tảng QGIS, hỗ trợ tự động hóa quy trình xử lý ảnh Sentinel-2, trích xuất mảng xanh đô thị, mô hình hóa vùng phục vụ theo khoảng cách Euclid, phân tích không gian xây dựng và tổng hợp kết quả thống kê theo đơn vị hành chính.
 
 <div class="guide-figure" markdown>
 ![Giao diện chính Plugin Green Space Evaluator](images/giao_dien_chinh_plugin.png)
