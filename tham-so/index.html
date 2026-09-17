@@ -659,10 +659,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-quy-mo-dan-so-phuc-vu-muc-tieu-p_targeti" class="md-nav__link">
+  <a href="#31-quy-mo-dan-so-muc-tieu-p_targeti" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1. Quy mô dân số phục vụ mục tiêu (\(P_{target,i}\))
+        3.1. Quy mô dân số mục tiêu (\(P_{target,i}\))
       
     </span>
   </a>
@@ -1114,10 +1114,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-quy-mo-dan-so-phuc-vu-muc-tieu-p_targeti" class="md-nav__link">
+  <a href="#31-quy-mo-dan-so-muc-tieu-p_targeti" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1. Quy mô dân số phục vụ mục tiêu (\(P_{target,i}\))
+        3.1. Quy mô dân số mục tiêu (\(P_{target,i}\))
       
     </span>
   </a>
@@ -1279,14 +1279,14 @@
 <td><strong>Ngưỡng MNDWI</strong></td>
 <td style="text-align: right;"><code>0.0</code></td>
 <td style="text-align: center;">—</td>
-<td>Giá trị mặc định được sử dụng trong cấu hình nghiên cứu/thử nghiệm hiện tại. Pixel có <span class="arithmatex">\(\text{MNDWI} &gt; 0.0\)</span> được xác định là nước và loại trừ trước khi tính SAVI.</td>
+<td>Giá trị mặc định được lựa chọn trong cấu hình nghiên cứu/thử nghiệm hiện tại. Pixel có <span class="arithmatex">\(\text{MNDWI} &gt; 0.0\)</span> được xác định là nước và loại trừ trước khi tính SAVI.</td>
 </tr>
 <tr>
 <td><strong>Chỉ số phổ</strong></td>
 <td><strong>Hệ số hiệu chỉnh nền đất SAVI (L)</strong></td>
 <td style="text-align: right;"><code>0.5</code></td>
 <td style="text-align: center;">—</td>
-<td>Hệ số hiệu chỉnh tán xạ nền đất trong công thức SAVI, phù hợp với thảm thực vật mật độ trung bình.</td>
+<td>Hệ số hiệu chỉnh nền đất L = 0.5, là giá trị mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại.</td>
 </tr>
 <tr>
 <td><strong>Trích xuất mảng xanh</strong></td>
@@ -1328,7 +1328,7 @@
 <td><strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người (C)</strong></td>
 <td style="text-align: right;"><code>6.0</code></td>
 <td style="text-align: center;">m²/người</td>
-<td>Chỉ tiêu diện tích bình quân dùng để xác định quy mô dân số phục vụ mục tiêu của từng mảng xanh: <span class="arithmatex">\(P_{target,i} = S_i / C\)</span>.</td>
+<td>Chỉ tiêu diện tích bình quân dùng để xác định quy mô dân số mục tiêu: <span class="arithmatex">\(P_{target,i} = S_i / C\)</span>.</td>
 </tr>
 <tr>
 <td><strong>Thuật toán</strong></td>
@@ -1359,15 +1359,15 @@
 <hr />
 <h2 id="3-mo-hinh-hoa-vung-phuc-vu-mang-xanh">3. Mô hình hóa vùng phục vụ mảng xanh</h2>
 <p>Vùng phục vụ của từng mảng xanh được mô hình hóa độc lập dựa trên diện tích mảng xanh, dân số được phân bổ theo không gian và khoảng cách Euclid.</p>
-<h3 id="31-quy-mo-dan-so-phuc-vu-muc-tieu-p_targeti">3.1. Quy mô dân số phục vụ mục tiêu (<span class="arithmatex">\(P_{target,i}\)</span>)</h3>
-<p>Với mỗi mảng xanh độc lập <span class="arithmatex">\(i\)</span> có diện tích <span class="arithmatex">\(S_i\)</span>, quy mô dân số phục vụ mục tiêu của mảng xanh được xác định theo công thức:</p>
+<h3 id="31-quy-mo-dan-so-muc-tieu-p_targeti">3.1. Quy mô dân số mục tiêu (<span class="arithmatex">\(P_{target,i}\)</span>)</h3>
+<p>Với mỗi mảng xanh độc lập <span class="arithmatex">\(i\)</span> có diện tích <span class="arithmatex">\(S_i\)</span>, quy mô dân số mục tiêu được xác định từ diện tích mảng xanh và chỉ tiêu <span class="arithmatex">\(C\)</span> theo công thức:</p>
 <div class="arithmatex">\[
 P_{target,i} = \frac{S_i}{C}
 \]</div>
 <p>Trong đó:
 - <span class="arithmatex">\(S_i\)</span>: Diện tích mảng xanh <span class="arithmatex">\(i\)</span> (<span class="arithmatex">\(\text{m}^2\)</span>).
 - <span class="arithmatex">\(C\)</span>: <strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người</strong> (mặc định tham chiếu <span class="arithmatex">\(6.0\text{ m}^2/\text{người}\)</span>).
-- <span class="arithmatex">\(P_{target,i}\)</span>: Quy mô dân số phục vụ mục tiêu (số người tối đa mà mảng xanh có thể phục vụ theo chỉ tiêu).</p>
+- <span class="arithmatex">\(P_{target,i}\)</span>: Quy mô dân số mục tiêu được xác định từ diện tích mảng xanh và chỉ tiêu <span class="arithmatex">\(C\)</span> (<span class="arithmatex">\(P_{target,i} = S_i / C\)</span>).</p>
 <h3 id="32-gioi-han-tren-cua-mien-tim-kiem-r_max">3.2. Giới hạn trên của miền tìm kiếm (<span class="arithmatex">\(R_{\max}\)</span>)</h3>
 <ul>
 <li><strong><span class="arithmatex">\(R_{\max}\)</span> (Bán kính phục vụ tối đa)</strong>: Đóng vai trò là <strong>giới hạn trên của miền tìm kiếm</strong> <span class="arithmatex">\([0, R_{\max}]\)</span> trong thuật toán (mặc định tham chiếu <span class="arithmatex">\(300\text{ m}\)</span>).</li>
@@ -1384,11 +1384,11 @@ R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{target,i} \right\}
 <p>Thuật toán kiểm tra điều kiện và áp dụng tìm kiếm nhị phân (<strong>Binary Search</strong>) khi cần thiết:</p>
 <ol>
 <li><strong>Trường hợp <code>NO_SOLUTION</code> (<span class="arithmatex">\(R^* = 0\text{ m}\)</span>)</strong>:</li>
-<li>Xảy ra khi ngay tại khoảng cách <span class="arithmatex">\(R = 0\text{ m}\)</span>, tổng dân số được phân bổ nằm trong phạm vi của mảng xanh đã lớn hơn quy mô phục vụ mục tiêu:
+<li>Xảy ra khi ngay tại khoảng cách <span class="arithmatex">\(R = 0\text{ m}\)</span>, tổng dân số được phân bổ nằm trong phạm vi của mảng xanh đã lớn hơn quy mô mục tiêu:
      $<span class="arithmatex">\(P_i(0) &gt; P_{target,i}\)</span>$</li>
 <li>Khi đó, không tồn tại bán kính thỏa điều kiện trong miền tìm kiếm <span class="arithmatex">\([0, R_{\max}]\)</span>. Bán kính phục vụ được gán bằng <span class="arithmatex">\(0\text{ m}\)</span>. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.</li>
 <li><strong>Trường hợp <code>RMAX</code> (<span class="arithmatex">\(R^* = R_{\max}\)</span>)</strong>:</li>
-<li>Nếu tại giới hạn trên <span class="arithmatex">\(R = R_{\max}\)</span> mà vẫn thỏa mãn <span class="arithmatex">\(P_i(R_{\max}) \le P_{target,i}\)</span>, mảng xanh có quy mô diện tích đủ lớn để phục vụ toàn bộ dân số lân cận trong bán kính tối đa. Bán kính phục vụ được gán bằng <span class="arithmatex">\(R_{\max}\)</span> (mặc định <span class="arithmatex">\(300\text{ m}\)</span>).</li>
+<li>Nếu tại giới hạn trên <span class="arithmatex">\(R = R_{\max}\)</span> vẫn thỏa điều kiện <span class="arithmatex">\(P_i(R_{\max}) \le P_{target,i}\)</span>, thuật toán gán bán kính phục vụ <span class="arithmatex">\(R^* = R_{\max}\)</span> và trạng thái kết quả là RMAX.</li>
 <li><strong>Trường hợp <code>BINARY_SEARCH</code></strong>:</li>
 <li>Khi <span class="arithmatex">\(P_i(0) \le P_{target,i}\)</span> nhưng <span class="arithmatex">\(P_i(R_{\max}) &gt; P_{target,i}\)</span>, thuật toán tìm kiếm nhị phân sẽ thu hẹp dần khoảng cách <span class="arithmatex">\([R_{left}, R_{right}]\)</span> cho đến khi đạt sai số hội tụ (mặc định <span class="arithmatex">\(10\text{ m}\)</span>). Kết quả trả về bán kính phục vụ lớn nhất thỏa điều kiện.</li>
 </ol>
@@ -1399,8 +1399,8 @@ R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{target,i} \right\}
 <hr />
 <h2 id="4-tham-so-ky-thuat-khac">4. Tham số kỹ thuật khác</h2>
 <ul>
-<li><strong>Ngưỡng phân tách nước MNDWI (<code>0.0</code>)</strong>: Giá trị mặc định được sử dụng trong cấu hình nghiên cứu/thử nghiệm hiện tại. Các pixel có chỉ số <span class="arithmatex">\(\text{MNDWI} &gt; 0.0\)</span> được xác định là mặt nước và được loại trừ hoàn toàn trước khi tính chỉ số SAVI.</li>
-<li><strong>Hệ số SAVI <span class="arithmatex">\(L\)</span> (<code>0.5</code>)</strong>: Giá trị chuẩn hóa giúp triệt tiêu tán xạ phản xạ từ nền đất hở trong môi trường đô thị.</li>
+<li><strong>Ngưỡng phân tách nước MNDWI (<code>0.0</code>)</strong>: Giá trị mặc định được lựa chọn trong cấu hình nghiên cứu/thử nghiệm hiện tại. Các pixel có chỉ số <span class="arithmatex">\(\text{MNDWI} &gt; 0.0\)</span> được xác định là mặt nước và được loại trừ hoàn toàn trước khi tính chỉ số SAVI.</li>
+<li><strong>Hệ số SAVI <span class="arithmatex">\(L\)</span> (<code>0.5</code>)</strong>: Hệ số hiệu chỉnh nền đất L = 0.5, là giá trị mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại.</li>
 <li><strong>Diện tích mảng xanh tối thiểu (<code>5000 m²</code>)</strong>: Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu áp dụng cho các mảng xanh độc lập <strong>ngoài công viên</strong> (tương đương 50 pixel <span class="arithmatex">\(10\text{m} \times 10\text{m}\)</span>) nhằm lọc bỏ cây xanh vườn nhà nhỏ lẻ, dải phân cách hẹp hoặc bóng cây trên đường. Toàn bộ mảng xanh nằm trong ranh công viên luôn được bảo toàn nguyên vẹn.</li>
 <li><strong>Sai số hội tụ (Tolerance = <code>10 m</code>)</strong>: Điều kiện dừng của Binary Search, đồng bộ với độ phân giải lưới 10 m của ảnh viễn thám Sentinel-2.</li>
 </ul>
@@ -1419,8 +1419,8 @@ R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{target,i} \right\}
 </ul>
 <h3 id="nen-giu-mac-inh">🔵 Nên giữ mặc định</h3>
 <ul>
-<li><strong>Ngưỡng MNDWI (<code>0.0</code>)</strong>: Giá trị tham chiếu ổn định trong thử nghiệm ảnh Sentinel-2 L2A.</li>
-<li><strong>Hệ số <span class="arithmatex">\(L\)</span> (<code>0.5</code>)</strong>: Giá trị phổ biến và ổn định của chỉ số SAVI.</li>
+<li><strong>Ngưỡng MNDWI (<code>0.0</code>)</strong>: Giá trị mặc định được lựa chọn trong cấu hình nghiên cứu/thử nghiệm hiện tại.</li>
+<li><strong>Hệ số <span class="arithmatex">\(L\)</span> (<code>0.5</code>)</strong>: Hệ số hiệu chỉnh nền đất L = 0.5, là giá trị mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại.</li>
 <li><strong>Sai số hội tụ (<code>10 m</code>)</strong>: Tương ứng với kích thước 1 pixel 10 m của ảnh Sentinel-2.</li>
 </ul>
 <hr />
@@ -1429,7 +1429,7 @@ R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{target,i} \right\}
 <p class="admonition-title">Lưu ý tính liên hoàn giữa các module</p>
 <p>Các tham số trong Plugin có mối liên hệ chuỗi chặt chẽ:
 1. Thay đổi ngưỡng <strong>MNDWI</strong> hoặc <strong>SAVI</strong> sẽ thay đổi diện tích mảng xanh <span class="arithmatex">\(S_i\)</span>.
-2. Diện tích <span class="arithmatex">\(S_i\)</span> thay đổi làm thay đổi quy mô dân số phục vụ mục tiêu <span class="arithmatex">\(P_{target,i} = S_i / C\)</span>, từ đó trực tiếp làm thay đổi bán kính <span class="arithmatex">\(R_i^*\)</span>.
+2. Diện tích <span class="arithmatex">\(S_i\)</span> thay đổi làm thay đổi quy mô dân số mục tiêu <span class="arithmatex">\(P_{target,i} = S_i / C\)</span>, từ đó trực tiếp làm thay đổi bán kính <span class="arithmatex">\(R_i^*\)</span>.
 3. Bán kính <span class="arithmatex">\(R^*\)</span> thay đổi sẽ làm thay đổi kết quả phân loại không gian xây dựng (trong/ngoài vùng phục vụ) và toàn bộ các chỉ tiêu thống kê hành chính ở Module 5.</p>
 </div>
 
