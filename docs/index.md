@@ -26,7 +26,7 @@ Quy trình phân tích của Plugin gồm 5 module chức năng liên hoàn:
 
 1. **Module 1 — Chuẩn bị và kiểm tra dữ liệu đầu vào:** Tiếp nhận và kiểm tra cấu trúc hình học các lớp vector; chuẩn hóa trường dân số thống kê của đơn vị hành chính thành `POP_STAT`; thiết lập hệ tọa độ phẳng dự chiếu tham chiếu và tạo ảnh Sentinel-2 Stack 10 m.
 2. **Module 2 — Phân tách mảng xanh đô thị:** Tính toán các chỉ số quang học MNDWI và SAVI; loại trừ mặt nước; bóc tách thực vật; lọc bỏ mảng xanh nhỏ ngoài công viên theo diện tích tối thiểu và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
-3. **Module 3 — Mô hình hóa vùng phục vụ mảng xanh:** Xây dựng lưới khoảng cách Euclid từ biên mảng xanh; phân bổ dân số thống kê theo footprint công trình tạo lớp `POP_ALLOC`; xác định quy mô dân số phục vụ mục tiêu ($P_{target,i} = S_i / C$) và tìm kiếm bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện của mô hình cho từng mảng xanh.
+3. **Module 3 — Mô hình hóa vùng phục vụ mảng xanh:** Xây dựng lưới khoảng cách Euclid từ biên mảng xanh; phân bổ dân số thống kê theo footprint công trình tạo lớp `POP_ALLOC`; xác định quy mô dân số mục tiêu ($P_{target,i} = S_i / C$) và tìm kiếm bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện của mô hình cho từng mảng xanh.
 4. **Module 4 — Phân tích không gian xây dựng:** Phân tách footprint công trình thành các phần hình học (`footprint-part`); xác định footprint-part nằm trong và ngoài vùng phục vụ; áp dụng thuật toán gán độc quyền (**Exclusive Assignment**) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
 5. **Module 5 — Tổng hợp và thống kê kết quả:** Tổng hợp các chỉ tiêu định lượng theo đơn vị hành chính trực tiếp từ các lớp vector; tự động thực hiện 8 phép kiểm tra cân bằng dữ liệu (**Balance Checks**); xuất 5 sản phẩm đầu ra chính cùng các kết quả bổ sung lên QGIS và tệp lưu trữ ngoài.
 
@@ -53,13 +53,13 @@ Các tham số tính toán được quản lý trong cửa sổ **Cài đặt** 
 
 | Tham số trên giao diện | Giá trị mặc định | Đơn vị | Ý nghĩa khoa học & Khuyến nghị |
 |---|---:|:---:|---|
-| **Ngưỡng MNDWI** | `0.0` | — | Giá trị mặc định được sử dụng trong cấu hình nghiên cứu/thử nghiệm hiện tại; pixel có MNDWI > 0.0 được phân loại là nước và loại trừ. |
-| **Hệ số hiệu chỉnh nền đất SAVI (L)** | `0.5` | — | Giảm ảnh hưởng phản xạ của nền đất đối với thảm thực vật mật độ trung bình. |
+| **Ngưỡng MNDWI** | `0.0` | — | Giá trị mặc định được lựa chọn trong cấu hình nghiên cứu/thử nghiệm hiện tại; pixel có MNDWI > 0.0 được phân loại là nước và loại trừ. |
+| **Hệ số hiệu chỉnh nền đất SAVI (L)** | `0.5` | — | Hệ số hiệu chỉnh nền đất L = 0.5, là giá trị mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại. |
 | **Phương thức xác định ngưỡng SAVI** | `Tự động xác định` | — | Tự động tính ngưỡng từ vùng mẫu công viên/vườn hoa (mặc định theo bách phân vị P10). |
 | **Phương pháp xác định ngưỡng SAVI** | `Bách phân vị P10 (Mặc định)` | — | Phương pháp mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại. |
-| **Diện tích mảng xanh tối thiểu** | `5000.0` | m² | Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm lọc bỏ các cụm thực vật nhỏ lẻ ngoài công viên. |
+| **Diện tích mảng xanh tối thiểu** | `5000.0` | m² | Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm loại bỏ các cụm thực vật nhỏ lẻ ngoài công viên. |
 | **Bán kính phục vụ tối đa (Rmax)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $R^*$ cho từng mảng xanh trong nghiên cứu/thử nghiệm. |
-| **Chỉ tiêu diện tích mảng xanh bình quân đầu người (C)** | `6.0` | m²/người | Chỉ tiêu diện tích mảng xanh bình quân dùng để xác định quy mô dân số phục vụ mục tiêu: $P_{target,i} = S_i / C$. |
+| **Chỉ tiêu diện tích mảng xanh bình quân đầu người (C)** | `6.0` | m²/người | Chỉ tiêu diện tích mảng xanh bình quân dùng để xác định quy mô dân số mục tiêu: $P_{target,i} = S_i / C$. |
 | **Sai số hội tụ khi xác định bán kính** | `10.0` | m | Điều kiện dừng sai số khoảng cách của thuật toán tìm kiếm nhị phân (Binary Search). |
 
 !!! info "Các giá trị cấu hình mặc định trong nghiên cứu"

@@ -109,7 +109,7 @@ Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread k
     $$P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}$$
     tạo lớp `POP_ALLOC`.
   - Xây dựng ma trận khoảng cách hình học Euclid (EDT) từ biên từng mảng xanh.
-  - Xác định quy mô dân số phục vụ mục tiêu $P_{target,i} = S_i / C$.
+  - Xác định quy mô dân số mục tiêu $P_{target,i} = S_i / C$.
   - Tìm kiếm bán kính phục vụ lớn nhất $R^*$ trong $[0, R_{\max}]$ bằng Binary Search và xử lý các trường hợp biên (`RMAX`, `NO_SOLUTION`).
 - **Module 4 (Phân tích không gian xây dựng):**
   - Phân tích vị trí không gian của từng `footprint-part` đối với vùng phục vụ bán kính $R^*$.

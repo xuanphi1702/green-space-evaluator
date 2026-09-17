@@ -42,7 +42,7 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 ## 5. Ý nghĩa bán kính phục vụ $R^*$ và giới hạn $R_{\max}$
 
 !!! note "Bán kính phục vụ lớn nhất thỏa điều kiện của mô hình"
-    1. **Tính độc lập của từng mảng xanh:** Mỗi mảng xanh có một quy mô dân số phục vụ mục tiêu riêng $P_{target,i} = S_i / C$ và được xác định một bán kính phục vụ $R_i^*$ riêng trong khoảng $[0, R_{\max}]$.
+    1. **Tính độc lập của từng mảng xanh:** Mỗi mảng xanh có một quy mô dân số mục tiêu riêng $P_{target,i} = S_i / C$ và được xác định một bán kính phục vụ $R_i^*$ riêng trong khoảng $[0, R_{\max}]$.
     2. **Các yếu tố quyết định $R^*$:** Bán kính phục vụ $R^*$ phụ thuộc đồng thời vào:
        - Diện tích mảng xanh ($S_i$);
        - Phân bố không gian của các công trình xây dựng xung quanh;

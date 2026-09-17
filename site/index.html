@@ -1056,7 +1056,7 @@
 <ol>
 <li><strong>Module 1 — Chuẩn bị và kiểm tra dữ liệu đầu vào:</strong> Tiếp nhận và kiểm tra cấu trúc hình học các lớp vector; chuẩn hóa trường dân số thống kê của đơn vị hành chính thành <code>POP_STAT</code>; thiết lập hệ tọa độ phẳng dự chiếu tham chiếu và tạo ảnh Sentinel-2 Stack 10 m.</li>
 <li><strong>Module 2 — Phân tách mảng xanh đô thị:</strong> Tính toán các chỉ số quang học MNDWI và SAVI; loại trừ mặt nước; bóc tách thực vật; lọc bỏ mảng xanh nhỏ ngoài công viên theo diện tích tối thiểu và định danh từng mảng xanh riêng biệt (<code>PATCH_ID</code>).</li>
-<li><strong>Module 3 — Mô hình hóa vùng phục vụ mảng xanh:</strong> Xây dựng lưới khoảng cách Euclid từ biên mảng xanh; phân bổ dân số thống kê theo footprint công trình tạo lớp <code>POP_ALLOC</code>; xác định quy mô dân số phục vụ mục tiêu (<span class="arithmatex">\(P_{target,i} = S_i / C\)</span>) và tìm kiếm bán kính phục vụ lớn nhất <span class="arithmatex">\(R^*\)</span> thỏa điều kiện của mô hình cho từng mảng xanh.</li>
+<li><strong>Module 3 — Mô hình hóa vùng phục vụ mảng xanh:</strong> Xây dựng lưới khoảng cách Euclid từ biên mảng xanh; phân bổ dân số thống kê theo footprint công trình tạo lớp <code>POP_ALLOC</code>; xác định quy mô dân số mục tiêu (<span class="arithmatex">\(P_{target,i} = S_i / C\)</span>) và tìm kiếm bán kính phục vụ lớn nhất <span class="arithmatex">\(R^*\)</span> thỏa điều kiện của mô hình cho từng mảng xanh.</li>
 <li><strong>Module 4 — Phân tích không gian xây dựng:</strong> Phân tách footprint công trình thành các phần hình học (<code>footprint-part</code>); xác định footprint-part nằm trong và ngoài vùng phục vụ; áp dụng thuật toán gán độc quyền (<strong>Exclusive Assignment</strong>) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.</li>
 <li><strong>Module 5 — Tổng hợp và thống kê kết quả:</strong> Tổng hợp các chỉ tiêu định lượng theo đơn vị hành chính trực tiếp từ các lớp vector; tự động thực hiện 8 phép kiểm tra cân bằng dữ liệu (<strong>Balance Checks</strong>); xuất 5 sản phẩm đầu ra chính cùng các kết quả bổ sung lên QGIS và tệp lưu trữ ngoài.</li>
 </ol>
@@ -1117,13 +1117,13 @@
 <td><strong>Ngưỡng MNDWI</strong></td>
 <td style="text-align: right;"><code>0.0</code></td>
 <td style="text-align: center;">—</td>
-<td>Giá trị mặc định được sử dụng trong cấu hình nghiên cứu/thử nghiệm hiện tại; pixel có MNDWI &gt; 0.0 được phân loại là nước và loại trừ.</td>
+<td>Giá trị mặc định được lựa chọn trong cấu hình nghiên cứu/thử nghiệm hiện tại; pixel có MNDWI &gt; 0.0 được phân loại là nước và loại trừ.</td>
 </tr>
 <tr>
 <td><strong>Hệ số hiệu chỉnh nền đất SAVI (L)</strong></td>
 <td style="text-align: right;"><code>0.5</code></td>
 <td style="text-align: center;">—</td>
-<td>Giảm ảnh hưởng phản xạ của nền đất đối với thảm thực vật mật độ trung bình.</td>
+<td>Hệ số hiệu chỉnh nền đất L = 0.5, là giá trị mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại.</td>
 </tr>
 <tr>
 <td><strong>Phương thức xác định ngưỡng SAVI</strong></td>
@@ -1141,7 +1141,7 @@
 <td><strong>Diện tích mảng xanh tối thiểu</strong></td>
 <td style="text-align: right;"><code>5000.0</code></td>
 <td style="text-align: center;">m²</td>
-<td>Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm lọc bỏ các cụm thực vật nhỏ lẻ ngoài công viên.</td>
+<td>Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm loại bỏ các cụm thực vật nhỏ lẻ ngoài công viên.</td>
 </tr>
 <tr>
 <td><strong>Bán kính phục vụ tối đa (Rmax)</strong></td>
@@ -1153,7 +1153,7 @@
 <td><strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người (C)</strong></td>
 <td style="text-align: right;"><code>6.0</code></td>
 <td style="text-align: center;">m²/người</td>
-<td>Chỉ tiêu diện tích mảng xanh bình quân dùng để xác định quy mô dân số phục vụ mục tiêu: <span class="arithmatex">\(P_{target,i} = S_i / C\)</span>.</td>
+<td>Chỉ tiêu diện tích mảng xanh bình quân dùng để xác định quy mô dân số mục tiêu: <span class="arithmatex">\(P_{target,i} = S_i / C\)</span>.</td>
 </tr>
 <tr>
 <td><strong>Sai số hội tụ khi xác định bán kính</strong></td>

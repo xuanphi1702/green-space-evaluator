@@ -1121,7 +1121,7 @@
 <div class="arithmatex">\[
 \text{SAVI} = \frac{\text{B08} - \text{B04}}{\text{B08} + \text{B04} + L} \times (1 + L)
 \]</div>
-<p><em>(với hệ số hiệu chỉnh nền đất mặc định <span class="arithmatex">\(L = 0.5\)</span>)</em></p>
+<p><em>(với hệ số hiệu chỉnh nền đất <span class="arithmatex">\(L = 0.5\)</span>, là giá trị mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại)</em></p>
 </li>
 </ul>
 </li>
@@ -1172,7 +1172,7 @@
 <hr />
 <h3 id="24-dau-vet-cong-trinh-xay-dung-footprint">2.4. Dấu vết công trình xây dựng (Footprint)</h3>
 <ul>
-<li><strong>Bản chất dữ liệu</strong>: Trong nghiên cứu hiện tại, nguồn dữ liệu được sử dụng là <strong>Google Open Buildings</strong> – tập dữ liệu nhận diện hình học <strong>dấu vết chân công trình xây dựng (building footprints)</strong> từ ảnh vệ tinh độ phân giải cao bằng trí tuệ nhân tạo. <em>(Lưu ý: Khác với dữ liệu OpenStreetMap (OSM) là bản đồ đóng góp bởi cộng đồng với độ hoàn thiện tùy khu vực, Google Open Buildings cung cấp các polygon dấu vết vật lý đồng nhất).</em></li>
+<li><strong>Bản chất dữ liệu</strong>: Trong nghiên cứu hiện tại, nguồn dữ liệu được sử dụng là <strong>Google Open Buildings</strong> – tập dữ liệu nhận diện hình học <strong>dấu vết chân công trình xây dựng (building footprints)</strong> từ ảnh vệ tinh độ phân giải cao bằng mô hình học máy. <em>(Lưu ý: Khác với dữ liệu OpenStreetMap (OSM) là bản đồ đóng góp bởi cộng đồng với độ hoàn thiện tùy khu vực, Google Open Buildings cung cấp các polygon dấu vết vật lý đồng nhất).</em></li>
 <li><strong>Vai trò đại diện không gian xây dựng</strong>: Footprint đại diện cho <strong>không gian xây dựng vật lý (physical built space)</strong>, phản ánh quy mô và vị trí các khối kết cấu xây dựng trên bề mặt đô thị.</li>
 <li><strong>Cơ chế phân tách hình học (footprint-part)</strong>:<ul>
 <li>Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân tách thành các phần tử hình học nhỏ hơn gọi là <code>footprint-part</code> thuộc về từng đơn vị hành chính.</li>

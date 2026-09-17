@@ -38,7 +38,7 @@ Plugin xử lý ảnh phản xạ bề mặt Sentinel-2 để nhận diện mặ
         \text{SAVI} = \frac{\text{B08} - \text{B04}}{\text{B08} + \text{B04} + L} \times (1 + L)
         $$
 
-        *(với hệ số hiệu chỉnh nền đất mặc định $L = 0.5$)*
+        *(với hệ số hiệu chỉnh nền đất $L = 0.5$, là giá trị mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại)*
 
 - **Các kênh phổ tùy chọn**:
     - **B02** (Blue - Xanh lam, 10 m): Hỗ trợ ghép kênh tạo tổ hợp ảnh màu thực True Color (RGB) trong tệp ảnh Sentinel-2 Stack.
@@ -81,7 +81,7 @@ Lớp ranh giới hành chính đóng vai trò là **khung tham chiếu không g
 
 ### 2.4. Dấu vết công trình xây dựng (Footprint)
 
-- **Bản chất dữ liệu**: Trong nghiên cứu hiện tại, nguồn dữ liệu được sử dụng là **Google Open Buildings** – tập dữ liệu nhận diện hình học **dấu vết chân công trình xây dựng (building footprints)** từ ảnh vệ tinh độ phân giải cao bằng trí tuệ nhân tạo. *(Lưu ý: Khác với dữ liệu OpenStreetMap (OSM) là bản đồ đóng góp bởi cộng đồng với độ hoàn thiện tùy khu vực, Google Open Buildings cung cấp các polygon dấu vết vật lý đồng nhất).*
+- **Bản chất dữ liệu**: Trong nghiên cứu hiện tại, nguồn dữ liệu được sử dụng là **Google Open Buildings** – tập dữ liệu nhận diện hình học **dấu vết chân công trình xây dựng (building footprints)** từ ảnh vệ tinh độ phân giải cao bằng mô hình học máy. *(Lưu ý: Khác với dữ liệu OpenStreetMap (OSM) là bản đồ đóng góp bởi cộng đồng với độ hoàn thiện tùy khu vực, Google Open Buildings cung cấp các polygon dấu vết vật lý đồng nhất).*
 - **Vai trò đại diện không gian xây dựng**: Footprint đại diện cho **không gian xây dựng vật lý (physical built space)**, phản ánh quy mô và vị trí các khối kết cấu xây dựng trên bề mặt đô thị.
 - **Cơ chế phân tách hình học (footprint-part)**:
     - Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân tách thành các phần tử hình học nhỏ hơn gọi là `footprint-part` thuộc về từng đơn vị hành chính.

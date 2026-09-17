@@ -1370,7 +1370,7 @@
 <li><strong>Bảng thuộc tính của lớp Vùng phục vụ R* (<code>SERVICE_AREA</code>)</strong>:<ul>
 <li><code>PATCH_ID</code> (Integer): Mã định danh số nguyên duy nhất của từng mảng xanh.</li>
 <li><code>R_STAR</code> (Double): Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).</li>
-<li><code>P_TARGET</code> (Double): Quy mô dân số phục vụ mục tiêu theo chỉ tiêu (<span class="arithmatex">\(P_{target,i} = S_i / C\)</span>).</li>
+<li><code>P_TARGET</code> (Double): Quy mô dân số mục tiêu được xác định từ diện tích mảng xanh và chỉ tiêu C (<span class="arithmatex">\(P_{target,i} = S_i / C\)</span>).</li>
 <li><code>STATUS</code> (String): Trạng thái kết quả tìm kiếm bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).</li>
 <li><code>AREA_M2</code> (Double): Diện tích của mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span>).</li>
 <li><code>AREA_HA</code> (Double): Diện tích của mảng xanh (ha).</li>
@@ -1412,7 +1412,7 @@
 3. <code>AREA_HA</code>: Diện tích mảng xanh (ha).
 4. <code>R_STAR_M</code>: Bán kính phục vụ lớn nhất thỏa điều kiện <span class="arithmatex">\(R^*\)</span> (m).
 5. <code>STATUS</code>: Trạng thái giải bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).
-6. <code>P_TARGET</code>: Quy mô dân số phục vụ mục tiêu của mảng xanh (<span class="arithmatex">\(S_i / C\)</span>).
+6. <code>P_TARGET</code>: Quy mô dân số mục tiêu được xác định từ diện tích mảng xanh và chỉ tiêu C (<span class="arithmatex">\(S_i / C\)</span>).
 7. <code>P_AT_RSTAR</code>: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách <span class="arithmatex">\(R^*\)</span> của mảng xanh.
 8. <code>N_SERVED_PARTS</code>: Số lượng footprint-part được gán phục vụ độc quyền cho mảng xanh.
 9. <code>SERVED_BUILDING_AREA_M2</code>: Tổng diện tích xây dựng được gán phục vụ (<span class="arithmatex">\(\text{m}^2\)</span>).

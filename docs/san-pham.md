@@ -33,7 +33,7 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 - **Bảng thuộc tính của lớp Vùng phục vụ R\* (`SERVICE_AREA`)**:
     - `PATCH_ID` (Integer): Mã định danh số nguyên duy nhất của từng mảng xanh.
     - `R_STAR` (Double): Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).
-    - `P_TARGET` (Double): Quy mô dân số phục vụ mục tiêu theo chỉ tiêu ($P_{target,i} = S_i / C$).
+    - `P_TARGET` (Double): Quy mô dân số mục tiêu được xác định từ diện tích mảng xanh và chỉ tiêu C ($P_{target,i} = S_i / C$).
     - `STATUS` (String): Trạng thái kết quả tìm kiếm bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
     - `AREA_M2` (Double): Diện tích của mảng xanh ($\text{m}^2$).
     - `AREA_HA` (Double): Diện tích của mảng xanh (ha).
@@ -71,7 +71,7 @@ Tệp thống kê chi tiết ở cấp độ từng patch (`patch_service_statis
 3. `AREA_HA`: Diện tích mảng xanh (ha).
 4. `R_STAR_M`: Bán kính phục vụ lớn nhất thỏa điều kiện $R^*$ (m).
 5. `STATUS`: Trạng thái giải bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
-6. `P_TARGET`: Quy mô dân số phục vụ mục tiêu của mảng xanh ($S_i / C$).
+6. `P_TARGET`: Quy mô dân số mục tiêu được xác định từ diện tích mảng xanh và chỉ tiêu C ($S_i / C$).
 7. `P_AT_RSTAR`: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách $R^*$ của mảng xanh.
 8. `N_SERVED_PARTS`: Số lượng footprint-part được gán phục vụ độc quyền cho mảng xanh.
 9. `SERVED_BUILDING_AREA_M2`: Tổng diện tích xây dựng được gán phục vụ ($\text{m}^2$).
