@@ -1,6 +1,6 @@
 # Cài đặt tham số
 
-Trang này hướng dẫn chi tiết ý nghĩa, vai trò và cách thiết lập các tham số trong cửa sổ **Cài đặt** của Plugin **Green Space Evaluator**.
+Trang này hướng dẫn chi tiết ý nghĩa khoa học, vai trò thuật toán và cách thiết lập các tham số trong cửa sổ **Cài đặt** của Plugin **Green Space Evaluator**.
 
 <div class="guide-figure" markdown>
 ![Cửa sổ cài đặt nâng cao của Plugin](images/cai_dat_nang_cao.png)
@@ -9,111 +9,124 @@ Trang này hướng dẫn chi tiết ý nghĩa, vai trò và cách thiết lập
 
 ---
 
-## 1. Tổng quan các nhóm tham số
+## 1. Tổng quan bảng tham số
 
-Các tham số trong Plugin được chia thành bốn nhóm theo vai trò trong quy trình xử lý, gồm: (1) chỉ số phổ, (2) trích xuất mảng xanh, (3) vùng phục vụ và (4) thuật toán. Trong đó, người dùng thường cần quan tâm đến các tham số liên quan đến ngưỡng SAVI, bán kính phục vụ \(R_{max}\) và sức tải mục tiêu \(C_{min}\); các tham số kỹ thuật còn lại nên giữ giá trị mặc định nếu không có nhu cầu điều chỉnh.
+Người dùng có thể mở cửa sổ cấu hình bằng cách nhấn nút **Cài đặt** (biểu tượng bánh răng ở góc trên bên phải giao diện chính) và chọn tab **Tùy chỉnh nâng cao**:
 
-
-| Nhóm | Tham số | Giá trị mặc định | Vai trò | Khuyến nghị |
-|---|---|---:|---|---|
-| **Chỉ số phổ** | Ngưỡng MNDWI | `0,0` | Phân tách pixel mặt nước khỏi đất liền | Giữ mặc định `0,0` cho ảnh Sentinel-2 L2A |
-| **Chỉ số phổ** | Hệ số $L$ (SAVI) | `0,5` | Hiệu chỉnh ảnh hưởng tán xạ nền đất | Giữ mặc định `0,5` - giá trị thường được sử dụng cho SAVI trong một số điều kiện |
-| **Trích xuất mảng xanh** | Ngưỡng SAVI | `-999` | Phân tách thảm thực vật mảng xanh trên đất liền | Giữ `-999` để Plugin tự động xác định từ mẫu công viên |
-| **Trích xuất mảng xanh** | Phương pháp thống kê SAVI | `P10` | Thuật toán trích xuất ngưỡng từ mẫu công viên | Dùng `P10` làm cấu hình cơ sở; có thể đổi theo đặc thù thực vật |
-| **Trích xuất mảng xanh** | Bách phân vị tùy chỉnh $P$ | `10%` | Giá trị bách phân vị khi chọn phương pháp tùy chỉnh | Chỉ kích hoạt khi chọn *Custom Percentile* |
-| **Trích xuất mảng xanh** | Diện tích lọc mảng xanh tối thiểu | `5000 m²` | Lọc bỏ các cụm cây xanh nhỏ lẻ ngoài công viên | Chỉ nên điều chỉnh khi cần thay đổi quy mô tối thiểu của các mảng xanh độc lập ngoài công viên theo mục tiêu nghiên cứu |
-| **Vùng phục vụ** | Bán kính phục vụ tối đa ($R_{max}$) | `300 m` | Giới hạn cận trên của miền tìm kiếm bán kính | Điều chỉnh theo bán kính phục vụ mục tiêu cần đánh giá |
-| **Vùng phục vụ** | Sức tải mục tiêu ($C_{min}$) | `6 m²/người` | Tiêu chuẩn diện tích mảng xanh tối thiểu trên một người | Điều chỉnh theo tiêu chuẩn quy chuẩn hoặc mục tiêu nghiên cứu |
-| **Thuật toán** | Sai số hội tụ (Tolerance) | `10 m` | Điều kiện dừng của thuật toán tìm kiếm nhị phân | Giữ `10 m` (tương đương kích thước 1 ô pixel 10m) |
+| Nhóm | Tham số trên giao diện | Giá trị mặc định | Đơn vị | Ý nghĩa khoa học & Vai trò thuật toán |
+|---|---|---:|:---:|---|
+| **Chỉ số phổ** | **Ngưỡng MNDWI** | `0.0` | — | Phân tách pixel mặt nước khỏi bề mặt đất liền. Pixel có $\text{MNDWI} > 0.0$ được xác định là nước và loại trừ trước khi tính SAVI. |
+| **Chỉ số phổ** | **Hệ số hiệu chỉnh nền đất SAVI (L)** | `0.5` | — | Hệ số hiệu chỉnh tán xạ nền đất trong công thức SAVI, phù hợp với thảm thực vật mật độ trung bình. |
+| **Trích xuất mảng xanh** | **Phương thức xác định ngưỡng SAVI** | `Tự động xác định` | — | Lựa chọn giữa `Tự động xác định` (trích xuất từ vùng mẫu công viên) và `Nhập thủ công` (người dùng chỉ định ngưỡng cố định). |
+| **Trích xuất mảng xanh** | **Phương pháp xác định ngưỡng SAVI** | `Bách phân vị P10 (Mặc định)` | — | Phương pháp thống kê áp dụng trên tập mẫu công viên khi chọn chế độ tự động. |
+| **Trích xuất mảng xanh** | **Bách phân vị tùy chỉnh P (%)** | `10.0` | `%` | Giá trị bách phân vị thiết lập khi chọn phương pháp "Bách phân vị tùy chỉnh". |
+| **Trích xuất mảng xanh** | **Diện tích mảng xanh tối thiểu** | `5000.0` | m² | Ngưỡng lọc diện tích (`gdal.SieveFilter`) nhằm loại bỏ các mảng thực vật nhỏ lẻ ngoài công viên. Mảng xanh trong công viên luôn được bảo toàn. |
+| **Vùng phục vụ** | **Bán kính phục vụ tối đa (Rmax)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $[0, R_{\max}]$ cho từng mảng xanh độc lập. |
+| **Vùng phục vụ** | **Chỉ tiêu diện tích mảng xanh bình quân đầu người (C)** | `6.0` | m²/người | Chỉ tiêu diện tích bình quân dùng để xác định quy mô dân số phục vụ mục tiêu của từng mảng xanh: $P_{target,i} = S_i / C$. |
+| **Thuật toán** | **Sai số hội tụ khi xác định bán kính** | `10.0` | m | Điều kiện dừng sai số khoảng cách của thuật toán tìm kiếm nhị phân (Binary Search). |
 
 ---
 
-## 2. Tham số ngưỡng SAVI
+## 2. Tham số trích xuất mảng xanh và ngưỡng SAVI
 
-### 2.1. Chế độ xác định ngưỡng (-999)
+### 2.1. Phương thức xác định ngưỡng SAVI
 
-- **Chế độ tự động (`SAVI_THRESHOLD = -999`)**: Giá trị mặc định `-999` đóng vai trò là một cờ hiệu kỹ thuật (sentinel value). Khi nhận giá trị này, Plugin tự động trích xuất các ô pixel SAVI trên đất liền nằm bên trong các polygon công viên mẫu (`VEG_VECTOR`) và áp dụng phương pháp thống kê để xác định ngưỡng phân tách thực vật khách quan.
-- **Chế độ thủ công (`SAVI_THRESHOLD > -999`)**: Người dùng có thể nhập trực tiếp một giá trị số thực cố định (ví dụ `0,20` hoặc `0,25`) để áp dụng làm ngưỡng cứng cho toàn bộ khu vực nghiên cứu mà không phụ thuộc vào lớp công viên mẫu.
+- **Chế độ tự động xác định (Mặc định)**: Plugin tự động lấy mẫu các ô pixel SAVI trên đất liền nằm trong phạm vi các polygon công viên/vườn hoa (`VEG_VECTOR`) và áp dụng phương pháp thống kê được chọn để tính ngưỡng phân tách thực vật khách quan.
+- **Chế độ nhập thủ công**: Người dùng chủ động nhập trực tiếp một giá trị số thực cố định (ví dụ: `0.20` hoặc `0.25`) theo kinh nghiệm chuyên gia hoặc khảo sát thực địa mà không phụ thuộc vào lớp công viên mẫu.
 
-### 2.2. Các phương pháp thống kê mẫu công viên hỗ trợ
+### 2.2. Các phương pháp thống kê mẫu công viên
 
-Khi chạy ở chế độ tự động, Plugin hỗ trợ 6 phương pháp tính ngưỡng từ mẫu công viên:
+Khi chọn chế độ tự động, Plugin cung cấp 6 phương pháp tính ngưỡng:
 
-1. **Bách phân vị P10 (`Percentile 10`)** *(Mặc định thử nghiệm)*: P10 là ngưỡng bách phân vị thứ 10 của phân bố SAVI trong tập mẫu công viên, được sử dụng làm cấu hình cơ sở trong nghiên cứu. Ngưỡng thấp có xu hướng giữ lại nhiều tín hiệu thực vật hơn nhưng có thể làm tăng phân loại dư.
-2. **Mean - 1.0 * Std**: Ngưỡng bằng giá trị trung bình trừ 1 lần độ lệch chuẩn ($\mu - 1{,}0\sigma$).
-3. **Mean - 0.5 * Std**: Ngưỡng bằng giá trị trung bình trừ 0,5 lần độ lệch chuẩn ($\mu - 0{,}5\sigma$).
-4. **Median (Trung vị)**: Lấy giá trị trung vị P50 của phân bố SAVI.
+1. **Bách phân vị P10 (Mặc định thử nghiệm)**: Lấy giá trị bách phân vị thứ 10 của phân bố SAVI trong tập mẫu công viên. Giúp giữ lại hầu hết các dạng thảm thực vật công viên trong khi loại trừ các điểm dị biệt mặt lát.
+2. **Mean - 1.0 * Std**: Ngưỡng bằng giá trị trung bình trừ 1 lần độ lệch chuẩn ($\mu - 1.0\sigma$).
+3. **Mean - 0.5 * Std**: Ngưỡng bằng giá trị trung bình trừ 0.5 lần độ lệch chuẩn ($\mu - 0.5\sigma$).
+4. **Median (Trung vị)**: Lấy giá trị trung vị P50 của phân bố SAVI trong công viên.
 5. **Mean (Trung bình)**: Lấy giá trị trung bình cộng $\mu$ của phân bố SAVI.
-6. **Custom Percentile (Bách phân vị tùy chỉnh)**: Cho phép người dùng nhập trực tiếp một bách phân vị $P$ bất kỳ từ `0%` đến `100%`.
-
-!!! note "Định hướng lựa chọn ngưỡng SAVI"
-    Ngưỡng SAVI thấp hơn thường giữ lại nhiều tín hiệu thực vật hơn nhưng có thể làm tăng phân loại dư (nhầm lẫn với đất có cỏ thưa hoặc bóng râm); ngưỡng cao hơn giúp thảm thực vật bóc tách tinh khiết hơn nhưng có thể làm giảm diện tích mảng xanh được giữ lại.
+6. **Bách phân vị tùy chỉnh**: Cho phép người dùng nhập trực tiếp bách phân vị $P$ bất kỳ từ `0%` đến `100%`.
 
 ---
 
-## 3. Tham số vùng phục vụ
+## 3. Mô hình hóa vùng phục vụ mảng xanh
 
-Vùng phục vụ được mô hình hóa dựa trên mối quan hệ giữa diện tích mảng xanh và dân số nằm trong phạm vi khoảng cách Euclid.
+Vùng phục vụ của từng mảng xanh được mô hình hóa độc lập dựa trên diện tích mảng xanh, dân số được phân bổ theo không gian và khoảng cách Euclid.
 
-### 3.1. Ý nghĩa của Rmax và Cmin
+### 3.1. Quy mô dân số phục vụ mục tiêu ($P_{target,i}$)
 
-- **$R_{max}$ (Bán kính phục vụ tối đa)**: Đóng vai trò là **cận trên của miền tìm kiếm** $[0, R_{max}]$ trong thuật toán tìm kiếm nhị phân (mặc định `300 m`). Khoảng cách này được mô hình hóa theo **khoảng cách hình học Euclid**, không đại diện cho cự ly đi bộ thực tế theo mạng lưới giao thông.
-- **$C_{min}$ (Sức tải mảng xanh mục tiêu)**: Ngưỡng sức tải tối thiểu cần đạt (mặc định `6 m²/người`).
-
-### 3.2. Công thức tính sức tải và xác định bán kính R*
-
-Tại mỗi khoảng cách bán kính $R$, hàm sức tải $C(R)$ được tính bằng:
+Với mỗi mảng xanh độc lập $i$ có diện tích $S_i$, quy mô dân số phục vụ mục tiêu của mảng xanh được xác định theo công thức:
 
 $$
-C(R) = \frac{S_{UGS}}{P(R)}
+P_{target,i} = \frac{S_i}{C}
 $$
 
 Trong đó:
+- $S_i$: Diện tích mảng xanh $i$ ($    ext{m}^2$).
+- $C$: **Chỉ tiêu diện tích mảng xanh bình quân đầu người** (mặc định $6.0\text{ m}^2/\text{người}$).
+- $P_{target,i}$: Quy mô dân số phục vụ mục tiêu (số người tối đa mà mảng xanh có thể phục vụ theo chỉ tiêu).
 
-- $S_{UGS}$: Tổng diện tích mảng xanh phục vụ đô thị ($\text{m}^2$).
-- $P(R)$: Tổng dân số ước tính (WorldPop) phân bố trong không gian xây dựng (Open Buildings) nằm trong phạm vi khoảng cách Euclid $\le R$ từ mảng xanh (người).
+### 3.2. Giới hạn trên của miền tìm kiếm ($R_{\max}$)
 
-**Bán kính $R^*$** được định nghĩa là **bán kính lớn nhất trong miền tìm kiếm cấu hình $[0, R_{max}]$ mà sức tải vẫn thỏa mãn điều kiện $C(R^*) \ge C_{min}$**.
+- **$R_{\max}$ (Bán kính phục vụ tối đa)**: Đóng vai trò là **giới hạn trên của miền tìm kiếm** $[0, R_{\max}]$ trong thuật toán (mặc định $300\text{ m}$).
+- Khoảng cách được mô hình hóa theo **khoảng cách hình học Euclid**, không đại diện cho cự ly đi bộ thực tế theo mạng lưới giao thông.
+- $R_{\max}$ không phải là kết quả cố định hay quy chuẩn phổ quát cho mọi mảng xanh, mà là cận trên để khống chế không gian tìm kiếm phù hợp với phạm vi nghiên cứu.
+
+### 3.3. Xác định bán kính phục vụ lớn nhất thỏa điều kiện ($R^*$)
+
+Với mỗi mảng xanh $i$, bán kính phục vụ $R_i^*$ được xác định là **bán kính lớn nhất trong miền tìm kiếm $[0, R_{\max}]$ thỏa điều kiện tổng dân số phân bổ tiếp cận không vượt quá quy mô phục vụ mục tiêu**:
+
+$$
+R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{target,i} \right\}
+$$
+
+Trong đó $P_i(R)$ là tổng dân số được phân bổ (`POP_ALLOC`) nằm trong phạm vi khoảng cách hình học Euclid $\le R$ tính từ biên của mảng xanh $i$.
+
+### 3.4. Thuật toán tìm kiếm và 3 trạng thái kết quả
+
+Thuật toán kiểm tra điều kiện và áp dụng tìm kiếm nhị phân (**Binary Search**) khi cần thiết:
+
+1. **Trường hợp `NO_SOLUTION` ($R^* = 0\text{ m}$)**:
+   - Nếu ngay tại khoảng cách $R = 0\text{ m}$ (ngay bên trong hoặc sát mảng xanh) mà $P_i(0) > P_{target,i}$, mảng xanh không đủ diện tích để đáp ứng chỉ tiêu $C$ cho dân số lân cận ngay tại nguồn. Bán kính phục vụ được gán bằng $0\text{ m}$.
+2. **Trường hợp `RMAX` ($R^* = R_{\max}$)**:
+   - Nếu tại giới hạn trên $R = R_{\max}$ mà vẫn thỏa mãn $P_i(R_{\max}) \le P_{target,i}$, mảng xanh có quy mô diện tích đủ lớn để phục vụ toàn bộ dân số lân cận trong bán kính tối đa. Bán kính phục vụ được gán bằng $R_{\max}$ (mặc định $300\text{ m}$).
+3. **Trường hợp `BINARY_SEARCH`**:
+   - Khi $P_i(0) \le P_{target,i}$ nhưng $P_i(R_{\max}) > P_{target,i}$, thuật toán tìm kiếm nhị phân sẽ thu hẹp dần khoảng cách $[R_{left}, R_{right}]$ cho đến khi đạt sai số hội tụ (mặc định $10\text{ m}$). Kết quả trả về bán kính phục vụ lớn nhất thỏa điều kiện.
+
+!!! note "Bản chất khái niệm bán kính phục vụ R*"
+    Trong tài liệu và báo cáo khoa học, $R^*$ được gọi chuẩn xác là **"bán kính phục vụ lớn nhất thỏa điều kiện"** hoặc **"bán kính phục vụ lớn nhất trong miền tìm kiếm thỏa điều kiện của mô hình"**.
 
 ---
 
-## 4. Tham số kỹ thuật
+## 4. Tham số kỹ thuật khác
 
-- **Ngưỡng phân tách nước MNDWI (`MNDWI_THRESHOLD = 0,0`)**: Phân tách các bề mặt nước (sông, hồ, kênh rạch) có $\text{MNDWI} > 0{,}0$. Lớp mặt nước này được dùng làm mặt nạ loại trừ trước khi tính SAVI và bóc tách thực vật.
-- **Hệ số $L$ của SAVI (`L_FACTOR = 0,5`)**: Hệ số triệt tiêu tán xạ nền đất. Giá trị mặc định 0,5, được sử dụng trong nghiên cứu để hiệu chỉnh ảnh hưởng nền đất.
-- **Diện tích mảng xanh lọc nhiễu tối thiểu (`MIN_GREEN_AREA = 5000 m²`)**: Ngưỡng áp dụng cho bộ lọc `gdal.SieveFilter` đối với các mảng xanh **ngoài công viên**. Các mảng xanh độc lập có quy mô $< 5000\text{ m}^2$ (tương đương 50 pixel $10\text{m} \times 10\text{m}$) sẽ bị loại bỏ nhằm hạn chế nhiễu từ cây xanh vườn nhà nhỏ lẻ. Toàn bộ mảng xanh nằm trong ranh công viên luôn được bảo toàn nguyên vẹn.
-- **Ngưỡng sai số hội tụ (`TOLERANCE = 10 m`)**: Điều kiện dừng của vòng lặp Binary Search khi hiệu giữa hai biên tìm kiếm $(R_{max} - R_{min}) \le \text{Tolerance}$. Giá trị `10 m` tương đương độ phân giải không gian của 1 pixel ảnh Sentinel-2.
+- **Ngưỡng phân tách nước MNDWI (`0.0`)**: Các pixel có chỉ số $\text{MNDWI} > 0.0$ được xác định là mặt nước và được loại trừ hoàn toàn trước khi tính chỉ số SAVI.
+- **Hệ số SAVI $L$ (`0.5`)**: Giá trị chuẩn hóa giúp triệt tiêu tán xạ phản xạ từ nền đất hở trong môi trường đô thị.
+- **Diện tích mảng xanh tối thiểu (`5000 m²`)**: Áp dụng cho các mảng xanh độc lập **ngoài công viên** (tương đương 50 pixel $10\text{m} \times 10\text{m}$) nhằm lọc bỏ cây xanh vườn nhà nhỏ lẻ, dải phân cách hẹp hoặc bóng cây trên đường. Toàn bộ mảng xanh nằm trong ranh công viên luôn được bảo toàn nguyên vẹn.
+- **Sai số hội tụ (Tolerance = `10 m`)**: Điều kiện dừng của Binary Search, đồng bộ với độ phân giải lưới 10 m của ảnh viễn thám Sentinel-2.
 
 ---
 
 ## 5. Khi nào nên thay đổi tham số?
 
-### 🟢 Có thể thay đổi
+### 🟢 Có thể chủ động thay đổi
+- **Bán kính phục vụ tối đa ($R_{\max}$)**: Khi cần mở rộng hoặc thu hẹp miền tìm kiếm phù hợp với cự ly nghiên cứu của đề tài.
+- **Chỉ tiêu diện tích mảng xanh bình quân đầu người ($C$)**: Khi áp dụng các chỉ tiêu quy chuẩn khác nhau (ví dụ: $4.0$, $6.0$, $8.0\text{ m}^2/\text{người}$) hoặc kịch bản nghiên cứu so sánh.
+- **Diện tích lọc mảng xanh tối thiểu**: Khi cần điều chỉnh quy mô mảng xanh ngoài công viên phù hợp với hiện trạng khu vực.
 
-- **Bán kính phục vụ tối đa ($R_{max}$)**: Khi cần mở rộng hoặc thu hẹp miền tìm kiếm phù hợp với mục tiêu nghiên cứu.
-- **Sức tải mục tiêu ($C_{min}$)**: Khi áp dụng theo các tiêu chuẩn quy hoạch địa phương hoặc chỉ tiêu mảng xanh cụ thể của từng đô thị.
-- **Diện tích lọc mảng xanh tối thiểu**: Khi cần điều chỉnh quy mô tối thiểu của mảng xanh công cộng ngoài công viên phù hợp với hiện trạng khu vực.
-
-### 🟡 Nên cân nhắc
-
-- **Phương pháp thống kê SAVI / Ngưỡng SAVI thủ công**: Khi kết quả trích xuất tự động theo `P10` có dấu hiệu thừa hoặc thiếu thực vật do đặc thù mẫu công viên có nhiều mặt lát hoặc cây xanh quá rậm rạp.
-- **Bách phân vị tùy chỉnh**: Khi muốn thử nghiệm các mức ngưỡng phân tách chặt chẽ hơn (P15, P20) hoặc bao quát hơn (P5).
+### 🟡 Nên cân nhắc kỹ
+- **Phương pháp thống kê SAVI**: Khi kết quả trích xuất tự động theo `P10` có dấu hiệu thiếu thực vật hoặc thừa thực vật do đặc thù công viên mẫu.
+- **Bách phân vị tùy chỉnh**: Khi muốn thử nghiệm các mức ngưỡng phân tách chặt chẽ hơn ($P_{15}$, $P_{20}$) hoặc bao quát hơn ($P_5$).
 
 ### 🔵 Nên giữ mặc định
-
-- **Ngưỡng MNDWI (`0,0`)**: Được sử dụng làm giá trị mặc định trong cấu hình thử nghiệm của Plugin.
-- **Hệ số $L$ (`0,5`)**: Giá trị mặc định được sử dụng trong cấu hình thử nghiệm của Plugin.
-- **Ngưỡng sai số hội tụ (`10 m`)**: Đồng bộ với độ phân giải lưới 10m của quy trình xử lý.
+- **Ngưỡng MNDWI (`0.0`)**: Chuẩn hóa cho ảnh Sentinel-2 L2A.
+- **Hệ số $L$ (`0.5`)**: Giá trị phổ biến và ổn định của chỉ số SAVI.
+- **Sai số hội tụ (`10 m`)**: Tương ứng với kích thước 1 pixel 10 m của ảnh Sentinel-2.
 
 ---
 
-## 6. Lưu ý khi thay đổi tham số
+## 6. Tính lan truyền của tham số
 
-!!! warning "Sự lan truyền của tham số trong quy trình xử lý chuỗi"
-    Các tham số trong Plugin có mối liên hệ mật thiết qua chuỗi xử lý gồm 5 module:
-    
-    1. Thay đổi ngưỡng **MNDWI** hoặc **SAVI** sẽ thay đổi diện tích mảng xanh $S_{UGS}$.
-    2. Diện tích $S_{UGS}$ thay đổi sẽ làm thay đổi giá trị sức tải $C(R)$ và có thể ảnh hưởng đến bán kính phục vụ $R^*$, tùy thuộc vào điều kiện sức tải và miền tìm kiếm.
-    3. Bán kính $R^*$ thay đổi sẽ làm thay đổi toàn bộ kết quả phân loại không gian xây dựng và các chỉ tiêu thống kê dân số thiếu xanh theo phường/xã.
-    
-    Do đó, khi thay đổi bất kỳ tham số nào, người dùng nên kiểm tra kỹ các sản phẩm trung gian (raster mảng xanh, biểu đồ histogram) trước khi sử dụng kết quả thống kê cuối cùng.
+!!! warning "Lưu ý tính liên hoàn giữa các module"
+    Các tham số trong Plugin có mối liên hệ chuỗi chặt chẽ:
+    1. Thay đổi ngưỡng **MNDWI** hoặc **SAVI** sẽ thay đổi diện tích mảng xanh $S_i$.
+    2. Diện tích $S_i$ thay đổi làm thay đổi quy mô dân số phục vụ mục tiêu $P_{target,i} = S_i / C$, từ đó trực tiếp làm thay đổi bán kính $R_i^*$.
+    3. Bán kính $R^*$ thay đổi sẽ làm thay đổi kết quả phân loại không gian xây dựng (trong/ngoài vùng phục vụ) và toàn bộ các chỉ tiêu thống kê hành chính ở Module 5.

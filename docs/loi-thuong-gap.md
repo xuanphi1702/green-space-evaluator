@@ -1,163 +1,137 @@
-# Lỗi thường gặp
+# Lỗi thường gặp và cách xử lý
 
-Trang này tổng hợp các lỗi thường gặp trong quá trình cài đặt, chuẩn bị dữ liệu và thực thi phân tích trên Plugin **Green Space Evaluator**, cùng nguyên nhân kỹ thuật và các bước xử lý tương ứng dựa trên mã nguồn thực tế của Plugin.
+Trang này tổng hợp các tình huống lỗi thường gặp trong quá trình chuẩn bị dữ liệu, cài đặt tham số và thực thi phân tích trên Plugin **Green Space Evaluator**, cùng nguyên nhân kỹ thuật và các bước xử lý tương ứng dựa trên mã nguồn thực tế của Plugin.
 
 ---
 
-## 1. Thiếu thư viện Python phụ thuộc
-
-Plugin tự động kiểm tra sự tồn tại của các thư viện phụ thuộc bắt buộc (`numpy`, `osgeo/gdal`, `scipy`, `matplotlib`) và tùy chọn (`pandas`, `openpyxl`) trước khi bắt đầu thực thi thuật toán.
+## 1. Lỗi không đọc/không nhận được trường dân số thống kê
 
 ### Hiện tượng
-Hộp thoại cảnh báo xuất hiện thông báo thiếu thư viện hoặc trong **Nhật ký tiến trình** hiển thị thông báo:
+Hộp thoại cảnh báo xuất hiện thông báo lỗi hoặc trong **Nhật ký tiến trình** hiển thị:
 ```text
-❌ THIẾU THƯ VIỆN PYTHON BẮT BUỘC: [tên thư viện]!
+✗ Không tìm thấy trường dân số thống kê trong lớp ranh giới hành chính!
+```
+hoặc:
+```text
+✗ Dữ liệu dân số thống kê của một số đơn vị hành chính không hợp lệ (nhỏ hơn hoặc bằng 0, hoặc giá trị rỗng)!
 ```
 
-### Kiểm tra
-- Mở menu **Plugins** → **Python Console** trong QGIS để kiểm tra xem môi trường Python hiện tại đã cài đặt thư viện chưa.
+### Nguyên nhân
+- Người dùng chưa chọn trường thuộc tính dân số trong danh sách thả xuống trên giao diện.
+- Trường được chọn chứa kiểu dữ liệu không phải dạng số (ví dụ: chuỗi văn bản Text chứa chữ cái, ký hiệu đặc biệt).
+- Một số polygon đơn vị hành chính có giá trị dân số bị khuyết (NULL/NaN) hoặc giá trị $\le 0$.
+
+### Cách xử lý
+1. Mở bảng thuộc tính của lớp ranh giới hành chính trong QGIS, kiểm tra trường chứa số liệu dân số.
+2. Đảm bảo trường dữ liệu có kiểu số (Integer, Real, Double) và tất cả các đơn vị hành chính đều có số dân hợp lệ (> 0).
+3. Trên giao diện Plugin (tab *Dữ liệu đầu vào*), chọn chính xác tên trường dân số thống kê trong danh sách thả xuống.
+
+---
+
+## 2. Thiếu thư viện Python phụ thuộc
+
+Plugin tự động kiểm tra sự tồn tại của các thư viện bắt buộc (`osgeo/gdal`, `numpy`, `scipy`, `matplotlib`) và tùy chọn (`pandas`, `openpyxl`) trước khi bắt đầu thực thi.
+
+### Hiện tượng
+Hộp thoại cảnh báo xuất hiện hoặc trong **Nhật ký tiến trình** hiển thị:
+```text
+✗ THIẾU THƯ VIỆN PYTHON BẮT BUỘC: [tên thư viện]!
+```
 
 ### Cách xử lý
 1. Đóng hoàn toàn phần mềm QGIS.
 2. Mở công cụ **OSGeo4W Shell** trên Windows (tìm trong Start Menu với từ khóa *OSGeo4W Shell*).
-3. Chạy lệnh cài đặt:
+3. Chạy lệnh cài đặt thư viện vào môi trường Python của QGIS:
    ```bash
-   pip install [tên thư viện còn thiếu]
+   pip install numpy scipy matplotlib openpyxl pandas
    ```
-4. Khởi động lại QGIS và mở lại Plugin để tiếp tục sử dụng.
+4. Khởi động lại QGIS và mở lại Plugin để tiếp tục phân tích.
 
 ---
 
-## 2. Thiếu kênh ảnh Sentinel-2 bắt buộc
+## 3. Thiếu kênh ảnh Sentinel-2 bắt buộc
 
-Quy trình tính toán chỉ số phổ MNDWI và SAVI yêu cầu tối thiểu **4 kênh ảnh bắt buộc**: **B03, B04, B08, B11**. Các kênh **B02** (tạo ảnh màu thực) và **SCL** (lọc mây và bóng mây tự động) là tùy chọn bổ sung.
+Quy trình bóc tách mảng xanh yêu cầu tối thiểu **4 kênh ảnh bắt buộc**: **B03, B04, B08, B11**. Các kênh **B02** (tạo ảnh màu tự nhiên) và **SCL** (lọc mây và bóng mây) là tùy chọn bổ sung.
 
 ### Hiện tượng
-Plugin dừng ở Module 1 và báo lỗi:
+Plugin dừng lại ở Module 1 và thông báo:
 ```text
-❌ Thiếu các kênh Sentinel-2 bắt buộc: [B03, B04, B08, B11] (cần tối thiểu B03, B04, B08, B11 để tính MNDWI và SAVI)!
+✗ Thiếu các kênh Sentinel-2 bắt buộc: [B03, B04, B08, B11] (cần tối thiểu B03, B04, B08, B11 để tính MNDWI và SAVI)!
 ```
 
-### Kiểm tra
-- Kiểm tra danh sách layer hoặc tệp ảnh Sentinel-2 đã chọn tại trường *1. Các kênh ảnh Sentinel-2*.
-- Kiểm tra tên tệp hoặc tên layer có chứa đúng ký hiệu nhận diện kênh (ví dụ: `B03`, `B04`, `B08`, `B11`, `B02`, `SCL`).
-
 ### Cách xử lý
-- Đảm bảo chọn đủ tối thiểu 4 tệp kênh phổ của cùng một cảnh chụp Sentinel-2 (Level-2A).
-- Đảm bảo tên layer/tệp chứa đúng ký hiệu nhận diện kênh mà Plugin yêu cầu. Không nên thay đổi tên tệp gốc nếu không cần thiết; có thể đổi tên layer trong QGIS để Plugin nhận diện đúng kênh.s
+- Đảm bảo chọn đủ tối thiểu 4 tệp kênh phổ của cùng một cảnh chụp Sentinel-2 Level-2A.
+- Kiểm tra tên tệp hoặc tên layer trên QGIS có chứa đúng ký hiệu nhận diện kênh: `B03` (Green), `B04` (Red), `B08` (NIR), `B11` (SWIR).
+- Có thể đổi tên layer trong bảng điều khiển lớp của QGIS để Plugin nhận diện chính xác kênh ảnh.
 
 ---
 
-## 3. Không nạp được dữ liệu đầu vào
+## 4. Lỗi không nạp được các lớp vector đầu vào
 
-### 3.1. Lớp khu vực nghiên cứu (MASK_LAYER)
-- **Hiện tượng**: `❌ Không thể nạp Vector ranh giới khu vực nghiên cứu (MASK_LAYER)!`
-- **Kiểm tra**: Kiểm tra đường dẫn/tệp nguồn của lớp và khả năng đọc lớp trong QGIS; đồng thời kiểm tra hình học của polygon có hợp lệ hay không.
-- **Cách xử lý**: Nếu tệp hoặc đường dẫn có vấn đề, chọn lại đúng lớp dữ liệu. Nếu hình học không hợp lệ, có thể sử dụng công cụ **Fix Geometries** trong QGIS. Đồng thời đảm bảo lớp khu vực nghiên cứu đã được chuẩn hóa theo yêu cầu dữ liệu của Plugin, sử dụng Projected CRS với đơn vị mét.
+### 4.1. Lớp ranh giới hành chính
+- **Hiện tượng**: `✗ Không thể nạp Vector ranh giới hành chính và dân số thống kê!`
+- **Nguyên nhân**: Tệp bị hỏng, đường dẫn chứa ký tự đặc biệt hoặc lớp đang bị khóa bởi chương trình khác. Lớp chưa được chuyển về hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét).
+- **Cách xử lý**: Đảm bảo lớp mở được trong QGIS, có hệ tọa độ phẳng phù hợp (ví dụ: VN-2000 kinh tuyến trục địa phương hoặc UTM) và cấu trúc hình học hợp lệ. Có thể dùng công cụ *Fix Geometries* trong QGIS để sửa lỗi polygon tự cắt.
 
-### 3.2. Raster dân số WorldPop (POP_RASTER)
-- **Hiện tượng**: `❌ Không thể nạp Raster dân số WorldPop (POP_RASTER)!`
-- **Kiểm tra**: Tệp raster WorldPop có mở được trực tiếp trong QGIS hay không; phạm vi raster có bao trùm toàn bộ khu vực nghiên cứu hay không.
-- **Cách xử lý**: Tải lại tệp GeoTIFF dân số WorldPop cho khu vực nghiên cứu hoặc kiểm tra lại đường dẫn tệp.
+### 4.2. Lớp công viên/vườn hoa
+- **Hiện tượng**: `✗ Không thể nạp Vector polygon công viên/vườn hoa!`
+- **Cách xử lý**: Đảm bảo lớp công viên có định dạng polygon hợp lệ và nằm trong phạm vi khu vực nghiên cứu.
 
-### 3.3. Lớp công viên/vườn hoa (VEG_VECTOR)
-- **Hiện tượng**: `❌ Không thể nạp Vector polygon công viên/vườn hoa (VEG_VECTOR)!`
-- **Kiểm tra**: Lớp vector công viên có định dạng polygon hợp lệ và nằm trong phạm vi khu vực nghiên cứu hay không.
-- **Cách xử lý**: Kiểm tra bảng thuộc tính và không gian của lớp công viên mẫu trước khi nạp vào Plugin.
-
-### 3.4. Lớp dấu vết công trình xây dựng (RES_VECTOR)
-- **Hiện tượng**: `❌ Không thể nạp Vector dấu vết công trình xây dựng (RES_VECTOR)!`
-- **Kiểm tra**: Lớp vector công trình (Open Buildings / OSM) có dữ liệu hình học hợp lệ hay không.
-- **Cách xử lý**: Đảm bảo lớp công trình bao phủ phạm vi nghiên cứu và chứa các đa giác chân công trình xây dựng.
+### 4.3. Lớp dấu vết công trình xây dựng (Footprint)
+- **Hiện tượng**: `✗ Không thể nạp Vector dấu vết công trình xây dựng!`
+- **Cách xử lý**: Đảm bảo lớp footprint (Google Open Buildings / OSM) có hình học polygon hợp lệ và bao phủ không gian xây dựng trong khu vực nghiên cứu.
 
 ---
 
-## 4. Không lấy được mẫu SAVI từ công viên
+## 5. Không trích xuất được mẫu SAVI từ công viên
 
-Khi cấu hình `SAVI_THRESHOLD = -999` (chế độ tự động), Plugin sẽ rasterize lớp công viên mẫu để trích xuất phân bố giá trị SAVI đất liền nhằm xác định ngưỡng bóc tách thực vật.
+Khi cấu hình `Phương thức xác định ngưỡng SAVI` là `Tự động xác định`, Plugin sẽ lấy mẫu các ô pixel SAVI trên đất liền bên trong các polygon công viên để xác định ngưỡng phân tách thực vật.
 
 ### Hiện tượng
 Nhật ký tiến trình báo lỗi:
 ```text
-❌ Không trích xuất được pixel mẫu SAVI nào từ lớp Công viên mẫu (VEG_VECTOR)!
-```
-hoặc:
-```text
-❌ Không thể mở raster mẫu công viên sau khi rasterize!
+✗ Không trích xuất được pixel mẫu SAVI nào từ lớp Công viên/vườn hoa!
 ```
 
-### Kiểm tra
-- Các polygon công viên có nằm hoàn toàn ngoài phạm vi ảnh Sentinel-2 hoặc ranh giới nghiên cứu không.
-- Toàn bộ vùng công viên có bị nhận diện nhầm là mặt nước (do MNDWI quá cao) hoặc bị gán NoData do mây/bóng mây hay không.
+### Nguyên nhân
+- Các polygon công viên nằm hoàn toàn ngoài phạm vi ảnh Sentinel-2 hoặc ngoài ranh giới nghiên cứu.
+- Toàn bộ vùng công viên bị nhận diện nhầm là mặt nước (do MNDWI quá cao) hoặc bị che phủ bởi mây/bóng mây (kênh SCL gán NoData).
 
 ### Cách xử lý
-- **Cách 1**: Kiểm tra và cập nhật lại lớp vector công viên mẫu đảm bảo nằm bên trong khu vực nghiên cứu và có phạm vi mẫu phù hợp để trích xuất giá trị SAVI..
-- **Cách 2**: Chuyển sang **Ngưỡng SAVI thủ công** bằng cách mở cửa sổ **Cài đặt** (Tab *Tùy chỉnh nâng cao*), nhập giá trị ngưỡng cố định (ví dụ: `0.20` hoặc `0.25`) thay vì `-999`.
+- **Cách 1**: Kiểm tra lại vị trí các polygon công viên mẫu, đảm bảo nằm bên trong phạm vi cảnh ảnh Sentinel-2 và khu vực nghiên cứu.
+- **Cách 2**: Chuyển sang chế độ **Nhập thủ công** trong cửa sổ **Cài đặt** (Tab *Tùy chỉnh nâng cao*), nhập một giá trị ngưỡng SAVI cố định (ví dụ: `0.20` hoặc `0.25`).
 
 ---
 
-## 5. Không tạo được vùng phục vụ
+## 6. Các trường hợp biên khi xác định bán kính phục vụ R*
 
-### 5.1. Không tìm thấy pixel mảng xanh nào
-- **Hiện tượng**: `❌ Không tìm thấy pixel mảng xanh nào để tạo vùng phục vụ!`
-- **Kiểm tra**: Kiểm tra xem ngưỡng SAVI có bị đặt quá cao hoặc giá trị diện tích lọc tối thiểu (`MIN_GREEN_AREA`) có quá lớn so với hiện trạng cây xanh trong khu vực hay không.
-- **Cách xử lý**: Giảm ngưỡng SAVI hoặc giảm diện tích lọc mảng xanh tối thiểu trong phần Cài đặt.
+### 6.1. Không tìm thấy mảng xanh nào đạt ngưỡng diện tích
+- **Hiện tượng**: `✗ Không tìm thấy mảng xanh nào đạt tiêu chuẩn diện tích tối thiểu!`
+- **Nguyên nhân**: Ngưỡng SAVI bị đặt quá cao hoặc tham số *Diện tích mảng xanh tối thiểu* (`5000 m²`) quá lớn so với quy mô cây xanh thực tế trong khu vực.
+- **Cách xử lý**: Mở cửa sổ Cài đặt, giảm diện tích mảng xanh tối thiểu hoặc giảm ngưỡng SAVI.
 
-### 5.2. Quá tải ngay tại nguồn 
-- **Hiện tượng**:
-  ```text
-  ❌ Trường hợp biên: C(Rmin) < Cmin (C(0) < Cmin)
-  -> KHÔNG TỒN TẠI BÁN KÍNH PHỤC VỤ THỎA MÃN ĐIỀU KIỆN!
-  ```
-- **Kiểm tra**: Sức tải mảng xanh tại bán kính $R = 0\text{ m}$ ($C(0) = S_{UGS} / P(0)$) đã nhỏ hơn chỉ tiêu sức tải mục tiêu ($C_{min}$).  Điều này cho biết sức tải tại bán kính 0 m chưa đạt ngưỡng mục tiêu, do tương quan giữa diện tích mảng xanh và dân số tại phạm vi này chưa đáp ứng điều kiện đặt ra.
+### 6.2. Trường hợp NO_SOLUTION ($R^* = 0\text{ m}$)
+- **Hiện tượng**: Trong bảng thống kê mảng xanh hoặc nhật ký tiến trình xuất hiện một số mảng xanh có trạng thái `NO_SOLUTION` và bán kính $R^* = 0\text{ m}$.
+- **Bản chất khoa học**: Đây **không phải là lỗi phần mềm**. Tình trạng này xảy ra khi mảng xanh có quy mô diện tích quá nhỏ ($S_i$ nhỏ) dẫn đến quy mô dân số phục vụ mục tiêu thấp ($P_{target,i} = S_i / C$), trong khi mật độ xây dựng và dân số phân bổ ngay sát bên mảng xanh ($R = 0\text{ m}$) đã lớn hơn $P_{target,i}$. Theo định nghĩa của mô hình, mảng xanh này không tìm thấy bán kính phục vụ thỏa điều kiện trong khoảng $[0, R_{\max}]$.
 - **Cách xử lý**:
-  - Chỉ thay đổi $C_{min}$ khi có cơ sở phù hợp với mục tiêu phân tích; không nên giảm ngưỡng chỉ để Plugin tạo được một bán kính phục vụ.
-  - Kiểm tra lại lớp dân số WorldPop hoặc ngưỡng trích xuất mảng xanh để đảm bảo không bị thiếu hụt diện tích cây xanh thực tế.
+  - Không tùy tiện hạ chỉ tiêu $C$ chỉ để tạo ra bán kính phục vụ.
+  - Đây là bằng chứng khoa học cho thấy mảng xanh quy mô quá nhỏ không đủ khả năng phục vụ dân số xung quanh theo chỉ tiêu quy chuẩn đề ra.
 
 ---
 
-## 6. Lỗi sản phẩm đầu ra
+## 7. Lỗi khóa tệp (File Lock) khi lưu kết quả
 
 ### Hiện tượng
-Plugin báo lỗi khi ghi file raster/vector kết quả hoặc khi xuất báo cáo thống kê Excel/CSV.
+Plugin báo lỗi khi ghi tệp kết quả ra đĩa (đặc biệt là tệp Excel `.xlsx` hoặc GeoPackage `.gpkg`):
+```text
+✗ Lỗi khi lưu sản phẩm đầu ra: Permission denied / File is locked!
+```
 
-### Kiểm tra
-- Tệp kết quả cũ có đang được mở bằng phần mềm khác (ví dụ: mở file Excel `.xlsx` hoặc tệp GeoPackage `.gpkg` trong một phần mềm khác) làm tệp bị khóa ghi đè (file lock).
-- Thư mục lưu trữ đầu ra có quyền ghi (write permission) hoặc ổ đĩa bị đầy dung lượng hay không.
+### Nguyên nhân
+- Tệp kết quả cũ đang được mở bởi Microsoft Excel, QGIS hoặc một ứng dụng khác, khiến hệ điều hành khóa quyền ghi đè tệp.
 
 ### Cách xử lý
-- Đóng tất cả các tệp kết quả đang mở trong Excel hoặc các phần mềm ngoài trước khi bấm **Phân tích**.
-- Chọn đường dẫn lưu ở một thư mục mới hoặc để trống đường dẫn để Plugin tự động tạo các lớp kết quả tạm thời (Temporary Layers) trong QGIS.
-
----
-
-## 7. Plugin dừng trong quá trình xử lý
-
-Nếu tiến trình phân tích bị gián đoạn giữa chừng mà không rõ nguyên nhân:
-
-1. Chuyển sang thẻ **Nhật ký tiến trình** trên giao diện chính của Plugin.
-2. Rà soát các dòng nhật ký cuối cùng để xác định module mà quá trình phân tích dừng lại.
-3. Đọc thông điệp cảnh báo có biểu tượng ❌ hoặc ⚠️ để biết chính xác tham số hoặc dữ liệu cần hiệu chỉnh.
-4. Sử dụng nút **Sao chép log** để lưu lại toàn bộ tiến trình phân tích phục vụ tra cứu.
-
----
-
-## Khi cần báo lỗi
-
-Nếu bạn gặp phải lỗi chưa được đề cập ở trên hoặc nghi ngờ lỗi từ mã nguồn Plugin, vui lòng chuẩn bị các thông tin sau để gửi báo cáo hỗ trợ:
-
-- **Phiên bản QGIS**: Phiên bản QGIS đang sử dụng (ví dụ: QGIS 3.28 LTR, 3.34 LTR hoặc 3.44).
-- **Thông điệp lỗi chi tiết**: Nội dung lỗi hiển thị trong khung *Nhật ký tiến trình* hoặc Python Error Dialog.
-- **Tệp nhật ký xử lý**: Nhấn nút **Lưu log** trong Plugin để xuất file `.txt`.
-- **Cấu hình tham số**: Giá trị các tham số đã thiết lập trong cửa sổ Cài đặt ($R_{max}$, $C_{min}$, ngưỡng SAVI,...).
-- **Mô tả dữ liệu đầu vào**: Hệ tọa độ, định dạng và phạm vi của 5 nhóm dữ liệu đầu vào đang sử dụng.
-- **Ảnh chụp màn hình**: Ảnh chụp giao diện và vị trí phát sinh lỗi (nếu có).
-
----
-
-## Liên kết liên quan
-
-- [Cài đặt Plugin](cai-dat.md): Kiểm tra môi trường và cài đặt thư viện phụ thuộc.
-- [Dữ liệu đầu vào](du-lieu-dau-vao.md): Hướng dẫn chuẩn hóa dữ liệu trước khi chạy.
-- [Cài đặt tham số](tham-so.md): Giải thích chi tiết các ngưỡng kỹ thuật và tham số mô hình.
-- [Chạy phân tích](chay-phan-tich.md): Quy trình thực thi phân tích từng bước.
+1. Đóng toàn bộ các tệp kết quả đang mở trong Excel hoặc các chương trình đọc ngoài.
+2. Nếu lớp kết quả đang được nạp trong QGIS, nhấn chuột phải vào lớp và chọn *Remove Layer* trước khi chạy lại.
+3. Chọn một tên tệp mới hoặc lưu sang một thư mục mới.
+4. Có thể để trống đường dẫn lưu để Plugin tạo các lớp kết quả tạm thời (Temporary Layers) trong bộ nhớ QGIS.
