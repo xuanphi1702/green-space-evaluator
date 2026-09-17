@@ -705,6 +705,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="5. Thao tác tại tab Sản phẩm đầu ra">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5-san-pham-au-ra-chinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 sản phẩm đầu ra chính:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bang-bao-cao-thong-ke-bo-sung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bảng báo cáo thống kê bổ sung:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1076,6 +1104,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="5. Thao tác tại tab Sản phẩm đầu ra">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5-san-pham-au-ra-chinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 sản phẩm đầu ra chính:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bang-bao-cao-thong-ke-bo-sung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bảng báo cáo thống kê bổ sung:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1157,7 +1213,7 @@
 </ol>
 <p>Cửa sổ chính của Plugin hiển thị 3 tab chức năng:
 - <strong>Dữ liệu đầu vào</strong>: Nạp 4 nhóm dữ liệu không gian.
-- <strong>Sản phẩm đầu ra</strong>: Chỉ định đường dẫn lưu trữ cho 5 sản phẩm chính.
+- <strong>Sản phẩm đầu ra</strong>: Chỉ định đường dẫn lưu trữ cho 5 sản phẩm chính và bảng báo cáo bổ sung.
 - <strong>Nhật ký tiến trình</strong>: Theo dõi tiến độ, thông báo và tổng kết thời gian thực thi.</p>
 <hr />
 <h2 id="3-thao-tac-tai-tab-du-lieu-au-vao">3. Thao tác tại tab Dữ liệu đầu vào</h2>
@@ -1172,7 +1228,7 @@
 <li>Chọn layer polygon ranh giới hành chính trong danh sách thả xuống.</li>
 <li>Tại ô chọn trường dân số, chọn trường thuộc tính chứa số liệu dân số thống kê chính thức của từng đơn vị hành chính. Plugin sẽ tự động chuẩn hóa nội bộ thành trường <code>POP_STAT</code>.</li>
 <li><strong>Công viên/vườn hoa</strong>: Chọn layer polygon công viên, vườn hoa hiện hữu làm vùng mẫu trích xuất SAVI và bảo toàn mảng xanh.</li>
-<li><strong>Dấu vết công trình xây dựng (Footprint)</strong>: Chọn layer polygon công trình (Google Open Buildings, OSM) đại diện cho không gian xây dựng vật lý.</li>
+<li><strong>Dấu vết công trình xây dựng (Footprint)</strong>: Chọn layer polygon công trình (Google Open Buildings) đại diện cho không gian xây dựng vật lý.</li>
 </ol>
 <hr />
 <h2 id="4-cua-so-cai-at">4. Cửa sổ Cài đặt</h2>
@@ -1184,7 +1240,7 @@
 <h3 id="tab-1-san-pham-trung-gian">Tab 1: Sản phẩm trung gian</h3>
 <ul>
 <li>Cho phép người dùng chỉ định đường dẫn lưu trữ các tệp trung gian nếu có nhu cầu lưu trữ tệp riêng để phục vụ nghiên cứu hoặc kiểm tra chất lượng (ví dụ: Sentinel-2 Stack, MNDWI, SAVI, Mặt nước, SAVI loại nước, Thực vật thô, Histogram, Dấu vết công trình phân bổ dân số, Bảng thống kê mảng xanh).</li>
-<li>Nếu để trống, các sản phẩm trung gian sẽ được tự động xử lý dưới dạng tệp tạm trong bộ nhớ và tự giải phóng sau khi phân tích xong.</li>
+<li>Nếu để trống, các sản phẩm trung gian sẽ được tự động tạo dưới dạng tệp tạm thời trong thư mục tạm của hệ điều hành (<code>tempfile.gettempdir()</code>) và nạp vào phiên làm việc.</li>
 </ul>
 <h3 id="tab-2-tuy-chinh-nang-cao">Tab 2: Tùy chỉnh nâng cao</h3>
 <ul>
@@ -1193,22 +1249,26 @@
 </ul>
 <hr />
 <h2 id="5-thao-tac-tai-tab-san-pham-au-ra">5. Thao tác tại tab Sản phẩm đầu ra</h2>
-<p>Chuyển sang thẻ <strong>Sản phẩm đầu ra</strong> để chỉ định đường dẫn lưu cho 5 sản phẩm chính:</p>
+<p>Chuyển sang thẻ <strong>Sản phẩm đầu ra</strong> để chỉ định đường dẫn lưu:</p>
 <div class="guide-figure">
 <p><img alt="Tab Sản phẩm đầu ra của Plugin" src="../images/san_pham_dau_ra.png" /></p>
 <div class="guide-caption"><strong>Hình 3.</strong> Giao diện chỉ định nơi lưu 5 sản phẩm đầu ra chính</div>
 </div>
+<h3 id="5-san-pham-au-ra-chinh">5 sản phẩm đầu ra chính:</h3>
 <ol>
 <li><strong>Mảng xanh đô thị</strong> (định dạng <code>.tif</code>).</li>
 <li><strong>Vùng phục vụ mảng xanh (R*)</strong> (định dạng <code>.gpkg</code>, <code>.shp</code> hoặc <code>.geojson</code>).</li>
 <li><strong>Không gian xây dựng trong vùng phục vụ</strong> (định dạng <code>.gpkg</code>, <code>.shp</code> hoặc <code>.geojson</code>).</li>
 <li><strong>Không gian xây dựng ngoài vùng phục vụ</strong> (định dạng <code>.gpkg</code>, <code>.shp</code> hoặc <code>.geojson</code>).</li>
 <li><strong>Thống kê theo đơn vị hành chính</strong> (định dạng <code>.gpkg</code>, <code>.shp</code> hoặc <code>.geojson</code>).</li>
-<li><strong>Bảng thống kê theo đơn vị hành chính</strong> (tùy chọn định dạng <code>.xlsx</code> hoặc <code>.csv</code>).</li>
 </ol>
+<h3 id="bang-bao-cao-thong-ke-bo-sung">Bảng báo cáo thống kê bổ sung:</h3>
+<ul>
+<li><strong>Bảng thống kê theo đơn vị hành chính</strong> (tùy chọn định dạng <code>.xlsx</code> hoặc <code>.csv</code>).</li>
+</ul>
 <div class="admonition tip">
-<p class="admonition-title">Cơ chế tạo lớp tạm thời (Temporary Layers)</p>
-<p>Nếu người dùng <strong>để trống đường dẫn</strong>, Plugin sẽ tự động tạo các lớp kết quả tạm thời trong bộ nhớ và nạp trực tiếp lên bản đồ QGIS. Khuyến nghị chỉ định đường dẫn lưu mới để tránh bị khóa tệp khi ghi đè các sản phẩm cũ đang mở.</p>
+<p class="admonition-title">Cơ chế tạo tệp kết quả tạm thời</p>
+<p>Nếu người dùng <strong>để trống đường dẫn</strong>, Plugin sẽ tự động tạo các tệp kết quả tạm thời trong thư mục tạm của hệ điều hành (<code>tempfile.gettempdir()</code>) và nạp trực tiếp lên bản đồ QGIS. Khuyến nghị người dùng chỉ định đường dẫn lưu mới để tránh bị khóa tệp khi ghi đè các sản phẩm cũ đang mở.</p>
 </div>
 <hr />
 <h2 id="6-chuoi-thuc-thi-5-module">6. Chuỗi thực thi 5 Module</h2>
@@ -1219,7 +1279,7 @@
 <li><strong>Module 1 (Tiền xử lý và chuẩn hóa dữ liệu):</strong></li>
 <li>Kiểm tra tính hợp lệ hình học các lớp vector.</li>
 <li>Chuẩn hóa trường dân số thống kê thành <code>POP_STAT</code>.</li>
-<li>Đồng bộ hệ tọa độ phẳng dự chiếu (mét) và tạo ảnh Sentinel-2 Stack 10 m.</li>
+<li>Tiếp nhận hệ tọa độ phẳng dự chiếu tham chiếu (mét) và tạo ảnh Sentinel-2 Stack 10 m.</li>
 <li><strong>Module 2 (Chỉ số phổ và phân tách mảng xanh):</strong></li>
 <li>Tính MNDWI và phân tách mặt nước.</li>
 <li>Tính SAVI và xác định ngưỡng thực vật (tự động từ mẫu công viên hoặc thủ công).</li>
@@ -1245,13 +1305,13 @@
 <h2 id="7-he-thong-8-phep-kiem-tra-tinh-toan-ven-du-lieu-balance-checks">7. Hệ thống 8 phép kiểm tra tính toàn vẹn dữ liệu (Balance Checks)</h2>
 <p>Plugin tích hợp cơ chế tự động kiểm tra đối soát số liệu khắt khe trước khi kết thúc:</p>
 <ol>
-<li><strong>POPULATION BALANCE</strong>: Tổng dân số phân bổ trên các footprint-part bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính.</li>
-<li><strong>PATCH POPULATION BALANCE</strong>: Dân số được phân bổ cho các mảng xanh không vượt quá quy mô phục vụ mục tiêu (<span class="arithmatex">\(P_i(R^*) \le P_{target,i}\)</span>).</li>
-<li><strong>WARD BUILDING AREA BALANCE</strong>: Tổng diện tích xây dựng phục vụ và diện tích xây dựng thiếu xanh bằng đúng tổng diện tích xây dựng của phường/xã.</li>
-<li><strong>INPUT FOOTPRINT AREA BALANCE</strong>: Tổng diện tích các footprint-part sau khi cắt bằng đúng diện tích footprint công trình đầu vào.</li>
-<li><strong>FOOTPRINT COUNT BALANCE</strong>: Số lượng đối tượng footprint được bảo toàn đầy đủ qua các phép phân tách hình học.</li>
-<li><strong>PATCH BUILDING AREA BALANCE</strong>: Cân bằng diện tích xây dựng được gán cho các mảng xanh độc lập.</li>
-<li><strong>EXCLUSIVE PATCH ASSIGNMENT</strong>: Xác nhận mỗi footprint-part chỉ được gán độc quyền cho tối đa một mảng xanh duy nhất, không bị trùng lặp.</li>
+<li><strong>POPULATION BALANCE</strong>: Tổng dân số phân bổ trên các footprint-part bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính (<span class="arithmatex">\(\sum T\_DanSo = \sum D\_DaPhucVu + \sum D\_ThieuXanh\)</span>).</li>
+<li><strong>PATCH POPULATION BALANCE</strong>: Dân số được phân bổ cho các mảng xanh khớp với tổng dân số được phục vụ theo phường (<span class="arithmatex">\(\sum SERVED\_POP(PATCH) = \sum D\_DaPhucVu\)</span>).</li>
+<li><strong>WARD BUILDING AREA BALANCE</strong>: Tổng diện tích xây dựng phục vụ và diện tích xây dựng thiếu xanh bằng đúng tổng diện tích xây dựng của phường/xã (<span class="arithmatex">\(\sum S\_XayDung = \sum S\_DaPhucVu + \sum S\_ThieuXanh\)</span>).</li>
+<li><strong>INPUT FOOTPRINT AREA BALANCE</strong>: Tổng diện tích các footprint-part sau khi cắt bằng đúng diện tích footprint công trình đầu vào (<span class="arithmatex">\(\sum AREA(input) = \sum AREA(served) + \sum AREA(outside)\)</span>).</li>
+<li><strong>FOOTPRINT COUNT BALANCE</strong>: Xác nhận toàn bộ footprint-part đầu vào của bước phân tích cuối được phân loại đầy đủ thành served hoặc outside (<span class="arithmatex">\(N_{\text{input}} = N_{\text{served}} + N_{\text{outside}}\)</span>), không bị mất hoặc tạo thêm đối tượng ngoài quy trình.</li>
+<li><strong>PATCH BUILDING AREA BALANCE</strong>: Cân bằng diện tích xây dựng được gán cho các mảng xanh độc lập (<span class="arithmatex">\(\sum SERVED\_BUILDING\_AREA(PATCH) = \sum AREA(cons\_in\_buffer)\)</span>).</li>
+<li><strong>EXCLUSIVE PATCH ASSIGNMENT</strong>: Xác nhận mỗi footprint-part chỉ được gán độc quyền cho tối đa một mảng xanh duy nhất, SERVED <span class="arithmatex">\(\cap\)</span> OUTSIDE = <span class="arithmatex">\(\emptyset\)</span>.</li>
 <li><strong>GREEN AREA BALANCE</strong>: Tổng diện tích mảng xanh được phân bổ cho các đơn vị hành chính bằng đúng tổng diện tích mảng xanh toàn khu vực nghiên cứu.</li>
 </ol>
 <hr />

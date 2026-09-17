@@ -795,13 +795,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-bang-bao-cao-thong-ke-bo-sung-excel-csv" class="md-nav__link">
+  <a href="#3-bang-bao-cao-thong-ke-bo-sung-csv-xlsx" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Bảng báo cáo thống kê bổ sung (Excel / CSV)
+        3. Bảng báo cáo thống kê bổ sung (CSV / XLSX)
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="3. Bảng báo cáo thống kê bổ sung (CSV / XLSX)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-bang-thong-ke-theo-on-vi-hanh-chinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Bảng thống kê theo đơn vị hành chính
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-bang-thong-ke-chi-tiet-theo-mang-xanh-patch_service_statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Bảng thống kê chi tiết theo mảng xanh (patch_service_statistics)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1129,13 +1157,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-bang-bao-cao-thong-ke-bo-sung-excel-csv" class="md-nav__link">
+  <a href="#3-bang-bao-cao-thong-ke-bo-sung-csv-xlsx" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Bảng báo cáo thống kê bổ sung (Excel / CSV)
+        3. Bảng báo cáo thống kê bổ sung (CSV / XLSX)
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="3. Bảng báo cáo thống kê bổ sung (CSV / XLSX)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-bang-thong-ke-theo-on-vi-hanh-chinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Bảng thống kê theo đơn vị hành chính
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-bang-thong-ke-chi-tiet-theo-mang-xanh-patch_service_statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Bảng thống kê chi tiết theo mảng xanh (patch_service_statistics)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1243,7 +1299,7 @@
 
 
 <h1 id="san-pham-va-chi-tieu-thong-ke">Sản phẩm và chỉ tiêu thống kê</h1>
-<p>Sau khi hoàn tất quy trình phân tích, Plugin <strong>Green Space Evaluator</strong> sẽ tạo ra <strong>5 sản phẩm đầu ra chính</strong>, tùy chọn <strong>bảng báo cáo thống kê</strong> (Excel/CSV) cùng hệ thống <strong>sản phẩm trung gian</strong> phục vụ kiểm tra và nghiên cứu chuyên sâu. Trang này cung cấp thông tin chi tiết về cấu trúc dữ liệu, ý nghĩa 10 trường thuộc tính thống kê và hướng dẫn diễn giải kết quả.</p>
+<p>Sau khi hoàn tất quy trình phân tích, Plugin <strong>Green Space Evaluator</strong> sẽ tạo ra <strong>5 sản phẩm đầu ra chính</strong>, tùy chọn <strong>bảng báo cáo thống kê</strong> (Excel/CSV) cùng hệ thống <strong>sản phẩm trung gian</strong> phục vụ kiểm tra và nghiên cứu chuyên sâu. Trang này cung cấp thông tin chi tiết về cấu trúc dữ liệu, ý nghĩa các trường thuộc tính thống kê và hướng dẫn diễn giải kết quả.</p>
 <hr />
 <h2 id="1-5-san-pham-au-ra-chinh">1. 5 sản phẩm đầu ra chính</h2>
 <p>Năm sản phẩm chính được cấu hình tại thẻ <strong>Sản phẩm đầu ra</strong> trên giao diện Plugin:</p>
@@ -1311,13 +1367,17 @@
 <li>Các polygon vùng phục vụ được giữ nguyên độc lập, <strong>không thực hiện gộp (merge) hay thu nhỏ (shrink)</strong> ngay cả khi các vùng đệm có sự chồng lấn không gian.</li>
 </ul>
 </li>
-<li><strong>Trường thuộc tính chính</strong>:<ul>
-<li><code>PATCH_ID</code>: Mã định danh số nguyên duy nhất của từng mảng xanh.</li>
-<li><code>GreenArea</code>: Diện tích của mảng xanh ($    ext{m}^2$).</li>
-<li><code>R_STAR</code>: Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).</li>
-<li><code>STATUS</code>: Trạng thái kết quả tìm kiếm bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).</li>
-<li><code>Pop_Target</code>: Quy mô dân số phục vụ mục tiêu theo chỉ tiêu (<span class="arithmatex">\(P_{target,i} = S_i / C\)</span>).</li>
-<li><code>Pop_RStar</code>: Dân số phân bổ tiếp cận thực tế trong bán kính <span class="arithmatex">\(R^*\)</span>.</li>
+<li><strong>Bảng thuộc tính của lớp Vùng phục vụ R* (<code>SERVICE_AREA</code>)</strong>:<ul>
+<li><code>PATCH_ID</code> (Integer): Mã định danh số nguyên duy nhất của từng mảng xanh.</li>
+<li><code>R_STAR</code> (Double): Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).</li>
+<li><code>P_TARGET</code> (Double): Quy mô dân số phục vụ mục tiêu theo chỉ tiêu (<span class="arithmatex">\(P_{target,i} = S_i / C\)</span>).</li>
+<li><code>STATUS</code> (String): Trạng thái kết quả tìm kiếm bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).</li>
+<li><code>AREA_M2</code> (Double): Diện tích của mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span>).</li>
+<li><code>AREA_HA</code> (Double): Diện tích của mảng xanh (ha).</li>
+<li><code>P_RMIN</code> (Double): Dân số phân bổ tiếp cận tại bán kính <span class="arithmatex">\(R = 0\text{ m}\)</span>.</li>
+<li><code>P_RMAX</code> (Double): Dân số phân bổ tiếp cận tại bán kính <span class="arithmatex">\(R = R_{\max}\)</span>.</li>
+<li><code>P_AT_RSTAR</code> (Double): Tổng dân số được phân bổ nằm trong phạm vi khoảng cách <span class="arithmatex">\(R^*\)</span> của mảng xanh.</li>
+<li><code>ITERATIONS</code> (Integer): Số bước lặp của thuật toán tìm kiếm nhị phân.</li>
 </ul>
 </li>
 </ul>
@@ -1338,16 +1398,31 @@
 <li><strong>Phương pháp tổng hợp</strong>: Tổng hợp trực tiếp từ các lớp vector kết quả hình học và số liệu phân bổ không gian.</li>
 </ul>
 <hr />
-<h2 id="3-bang-bao-cao-thong-ke-bo-sung-excel-csv">3. Bảng báo cáo thống kê bổ sung (Excel / CSV)</h2>
-<p>Ngoài lớp vector GIS, Plugin hỗ trợ xuất bảng số liệu tổng hợp chi tiết theo từng đơn vị hành chính ra tệp độc lập:</p>
+<h2 id="3-bang-bao-cao-thong-ke-bo-sung-csv-xlsx">3. Bảng báo cáo thống kê bổ sung (CSV / XLSX)</h2>
+<h3 id="31-bang-thong-ke-theo-on-vi-hanh-chinh">3.1. Bảng thống kê theo đơn vị hành chính</h3>
 <ul>
 <li><strong>Định dạng hỗ trợ</strong>: <strong>Excel (<code>.xlsx</code>)</strong> hoặc <strong>CSV (<code>.csv</code>)</strong>.</li>
 <li><strong>Cấu trúc dữ liệu</strong>: Mỗi hàng tương ứng với một đơn vị hành chính và chứa đầy đủ 10 trường chỉ số định lượng.</li>
 <li><strong>Chuẩn mã hóa</strong>: Tệp <code>.csv</code> được xuất dưới định dạng mã hóa <code>UTF-8-SIG</code>, đảm bảo mở trực tiếp bằng Microsoft Excel hiển thị tiếng Việt chuẩn xác không bị lỗi phông chữ.</li>
 </ul>
+<h3 id="32-bang-thong-ke-chi-tiet-theo-mang-xanh-patch_service_statistics">3.2. Bảng thống kê chi tiết theo mảng xanh (<code>patch_service_statistics</code>)</h3>
+<p>Tệp thống kê chi tiết ở cấp độ từng patch (<code>patch_service_statistics.csv</code> / <code>.xlsx</code>) gồm đúng <strong>13 trường chuẩn hóa trong mã nguồn</strong>:
+1. <code>PATCH_ID</code>: Mã định danh mảng xanh.
+2. <code>AREA_M2</code>: Diện tích mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span>).
+3. <code>AREA_HA</code>: Diện tích mảng xanh (ha).
+4. <code>R_STAR_M</code>: Bán kính phục vụ lớn nhất thỏa điều kiện <span class="arithmatex">\(R^*\)</span> (m).
+5. <code>STATUS</code>: Trạng thái giải bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).
+6. <code>P_TARGET</code>: Quy mô dân số phục vụ mục tiêu của mảng xanh (<span class="arithmatex">\(S_i / C\)</span>).
+7. <code>P_AT_RSTAR</code>: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách <span class="arithmatex">\(R^*\)</span> của mảng xanh.
+8. <code>N_SERVED_PARTS</code>: Số lượng footprint-part được gán phục vụ độc quyền cho mảng xanh.
+9. <code>SERVED_BUILDING_AREA_M2</code>: Tổng diện tích xây dựng được gán phục vụ (<span class="arithmatex">\(\text{m}^2\)</span>).
+10. <code>SERVED_BUILDING_AREA_HA</code>: Tổng diện tích xây dựng được gán phục vụ (ha).
+11. <code>SERVED_POP</code>: Tổng dân số được phân bổ phục vụ độc quyền của mảng xanh.
+12. <code>MEAN_DIST_M</code>: Khoảng cách trung bình từ các footprint-part được gán đến mảng xanh (m).
+13. <code>MAX_DIST_M</code>: Khoảng cách lớn nhất từ các footprint-part được gán đến mảng xanh (m).</p>
 <hr />
 <h2 id="4-10-truong-thuoc-tinh-thong-ke-hanh-chinh">4. 10 trường thuộc tính thống kê hành chính</h2>
-<p>Bảng thuộc tính của lớp vector thống kê hành chính và tệp bảng báo cáo chứa đúng <strong>10 trường chỉ số định lượng chuẩn hóa</strong>:</p>
+<p>Bảng thuộc tính của lớp vector thống kê hành chính chứa đúng <strong>10 trường chỉ số định lượng chuẩn hóa</strong>:</p>
 <table>
 <thead>
 <tr>
@@ -1468,7 +1543,7 @@ TL_{DaPhucVu} + TL_{ThieuXanh} = 100\%
 \]</div>
 <hr />
 <h2 id="6-san-pham-trung-gian">6. Sản phẩm trung gian</h2>
-<p>Khi người dùng cấu hình đường dẫn lưu tại tab <strong>Sản phẩm trung gian</strong> trong cửa sổ Cài đặt, Plugin có thể xuất thêm các tệp sau:</p>
+<p>Khi người dùng cấu hình đường dẫn lưu tại tab <strong>Sản phẩm trung gian</strong> trong cửa sổ Cài đặt, Plugin có thể xuất thêm các tệp sau (nếu để trống, các tệp tạm thời được tạo trong thư mục tạm của hệ thống <code>tempfile.gettempdir()</code>):</p>
 <table>
 <thead>
 <tr>
@@ -1521,7 +1596,7 @@ TL_{DaPhucVu} + TL_{ThieuXanh} = 100\%
 <tr>
 <td><strong>Bảng thống kê mảng xanh</strong></td>
 <td>File (<code>.xlsx</code>/<code>.csv</code>)</td>
-<td>Bảng thuộc tính chi tiết từng patch: diện tích, bán kính <span class="arithmatex">\(R^*\)</span>, trạng thái, dân số tiếp cận.</td>
+<td>Bảng thuộc tính chi tiết 13 trường của từng patch: diện tích, bán kính <span class="arithmatex">\(R^*\)</span>, trạng thái, dân số tiếp cận.</td>
 </tr>
 </tbody>
 </table>

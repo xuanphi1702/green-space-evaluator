@@ -1054,7 +1054,7 @@
 <h2 id="2-quy-trinh-phan-tich-qua-5-module">2. Quy trình phân tích qua 5 Module</h2>
 <p>Quy trình phân tích của Plugin gồm 5 module chức năng liên hoàn:</p>
 <ol>
-<li><strong>Module 1 — Chuẩn bị và kiểm tra dữ liệu đầu vào:</strong> Kiểm tra cấu trúc hình học các lớp vector; chuẩn hóa trường dân số thống kê của đơn vị hành chính thành <code>POP_STAT</code>; đồng bộ hệ tọa độ phẳng dự chiếu (đơn vị mét) và tạo ảnh Sentinel-2 Stack 10 m.</li>
+<li><strong>Module 1 — Chuẩn bị và kiểm tra dữ liệu đầu vào:</strong> Tiếp nhận và kiểm tra cấu trúc hình học các lớp vector; chuẩn hóa trường dân số thống kê của đơn vị hành chính thành <code>POP_STAT</code>; thiết lập hệ tọa độ phẳng dự chiếu tham chiếu và tạo ảnh Sentinel-2 Stack 10 m.</li>
 <li><strong>Module 2 — Phân tách mảng xanh đô thị:</strong> Tính toán các chỉ số quang học MNDWI và SAVI; loại trừ mặt nước; bóc tách thực vật; lọc bỏ mảng xanh nhỏ ngoài công viên theo diện tích tối thiểu và định danh từng mảng xanh riêng biệt (<code>PATCH_ID</code>).</li>
 <li><strong>Module 3 — Mô hình hóa vùng phục vụ mảng xanh:</strong> Xây dựng lưới khoảng cách Euclid từ biên mảng xanh; phân bổ dân số thống kê theo footprint công trình tạo lớp <code>POP_ALLOC</code>; xác định quy mô dân số phục vụ mục tiêu (<span class="arithmatex">\(P_{target,i} = S_i / C\)</span>) và tìm kiếm bán kính phục vụ lớn nhất <span class="arithmatex">\(R^*\)</span> thỏa điều kiện của mô hình cho từng mảng xanh.</li>
 <li><strong>Module 4 — Phân tích không gian xây dựng:</strong> Phân tách footprint công trình thành các phần hình học (<code>footprint-part</code>); xác định footprint-part nằm trong và ngoài vùng phục vụ; áp dụng thuật toán gán độc quyền (<strong>Exclusive Assignment</strong>) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.</li>
@@ -1083,7 +1083,7 @@
 <td>2</td>
 <td><strong>Ranh giới hành chính và dân số thống kê</strong></td>
 <td>Vector Polygon</td>
-<td>Lớp ranh giới phân chia các đơn vị hành chính (phường/xã). Người dùng chọn trường thuộc tính chứa số liệu dân số thống kê trên giao diện; Plugin tự động chuẩn hóa nội bộ thành trường <code>POP_STAT</code>.</td>
+<td>Lớp ranh giới phân chia các đơn vị hành chính (phường/xã). Người dùng chọn trường thuộc tính chứa số liệu dân số thống kê trên giao diện; Plugin tự động chuẩn hóa nội bộ thành trường <code>POP_STAT</code>. Lớp này đóng vai trò khung tham chiếu không gian.</td>
 </tr>
 <tr>
 <td>3</td>
@@ -1095,7 +1095,7 @@
 <td>4</td>
 <td><strong>Dấu vết công trình xây dựng (Footprint)</strong></td>
 <td>Vector Polygon</td>
-<td>Lớp polygon dấu vết chân công trình xây dựng (Google Open Buildings, OSM), đại diện cho không gian xây dựng vật lý. Được sử dụng để phân bổ dân số thống kê theo không gian (<code>POP_ALLOC</code>).</td>
+<td>Lớp polygon dấu vết chân công trình xây dựng (Google Open Buildings), đại diện cho không gian xây dựng vật lý. Được sử dụng để phân bổ dân số thống kê theo không gian (<code>POP_ALLOC</code>).</td>
 </tr>
 </tbody>
 </table>
@@ -1117,7 +1117,7 @@
 <td><strong>Ngưỡng MNDWI</strong></td>
 <td style="text-align: right;"><code>0.0</code></td>
 <td style="text-align: center;">—</td>
-<td>Phân tách mặt nước; các pixel có MNDWI &gt; 0.0 được phân loại là nước và loại trừ.</td>
+<td>Giá trị mặc định được sử dụng trong cấu hình nghiên cứu/thử nghiệm hiện tại; pixel có MNDWI &gt; 0.0 được phân loại là nước và loại trừ.</td>
 </tr>
 <tr>
 <td><strong>Hệ số hiệu chỉnh nền đất SAVI (L)</strong></td>
@@ -1132,16 +1132,22 @@
 <td>Tự động tính ngưỡng từ vùng mẫu công viên/vườn hoa (mặc định theo bách phân vị P10).</td>
 </tr>
 <tr>
+<td><strong>Phương pháp xác định ngưỡng SAVI</strong></td>
+<td style="text-align: right;"><code>Bách phân vị P10 (Mặc định)</code></td>
+<td style="text-align: center;">—</td>
+<td>Phương pháp mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại.</td>
+</tr>
+<tr>
 <td><strong>Diện tích mảng xanh tối thiểu</strong></td>
 <td style="text-align: right;"><code>5000.0</code></td>
 <td style="text-align: center;">m²</td>
-<td>Ngưỡng lọc bỏ các cụm thực vật nhỏ lẻ ngoài công viên (thảm cỏ nhỏ, dải phân cách, bóng cây).</td>
+<td>Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm lọc bỏ các cụm thực vật nhỏ lẻ ngoài công viên.</td>
 </tr>
 <tr>
 <td><strong>Bán kính phục vụ tối đa (Rmax)</strong></td>
 <td style="text-align: right;"><code>300.0</code></td>
 <td style="text-align: center;">m</td>
-<td>Giới hạn trên của miền tìm kiếm bán kính phục vụ <span class="arithmatex">\(R^*\)</span> cho từng mảng xanh.</td>
+<td>Giới hạn trên của miền tìm kiếm bán kính phục vụ <span class="arithmatex">\(R^*\)</span> cho từng mảng xanh trong nghiên cứu/thử nghiệm.</td>
 </tr>
 <tr>
 <td><strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người (C)</strong></td>
@@ -1158,8 +1164,8 @@
 </tbody>
 </table>
 <div class="admonition info">
-<p class="admonition-title">Các giá trị mặc định trong thử nghiệm</p>
-<p>Trong cấu hình thử nghiệm, các giá trị mặc định như bán kính tối đa <strong>300 m</strong>, chỉ tiêu diện tích bình quân đầu người <strong>6.0 m²/người</strong> và diện tích lọc <strong>5000 m²</strong> được lựa chọn có tham chiếu quy chuẩn đô thị và tài liệu nghiên cứu. Đây là các giá trị cấu hình tham chiếu phục vụ thử nghiệm, người dùng hoàn toàn có thể tùy chỉnh linh hoạt phù hợp với quy chuẩn địa phương và bối cảnh từng đô thị.</p>
+<p class="admonition-title">Các giá trị cấu hình mặc định trong nghiên cứu</p>
+<p>Trong cấu hình thử nghiệm, các giá trị mặc định như bán kính phục vụ tối đa <strong>300 m</strong>, chỉ tiêu diện tích bình quân đầu người <strong>6.0 m²/người</strong> và diện tích lọc <strong>5000 m²</strong> được lựa chọn làm giá trị cấu hình tham chiếu phục vụ nghiên cứu. Đây không phải là các giới hạn quy chuẩn áp đặt cho mọi đô thị; người dùng có thể tùy chỉnh linh hoạt phù hợp với quy chuẩn địa phương và bối cảnh từng khu vực nghiên cứu.</p>
 </div>
 <p>👉 Xem hướng dẫn chi tiết: <a href="tham-so/">Cài đặt tham số</a></p>
 <hr />
@@ -1169,7 +1175,7 @@
 <ol>
 <li><strong>Khởi động Plugin:</strong> Mở QGIS, nhấn vào biểu tượng chiếc lá trên thanh công cụ hoặc vào menu <strong>Plugins</strong> → <strong>Urban Green Space Service Evaluator</strong>.</li>
 <li><strong>Nạp dữ liệu:</strong> Tại tab <strong>Dữ liệu đầu vào</strong>, chọn lần lượt 4 nhóm dữ liệu (Ảnh Sentinel-2, Lớp ranh giới hành chính kèm trường dân số, Lớp công viên/vườn hoa, Lớp footprint công trình).</li>
-<li><strong>Cài đặt tham số (tùy chọn):</strong> Nhấn nút <strong>Cài đặt</strong> ở góc trên bên phải để điều chỉnh <span class="arithmatex">\(R_{\max}\)</span>, <span class="arithmatex">\(C\)</span> hoặc ngưỡng lọc diện tích nếu có nhu cầu riêng.</li>
+<li><strong>Cài đặt tham số (tùy chọn):</strong> Nhấn nút <strong>Cài đặt</strong> ở góc trên bên phải để điều chỉnh <span class="arithmatex">\(R_{\max}\)</span>, <span class="arithmatex">\(C\)</span> hoặc diện tích mảng xanh tối thiểu nếu có nhu cầu riêng.</li>
 <li><strong>Chỉ định nơi lưu sản phẩm:</strong> Chuyển sang tab <strong>Sản phẩm đầu ra</strong>, chọn định dạng và thư mục lưu cho 5 sản phẩm chính (hoặc để trống để tạo lớp tạm thời).</li>
 <li><strong>Thực thi phân tích:</strong> Nhấn nút <strong>Phân tích</strong> ở góc dưới cùng. Theo dõi nhật ký tiến trình hiển thị trực tiếp. Khi hoàn tất, các lớp kết quả sẽ được tự động thêm vào bản đồ QGIS kèm kiểu dáng trực quan.</li>
 </ol>

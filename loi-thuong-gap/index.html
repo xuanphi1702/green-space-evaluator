@@ -937,10 +937,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cach-xu-ly_2" class="md-nav__link">
+  <a href="#co-che-nhan-dien-va-cach-xu-ly" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Cách xử lý
+        Cơ chế nhận diện và cách xử lý
       
     </span>
   </a>
@@ -1037,7 +1037,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cach-xu-ly_3" class="md-nav__link">
+  <a href="#cach-xu-ly_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         Cách xử lý
@@ -1126,7 +1126,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cach-xu-ly_4" class="md-nav__link">
+  <a href="#cach-xu-ly_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         Cách xử lý
@@ -1296,10 +1296,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cach-xu-ly_2" class="md-nav__link">
+  <a href="#co-che-nhan-dien-va-cach-xu-ly" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Cách xử lý
+        Cơ chế nhận diện và cách xử lý
       
     </span>
   </a>
@@ -1396,7 +1396,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cach-xu-ly_3" class="md-nav__link">
+  <a href="#cach-xu-ly_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         Cách xử lý
@@ -1485,7 +1485,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cach-xu-ly_4" class="md-nav__link">
+  <a href="#cach-xu-ly_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         Cách xử lý
@@ -1566,19 +1566,18 @@ hoặc:
 <p>Plugin dừng lại ở Module 1 và thông báo:
 <div class="highlight"><pre><span></span><code>✗ Thiếu các kênh Sentinel-2 bắt buộc: [B03, B04, B08, B11] (cần tối thiểu B03, B04, B08, B11 để tính MNDWI và SAVI)!
 </code></pre></div></p>
-<h3 id="cach-xu-ly_2">Cách xử lý</h3>
+<h3 id="co-che-nhan-dien-va-cach-xu-ly">Cơ chế nhận diện và cách xử lý</h3>
 <ul>
-<li>Đảm bảo chọn đủ tối thiểu 4 tệp kênh phổ của cùng một cảnh chụp Sentinel-2 Level-2A.</li>
-<li>Kiểm tra tên tệp hoặc tên layer trên QGIS có chứa đúng ký hiệu nhận diện kênh: <code>B03</code> (Green), <code>B04</code> (Red), <code>B08</code> (NIR), <code>B11</code> (SWIR).</li>
-<li>Có thể đổi tên layer trong bảng điều khiển lớp của QGIS để Plugin nhận diện chính xác kênh ảnh.</li>
+<li><strong>Cơ chế:</strong> Plugin nhận diện kênh dựa trên sự xuất hiện của ký hiệu nhận diện kênh (<code>B02</code>, <code>B03</code>, <code>B04</code>, <code>B08</code>, <code>B11</code>, <code>SCL</code>) trong <strong>tên layer trên QGIS</strong> hoặc <strong>đường dẫn/tên tệp nguồn</strong>.</li>
+<li><strong>Cách xử lý:</strong> Đảm bảo danh sách tệp chọn có đủ 4 kênh bắt buộc của cùng một cảnh chụp Sentinel-2 Level-2A. Nếu tệp nguồn đã bị đổi tên không còn chứa ký hiệu kênh, người dùng có thể đổi tên layer tương ứng trong bảng điều khiển lớp (Layers Panel) của QGIS để chứa đúng ký hiệu kênh tương ứng.</li>
 </ul>
 <hr />
 <h2 id="4-loi-khong-nap-uoc-cac-lop-vector-au-vao">4. Lỗi không nạp được các lớp vector đầu vào</h2>
 <h3 id="41-lop-ranh-gioi-hanh-chinh">4.1. Lớp ranh giới hành chính</h3>
 <ul>
 <li><strong>Hiện tượng</strong>: <code>✗ Không thể nạp Vector ranh giới hành chính và dân số thống kê!</code></li>
-<li><strong>Nguyên nhân</strong>: Tệp bị hỏng, đường dẫn chứa ký tự đặc biệt hoặc lớp đang bị khóa bởi chương trình khác. Lớp chưa được chuyển về hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét).</li>
-<li><strong>Cách xử lý</strong>: Đảm bảo lớp mở được trong QGIS, có hệ tọa độ phẳng phù hợp (ví dụ: VN-2000 kinh tuyến trục địa phương hoặc UTM) và cấu trúc hình học hợp lệ. Có thể dùng công cụ <em>Fix Geometries</em> trong QGIS để sửa lỗi polygon tự cắt.</li>
+<li><strong>Nguyên nhân</strong>: Tệp bị hỏng, đường dẫn chứa ký tự đặc biệt hoặc lớp đang bị khóa bởi chương trình khác.</li>
+<li><strong>Cách xử lý</strong>: Đảm bảo lớp mở được trong QGIS, có cấu trúc hình học hợp lệ. Khuyến nghị lớp nên ở hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét như VN-2000 kinh tuyến trục địa phương hoặc UTM). Có thể dùng công cụ <em>Fix Geometries</em> trong QGIS để sửa lỗi polygon tự cắt.</li>
 </ul>
 <h3 id="42-lop-cong-vienvuon-hoa">4.2. Lớp công viên/vườn hoa</h3>
 <ul>
@@ -1588,7 +1587,7 @@ hoặc:
 <h3 id="43-lop-dau-vet-cong-trinh-xay-dung-footprint">4.3. Lớp dấu vết công trình xây dựng (Footprint)</h3>
 <ul>
 <li><strong>Hiện tượng</strong>: <code>✗ Không thể nạp Vector dấu vết công trình xây dựng!</code></li>
-<li><strong>Cách xử lý</strong>: Đảm bảo lớp footprint (Google Open Buildings / OSM) có hình học polygon hợp lệ và bao phủ không gian xây dựng trong khu vực nghiên cứu.</li>
+<li><strong>Cách xử lý</strong>: Đảm bảo lớp footprint (Google Open Buildings) có hình học polygon hợp lệ và bao phủ không gian xây dựng trong khu vực nghiên cứu.</li>
 </ul>
 <hr />
 <h2 id="5-khong-trich-xuat-uoc-mau-savi-tu-cong-vien">5. Không trích xuất được mẫu SAVI từ công viên</h2>
@@ -1602,7 +1601,7 @@ hoặc:
 <li>Các polygon công viên nằm hoàn toàn ngoài phạm vi ảnh Sentinel-2 hoặc ngoài ranh giới nghiên cứu.</li>
 <li>Toàn bộ vùng công viên bị nhận diện nhầm là mặt nước (do MNDWI quá cao) hoặc bị che phủ bởi mây/bóng mây (kênh SCL gán NoData).</li>
 </ul>
-<h3 id="cach-xu-ly_3">Cách xử lý</h3>
+<h3 id="cach-xu-ly_2">Cách xử lý</h3>
 <ul>
 <li><strong>Cách 1</strong>: Kiểm tra lại vị trí các polygon công viên mẫu, đảm bảo nằm bên trong phạm vi cảnh ảnh Sentinel-2 và khu vực nghiên cứu.</li>
 <li><strong>Cách 2</strong>: Chuyển sang chế độ <strong>Nhập thủ công</strong> trong cửa sổ <strong>Cài đặt</strong> (Tab <em>Tùy chỉnh nâng cao</em>), nhập một giá trị ngưỡng SAVI cố định (ví dụ: <code>0.20</code> hoặc <code>0.25</code>).</li>
@@ -1618,10 +1617,10 @@ hoặc:
 <h3 id="62-truong-hop-no_solution-r-0text-m">6.2. Trường hợp NO_SOLUTION (<span class="arithmatex">\(R^* = 0\text{ m}\)</span>)</h3>
 <ul>
 <li><strong>Hiện tượng</strong>: Trong bảng thống kê mảng xanh hoặc nhật ký tiến trình xuất hiện một số mảng xanh có trạng thái <code>NO_SOLUTION</code> và bán kính <span class="arithmatex">\(R^* = 0\text{ m}\)</span>.</li>
-<li><strong>Bản chất khoa học</strong>: Đây <strong>không phải là lỗi phần mềm</strong>. Tình trạng này xảy ra khi mảng xanh có quy mô diện tích quá nhỏ (<span class="arithmatex">\(S_i\)</span> nhỏ) dẫn đến quy mô dân số phục vụ mục tiêu thấp (<span class="arithmatex">\(P_{target,i} = S_i / C\)</span>), trong khi mật độ xây dựng và dân số phân bổ ngay sát bên mảng xanh (<span class="arithmatex">\(R = 0\text{ m}\)</span>) đã lớn hơn <span class="arithmatex">\(P_{target,i}\)</span>. Theo định nghĩa của mô hình, mảng xanh này không tìm thấy bán kính phục vụ thỏa điều kiện trong khoảng <span class="arithmatex">\([0, R_{\max}]\)</span>.</li>
+<li><strong>Bản chất khoa học</strong>: Đây <strong>không phải là lỗi phần mềm</strong>. <code>NO_SOLUTION</code> xảy ra khi ngay tại <span class="arithmatex">\(R = 0\text{ m}\)</span>, tổng dân số được phân bổ nằm trong phạm vi phục vụ của mảng xanh đã lớn hơn quy mô dân số phục vụ mục tiêu (<span class="arithmatex">\(P_i(0) &gt; P_{target,i}\)</span>). Khi đó, không tồn tại bán kính thỏa điều kiện trong miền <span class="arithmatex">\([0, R_{\max}]\)</span>. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.</li>
 <li><strong>Cách xử lý</strong>:</li>
-<li>Không tùy tiện hạ chỉ tiêu <span class="arithmatex">\(C\)</span> chỉ để tạo ra bán kính phục vụ.</li>
-<li>Đây là bằng chứng khoa học cho thấy mảng xanh quy mô quá nhỏ không đủ khả năng phục vụ dân số xung quanh theo chỉ tiêu quy chuẩn đề ra.</li>
+<li>Không tùy tiện hạ chỉ tiêu <span class="arithmatex">\(C\)</span> chỉ để tạo ra bán kính phục vụ nếu không có căn cứ quy chuẩn phù hợp.</li>
+<li>Đây là kết quả mô hình hóa phản ánh tương quan không gian giữa quy mô mảng xanh và mật độ dân số phân bổ lân cận tại nguồn.</li>
 </ul>
 <hr />
 <h2 id="7-loi-khoa-tep-file-lock-khi-luu-ket-qua">7. Lỗi khóa tệp (File Lock) khi lưu kết quả</h2>
@@ -1633,12 +1632,12 @@ hoặc:
 <ul>
 <li>Tệp kết quả cũ đang được mở bởi Microsoft Excel, QGIS hoặc một ứng dụng khác, khiến hệ điều hành khóa quyền ghi đè tệp.</li>
 </ul>
-<h3 id="cach-xu-ly_4">Cách xử lý</h3>
+<h3 id="cach-xu-ly_3">Cách xử lý</h3>
 <ol>
 <li>Đóng toàn bộ các tệp kết quả đang mở trong Excel hoặc các chương trình đọc ngoài.</li>
 <li>Nếu lớp kết quả đang được nạp trong QGIS, nhấn chuột phải vào lớp và chọn <em>Remove Layer</em> trước khi chạy lại.</li>
 <li>Chọn một tên tệp mới hoặc lưu sang một thư mục mới.</li>
-<li>Có thể để trống đường dẫn lưu để Plugin tạo các lớp kết quả tạm thời (Temporary Layers) trong bộ nhớ QGIS.</li>
+<li>Có thể để trống đường dẫn lưu để Plugin tạo các tệp kết quả tạm thời trong thư mục tạm của hệ thống (<code>tempfile.gettempdir()</code>).</li>
 </ol>
 
 
