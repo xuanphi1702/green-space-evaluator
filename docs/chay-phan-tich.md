@@ -53,9 +53,9 @@ Nhấn nút **Cài đặt** (biểu tượng bánh răng ở góc trên bên ph�
 <div class="guide-caption"><strong>Hình 2.</strong> Giao diện cấu hình trong cửa sổ Cài đặt của Plugin</div>
 </div>
 
-### Tab 1: Sản phẩm trung gian
-- Cho phép người dùng chỉ định đường dẫn lưu trữ các tệp trung gian nếu có nhu cầu lưu trữ tệp riêng để phục vụ nghiên cứu hoặc kiểm tra chất lượng (ví dụ: Sentinel-2 Stack, MNDWI, SAVI, Mặt nước, SAVI loại nước, Thực vật thô, Histogram, Dấu vết công trình phân bổ dân số, Bảng thống kê mảng xanh).
-- Nếu để trống, các sản phẩm trung gian sẽ được tự động tạo dưới dạng tệp tạm thời trong thư mục tạm của hệ điều hành (`tempfile.gettempdir()`) và nạp vào phiên làm việc.
+### Tab 1: Sản phẩm bổ sung
+- Cho phép người dùng chỉ định đường dẫn lưu trữ các sản phẩm bổ sung nếu có nhu cầu lưu trữ tệp riêng để phục vụ nghiên cứu hoặc kiểm tra chất lượng (ví dụ: Sentinel-2 Stack, MNDWI, SAVI, Mặt nước, SAVI loại nước, Thực vật thô, Histogram, Dấu vết công trình phân bổ dân số, Bảng thống kê mảng xanh).
+- Nếu để trống, các sản phẩm bổ sung sẽ được tự động tạo dưới dạng tệp tạm thời trong thư mục tạm của hệ điều hành (`tempfile.gettempdir()`) và nạp vào phiên làm việc.
 
 ### Tab 2: Tùy chỉnh nâng cao
 - Thiết lập các tham số kỹ thuật: Ngưỡng MNDWI (`0.0`), Hệ số SAVI $L$ (`0.5`), Phương thức và phương pháp xác định ngưỡng SAVI (`P10`), Diện tích mảng xanh tối thiểu ngoài công viên (`5000 m²`), Bán kính phục vụ tối đa $R_{\max}$ (`300 m`), Chỉ tiêu diện tích mảng xanh bình quân đầu người $C$ (`6.0 m²/người`), Sai số hội tụ (`10 m`).

@@ -1,6 +1,6 @@
 # Sản phẩm và chỉ tiêu thống kê
 
-Sau khi hoàn tất quy trình phân tích, Plugin **Green Space Evaluator** sẽ tạo ra **5 sản phẩm đầu ra chính**, tùy chọn **bảng báo cáo thống kê** (Excel/CSV) cùng hệ thống **sản phẩm trung gian** phục vụ kiểm tra và nghiên cứu chuyên sâu. Trang này cung cấp thông tin chi tiết về cấu trúc dữ liệu, ý nghĩa các trường thuộc tính thống kê và hướng dẫn diễn giải kết quả.
+Sau khi hoàn tất quy trình phân tích, Plugin **Green Space Evaluator** sẽ tạo ra **5 sản phẩm đầu ra chính**, tùy chọn **bảng báo cáo thống kê** (Excel/CSV) cùng hệ thống **sản phẩm bổ sung** phục vụ kiểm tra và nghiên cứu chuyên sâu. Trang này cung cấp thông tin chi tiết về cấu trúc dữ liệu, ý nghĩa các trường thuộc tính thống kê và hướng dẫn diễn giải kết quả.
 
 ---
 
@@ -137,11 +137,11 @@ $$
 
 ---
 
-## 6. Sản phẩm trung gian
+## 6. Sản phẩm bổ sung
 
-Khi người dùng cấu hình đường dẫn lưu tại tab **Sản phẩm trung gian** trong cửa sổ Cài đặt, Plugin có thể xuất thêm các tệp sau (nếu để trống, các tệp tạm thời được tạo trong thư mục tạm của hệ thống `tempfile.gettempdir()`):
+Khi người dùng cấu hình đường dẫn lưu tại tab **Sản phẩm bổ sung** trong cửa sổ Cài đặt, Plugin có thể xuất thêm các tệp sau (nếu để trống, các tệp tạm thời được tạo trong thư mục tạm của hệ thống `tempfile.gettempdir()`):
 
-| Sản phẩm trung gian | Định dạng | Vai trò kỹ thuật |
+| Sản phẩm bổ sung | Định dạng | Vai trò kỹ thuật |
 |---|---|---|
 | **Ảnh Sentinel-2 Stack** | Raster (`.tif`) | Ảnh đa kênh ghép gồm các kênh bắt buộc và tùy chọn cắt theo ranh giới, độ phân giải 10 m. |
 | **Raster MNDWI** | Raster (`.tif`) | Ảnh chỉ số khác biệt nước cải tiến. |
