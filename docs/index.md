@@ -24,7 +24,7 @@ Plugin giải quyết bài toán đánh giá phạm vi phục vụ của mảng 
 
 Quy trình phân tích của Plugin gồm 5 module chức năng liên hoàn:
 
-1. **Module 1 — Chuẩn bị và kiểm tra dữ liệu đầu vào:** Kiểm tra cấu trúc hình học các lớp vector; chuẩn hóa trường dân số thống kê của đơn vị hành chính thành `POP_STAT`; đồng bộ hệ tọa độ phẳng dự chiếu (đơn vị mét) và tạo ảnh Sentinel-2 Stack 10 m.
+1. **Module 1 — Chuẩn bị và kiểm tra dữ liệu đầu vào:** Tiếp nhận và kiểm tra cấu trúc hình học các lớp vector; chuẩn hóa trường dân số thống kê của đơn vị hành chính thành `POP_STAT`; thiết lập hệ tọa độ phẳng dự chiếu tham chiếu và tạo ảnh Sentinel-2 Stack 10 m.
 2. **Module 2 — Phân tách mảng xanh đô thị:** Tính toán các chỉ số quang học MNDWI và SAVI; loại trừ mặt nước; bóc tách thực vật; lọc bỏ mảng xanh nhỏ ngoài công viên theo diện tích tối thiểu và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
 3. **Module 3 — Mô hình hóa vùng phục vụ mảng xanh:** Xây dựng lưới khoảng cách Euclid từ biên mảng xanh; phân bổ dân số thống kê theo footprint công trình tạo lớp `POP_ALLOC`; xác định quy mô dân số phục vụ mục tiêu ($P_{target,i} = S_i / C$) và tìm kiếm bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện của mô hình cho từng mảng xanh.
 4. **Module 4 — Phân tích không gian xây dựng:** Phân tách footprint công trình thành các phần hình học (`footprint-part`); xác định footprint-part nằm trong và ngoài vùng phục vụ; áp dụng thuật toán gán độc quyền (**Exclusive Assignment**) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
@@ -39,9 +39,9 @@ Plugin sử dụng **4 nhóm dữ liệu đầu vào** không gian:
 | STT | Nhóm dữ liệu | Dạng dữ liệu | Yêu cầu kỹ thuật & Vai trò |
 |---|---|---|---|
 | 1 | **Ảnh Sentinel-2** | Raster (`.tif`, `.jp2`) | • **Bắt buộc:** Kênh B03 (Green, 10 m), B04 (Red, 10 m), B08 (NIR, 10 m), B11 (SWIR, 20 m) để tính chỉ số MNDWI, SAVI và bóc tách thực vật.<br>• **Tùy chọn:** Kênh B02 (Blue, 10 m - hỗ trợ tạo ảnh màu tự nhiên RGB); Kênh SCL (20 m - hỗ trợ lọc mây và bóng mây). |
-| 2 | **Ranh giới hành chính và dân số thống kê** | Vector Polygon | Lớp ranh giới phân chia các đơn vị hành chính (phường/xã). Người dùng chọn trường thuộc tính chứa số liệu dân số thống kê trên giao diện; Plugin tự động chuẩn hóa nội bộ thành trường `POP_STAT`. |
+| 2 | **Ranh giới hành chính và dân số thống kê** | Vector Polygon | Lớp ranh giới phân chia các đơn vị hành chính (phường/xã). Người dùng chọn trường thuộc tính chứa số liệu dân số thống kê trên giao diện; Plugin tự động chuẩn hóa nội bộ thành trường `POP_STAT`. Lớp này đóng vai trò khung tham chiếu không gian. |
 | 3 | **Công viên/vườn hoa** | Vector Polygon | Lớp polygon thể hiện phạm vi công viên/vườn hoa được sử dụng làm vùng mẫu trong quá trình xác định mảng xanh và hỗ trợ phân loại mảng xanh. |
-| 4 | **Dấu vết công trình xây dựng (Footprint)** | Vector Polygon | Lớp polygon dấu vết chân công trình xây dựng (Google Open Buildings, OSM), đại diện cho không gian xây dựng vật lý. Được sử dụng để phân bổ dân số thống kê theo không gian (`POP_ALLOC`). |
+| 4 | **Dấu vết công trình xây dựng (Footprint)** | Vector Polygon | Lớp polygon dấu vết chân công trình xây dựng (Google Open Buildings), đại diện cho không gian xây dựng vật lý. Được sử dụng để phân bổ dân số thống kê theo không gian (`POP_ALLOC`). |
 
 👉 Xem hướng dẫn chi tiết: [Chuẩn bị dữ liệu đầu vào](du-lieu-dau-vao.md)
 
@@ -53,16 +53,17 @@ Các tham số tính toán được quản lý trong cửa sổ **Cài đặt** 
 
 | Tham số trên giao diện | Giá trị mặc định | Đơn vị | Ý nghĩa khoa học & Khuyến nghị |
 |---|---:|:---:|---|
-| **Ngưỡng MNDWI** | `0.0` | — | Phân tách mặt nước; các pixel có MNDWI > 0.0 được phân loại là nước và loại trừ. |
+| **Ngưỡng MNDWI** | `0.0` | — | Giá trị mặc định được sử dụng trong cấu hình nghiên cứu/thử nghiệm hiện tại; pixel có MNDWI > 0.0 được phân loại là nước và loại trừ. |
 | **Hệ số hiệu chỉnh nền đất SAVI (L)** | `0.5` | — | Giảm ảnh hưởng phản xạ của nền đất đối với thảm thực vật mật độ trung bình. |
 | **Phương thức xác định ngưỡng SAVI** | `Tự động xác định` | — | Tự động tính ngưỡng từ vùng mẫu công viên/vườn hoa (mặc định theo bách phân vị P10). |
-| **Diện tích mảng xanh tối thiểu** | `5000.0` | m² | Ngưỡng lọc bỏ các cụm thực vật nhỏ lẻ ngoài công viên (thảm cỏ nhỏ, dải phân cách, bóng cây). |
-| **Bán kính phục vụ tối đa (Rmax)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $R^*$ cho từng mảng xanh. |
+| **Phương pháp xác định ngưỡng SAVI** | `Bách phân vị P10 (Mặc định)` | — | Phương pháp mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại. |
+| **Diện tích mảng xanh tối thiểu** | `5000.0` | m² | Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm lọc bỏ các cụm thực vật nhỏ lẻ ngoài công viên. |
+| **Bán kính phục vụ tối đa (Rmax)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $R^*$ cho từng mảng xanh trong nghiên cứu/thử nghiệm. |
 | **Chỉ tiêu diện tích mảng xanh bình quân đầu người (C)** | `6.0` | m²/người | Chỉ tiêu diện tích mảng xanh bình quân dùng để xác định quy mô dân số phục vụ mục tiêu: $P_{target,i} = S_i / C$. |
 | **Sai số hội tụ khi xác định bán kính** | `10.0` | m | Điều kiện dừng sai số khoảng cách của thuật toán tìm kiếm nhị phân (Binary Search). |
 
-!!! info "Các giá trị mặc định trong thử nghiệm"
-    Trong cấu hình thử nghiệm, các giá trị mặc định như bán kính tối đa **300 m**, chỉ tiêu diện tích bình quân đầu người **6.0 m²/người** và diện tích lọc **5000 m²** được lựa chọn có tham chiếu quy chuẩn đô thị và tài liệu nghiên cứu. Đây là các giá trị cấu hình tham chiếu phục vụ thử nghiệm, người dùng hoàn toàn có thể tùy chỉnh linh hoạt phù hợp với quy chuẩn địa phương và bối cảnh từng đô thị.
+!!! info "Các giá trị cấu hình mặc định trong nghiên cứu"
+    Trong cấu hình thử nghiệm, các giá trị mặc định như bán kính phục vụ tối đa **300 m**, chỉ tiêu diện tích bình quân đầu người **6.0 m²/người** và diện tích lọc **5000 m²** được lựa chọn làm giá trị cấu hình tham chiếu phục vụ nghiên cứu. Đây không phải là các giới hạn quy chuẩn áp đặt cho mọi đô thị; người dùng có thể tùy chỉnh linh hoạt phù hợp với quy chuẩn địa phương và bối cảnh từng khu vực nghiên cứu.
 
 👉 Xem hướng dẫn chi tiết: [Cài đặt tham số](tham-so.md)
 
@@ -76,7 +77,7 @@ Các tham số tính toán được quản lý trong cửa sổ **Cài đặt** 
 
 1. **Khởi động Plugin:** Mở QGIS, nhấn vào biểu tượng chiếc lá trên thanh công cụ hoặc vào menu **Plugins** → **Urban Green Space Service Evaluator**.
 2. **Nạp dữ liệu:** Tại tab **Dữ liệu đầu vào**, chọn lần lượt 4 nhóm dữ liệu (Ảnh Sentinel-2, Lớp ranh giới hành chính kèm trường dân số, Lớp công viên/vườn hoa, Lớp footprint công trình).
-3. **Cài đặt tham số (tùy chọn):** Nhấn nút **Cài đặt** ở góc trên bên phải để điều chỉnh $R_{\max}$, $C$ hoặc ngưỡng lọc diện tích nếu có nhu cầu riêng.
+3. **Cài đặt tham số (tùy chọn):** Nhấn nút **Cài đặt** ở góc trên bên phải để điều chỉnh $R_{\max}$, $C$ hoặc diện tích mảng xanh tối thiểu nếu có nhu cầu riêng.
 4. **Chỉ định nơi lưu sản phẩm:** Chuyển sang tab **Sản phẩm đầu ra**, chọn định dạng và thư mục lưu cho 5 sản phẩm chính (hoặc để trống để tạo lớp tạm thời).
 5. **Thực thi phân tích:** Nhấn nút **Phân tích** ở góc dưới cùng. Theo dõi nhật ký tiến trình hiển thị trực tiếp. Khi hoàn tất, các lớp kết quả sẽ được tự động thêm vào bản đồ QGIS kèm kiểu dáng trực quan.
 

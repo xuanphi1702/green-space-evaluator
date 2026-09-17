@@ -1082,7 +1082,7 @@
 <td><strong>Ranh giới hành chính và dân số thống kê</strong></td>
 <td>Vector Polygon</td>
 <td>Khung tham chiếu không gian (CRS, phạm vi) và cung cấp số liệu dân số thống kê chính thức của từng đơn vị hành chính</td>
-<td>Hệ tọa độ phẳng (Projected CRS, đơn vị mét), hình học hợp lệ; chứa trường thuộc tính dân số thống kê</td>
+<td>Hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét); chứa trường thuộc tính dân số thống kê</td>
 </tr>
 <tr>
 <td><strong>3</strong></td>
@@ -1096,7 +1096,7 @@
 <td><strong>Dấu vết công trình xây dựng (Footprint)</strong></td>
 <td>Vector Polygon</td>
 <td>Đại diện cho không gian xây dựng vật lý; cơ sở phân bổ dân số thống kê theo không gian (<code>POP_ALLOC</code>)</td>
-<td>Vector polygon dấu vết chân công trình xây dựng (Google Open Buildings, OSM hoặc tương đương)</td>
+<td>Vector polygon dấu vết chân công trình xây dựng (Google Open Buildings)</td>
 </tr>
 </tbody>
 </table>
@@ -1106,6 +1106,7 @@
 <p>Plugin xử lý ảnh phản xạ bề mặt Sentinel-2 để nhận diện mặt nước và thảm thực vật mảng xanh:</p>
 <ul>
 <li><strong>Loại sản phẩm</strong>: Sentinel-2 <strong>Level-2A (L2A)</strong> (sản phẩm đã hiệu chỉnh khí quyển Bottom of Atmosphere - BOA).</li>
+<li><strong>Cơ chế nhận diện kênh</strong>: Plugin tự động nhận diện các kênh dựa trên chuỗi văn bản nhận diện xuất hiện trong <strong>tên layer trên QGIS</strong> hoặc <strong>đường dẫn/tên tệp nguồn</strong> (ví dụ: <code>B02</code>, <code>B03</code>, <code>B04</code>, <code>B08</code>, <code>B11</code>, <code>SCL</code>).</li>
 <li>
 <p><strong>Các kênh phổ bắt buộc</strong>:</p>
 <ul>
@@ -1142,7 +1143,11 @@
 <p>Lớp ranh giới hành chính đóng vai trò là <strong>khung tham chiếu không gian</strong> và nguồn cung cấp <strong>số liệu dân số thống kê chính thức</strong>:</p>
 <ul>
 <li><strong>Bản chất dữ liệu</strong>: Lớp vector polygon phân chia ranh giới các đơn vị hành chính (ví dụ: phường, xã, thị trấn hoặc quận, huyện) trong phạm vi nghiên cứu.</li>
-<li><strong>Hệ tọa độ (CRS)</strong>: <strong>Bắt buộc sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS)</strong> có đơn vị đo lường bằng mét (ví dụ: VN-2000 kinh tuyến trục địa phương hoặc UTM tương ứng). Việc này đảm bảo tính toán khoảng cách Euclid (m) và diện tích (m², ha) diễn ra chính xác. Plugin lấy CRS của lớp này làm chuẩn không gian cho toàn bộ quy trình.</li>
+<li><strong>Cơ chế xử lý CRS trong Plugin</strong>:<ul>
+<li>Plugin lấy CRS của lớp ranh giới hành chính làm hệ tọa độ tham chiếu chuẩn (<code>crs_vn2000</code>) cho toàn bộ quy trình, đồng thời tự động tái chiếu (reproject) và cắt (clip) các kênh ảnh Sentinel-2 cùng các lớp vector khác theo hệ tọa độ này.</li>
+<li><strong>Khuyến nghị kỹ thuật:</strong> Lớp ranh giới hành chính <strong>nên sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét)</strong> như VN-2000 kinh tuyến trục địa phương hoặc UTM. Nếu lớp đang ở hệ tọa độ địa lý (đơn vị độ), Plugin sẽ phát cảnh báo nhắc nhở vì các phép tính biến đổi khoảng cách Euclid (m) và diện tích (m², ha) cần đơn vị mét để đạt độ chính xác.</li>
+</ul>
+</li>
 <li><strong>Dân số thống kê (<code>POP_STAT</code>)</strong>:<ul>
 <li>Trên giao diện Plugin, người dùng chỉ định trường thuộc tính chứa số liệu dân số thống kê chính thức của từng đơn vị hành chính.</li>
 <li>Plugin tự động đọc và chuẩn hóa dữ liệu sang trường chuẩn nội bộ <code>POP_STAT</code>.</li>
@@ -1167,7 +1172,7 @@
 <hr />
 <h3 id="24-dau-vet-cong-trinh-xay-dung-footprint">2.4. Dấu vết công trình xây dựng (Footprint)</h3>
 <ul>
-<li><strong>Bản chất dữ liệu</strong>: Google Open Buildings hoặc OpenStreetMap (OSM) là tập dữ liệu nhận diện hình học <strong>dấu vết chân công trình xây dựng (building footprints)</strong> từ ảnh vệ tinh độ phân giải cao.</li>
+<li><strong>Bản chất dữ liệu</strong>: Trong nghiên cứu hiện tại, nguồn dữ liệu được sử dụng là <strong>Google Open Buildings</strong> – tập dữ liệu nhận diện hình học <strong>dấu vết chân công trình xây dựng (building footprints)</strong> từ ảnh vệ tinh độ phân giải cao bằng trí tuệ nhân tạo. <em>(Lưu ý: Khác với dữ liệu OpenStreetMap (OSM) là bản đồ đóng góp bởi cộng đồng với độ hoàn thiện tùy khu vực, Google Open Buildings cung cấp các polygon dấu vết vật lý đồng nhất).</em></li>
 <li><strong>Vai trò đại diện không gian xây dựng</strong>: Footprint đại diện cho <strong>không gian xây dựng vật lý (physical built space)</strong>, phản ánh quy mô và vị trí các khối kết cấu xây dựng trên bề mặt đô thị.</li>
 <li><strong>Cơ chế phân tách hình học (footprint-part)</strong>:<ul>
 <li>Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân tách thành các phần tử hình học nhỏ hơn gọi là <code>footprint-part</code> thuộc về từng đơn vị hành chính.</li>
@@ -1205,7 +1210,7 @@ P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}
 <h2 id="3-checklist-truoc-khi-phan-tich">3. Checklist trước khi phân tích</h2>
 <p>Trước khi nhấn nút <strong>Phân tích</strong>, hãy kiểm tra lại các mục sau:</p>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Hệ tọa độ chuẩn</strong>: Lớp ranh giới hành chính sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét) phù hợp với khu vực nghiên cứu.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Hệ tọa độ chuẩn</strong>: Lớp ranh giới hành chính nên sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét) phù hợp với khu vực nghiên cứu.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Dữ liệu vector hợp lệ</strong>: Các lớp vector không bị lỗi tự cắt hình học (Self-intersection); có thể chạy công cụ <em>Fix Geometries</em> trong QGIS nếu cần.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Đầy đủ 4 nhóm dữ liệu</strong>: Đã chọn đủ 4 nhóm trên tab <em>Dữ liệu đầu vào</em>.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Kênh Sentinel-2 đầy đủ</strong>: Tối thiểu gồm các kênh B03, B04, B08, B11.</li>

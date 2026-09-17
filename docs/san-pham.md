@@ -1,6 +1,6 @@
 # Sản phẩm và chỉ tiêu thống kê
 
-Sau khi hoàn tất quy trình phân tích, Plugin **Green Space Evaluator** sẽ tạo ra **5 sản phẩm đầu ra chính**, tùy chọn **bảng báo cáo thống kê** (Excel/CSV) cùng hệ thống **sản phẩm trung gian** phục vụ kiểm tra và nghiên cứu chuyên sâu. Trang này cung cấp thông tin chi tiết về cấu trúc dữ liệu, ý nghĩa 10 trường thuộc tính thống kê và hướng dẫn diễn giải kết quả.
+Sau khi hoàn tất quy trình phân tích, Plugin **Green Space Evaluator** sẽ tạo ra **5 sản phẩm đầu ra chính**, tùy chọn **bảng báo cáo thống kê** (Excel/CSV) cùng hệ thống **sản phẩm trung gian** phục vụ kiểm tra và nghiên cứu chuyên sâu. Trang này cung cấp thông tin chi tiết về cấu trúc dữ liệu, ý nghĩa các trường thuộc tính thống kê và hướng dẫn diễn giải kết quả.
 
 ---
 
@@ -30,13 +30,17 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 - **Đặc điểm quan trọng**:
     - Mỗi mảng xanh có một bán kính $R^*$ riêng biệt và một polygon vùng phục vụ riêng biệt gắn liền với mã định danh `PATCH_ID`.
     - Các polygon vùng phục vụ được giữ nguyên độc lập, **không thực hiện gộp (merge) hay thu nhỏ (shrink)** ngay cả khi các vùng đệm có sự chồng lấn không gian.
-- **Trường thuộc tính chính**:
-    - `PATCH_ID`: Mã định danh số nguyên duy nhất của từng mảng xanh.
-    - `GreenArea`: Diện tích của mảng xanh ($    ext{m}^2$).
-    - `R_STAR`: Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).
-    - `STATUS`: Trạng thái kết quả tìm kiếm bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
-    - `Pop_Target`: Quy mô dân số phục vụ mục tiêu theo chỉ tiêu ($P_{target,i} = S_i / C$).
-    - `Pop_RStar`: Dân số phân bổ tiếp cận thực tế trong bán kính $R^*$.
+- **Bảng thuộc tính của lớp Vùng phục vụ R\* (`SERVICE_AREA`)**:
+    - `PATCH_ID` (Integer): Mã định danh số nguyên duy nhất của từng mảng xanh.
+    - `R_STAR` (Double): Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).
+    - `P_TARGET` (Double): Quy mô dân số phục vụ mục tiêu theo chỉ tiêu ($P_{target,i} = S_i / C$).
+    - `STATUS` (String): Trạng thái kết quả tìm kiếm bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
+    - `AREA_M2` (Double): Diện tích của mảng xanh ($\text{m}^2$).
+    - `AREA_HA` (Double): Diện tích của mảng xanh (ha).
+    - `P_RMIN` (Double): Dân số phân bổ tiếp cận tại bán kính $R = 0\text{ m}$.
+    - `P_RMAX` (Double): Dân số phân bổ tiếp cận tại bán kính $R = R_{\max}$.
+    - `P_AT_RSTAR` (Double): Tổng dân số được phân bổ nằm trong phạm vi khoảng cách $R^*$ của mảng xanh.
+    - `ITERATIONS` (Integer): Số bước lặp của thuật toán tìm kiếm nhị phân.
 
 ### 2.3. Không gian xây dựng trong vùng phục vụ
 - **Bản chất dữ liệu**: Tập hợp các đối tượng hình học công trình (`footprint-part`) nằm trong phạm vi vùng phục vụ bán kính $R^*$ của mảng xanh.
@@ -53,19 +57,34 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 
 ---
 
-## 3. Bảng báo cáo thống kê bổ sung (Excel / CSV)
+## 3. Bảng báo cáo thống kê bổ sung (CSV / XLSX)
 
-Ngoài lớp vector GIS, Plugin hỗ trợ xuất bảng số liệu tổng hợp chi tiết theo từng đơn vị hành chính ra tệp độc lập:
-
+### 3.1. Bảng thống kê theo đơn vị hành chính
 - **Định dạng hỗ trợ**: **Excel (`.xlsx`)** hoặc **CSV (`.csv`)**.
 - **Cấu trúc dữ liệu**: Mỗi hàng tương ứng với một đơn vị hành chính và chứa đầy đủ 10 trường chỉ số định lượng.
 - **Chuẩn mã hóa**: Tệp `.csv` được xuất dưới định dạng mã hóa `UTF-8-SIG`, đảm bảo mở trực tiếp bằng Microsoft Excel hiển thị tiếng Việt chuẩn xác không bị lỗi phông chữ.
+
+### 3.2. Bảng thống kê chi tiết theo mảng xanh (`patch_service_statistics`)
+Tệp thống kê chi tiết ở cấp độ từng patch (`patch_service_statistics.csv` / `.xlsx`) gồm đúng **13 trường chuẩn hóa trong mã nguồn**:
+1. `PATCH_ID`: Mã định danh mảng xanh.
+2. `AREA_M2`: Diện tích mảng xanh ($\text{m}^2$).
+3. `AREA_HA`: Diện tích mảng xanh (ha).
+4. `R_STAR_M`: Bán kính phục vụ lớn nhất thỏa điều kiện $R^*$ (m).
+5. `STATUS`: Trạng thái giải bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
+6. `P_TARGET`: Quy mô dân số phục vụ mục tiêu của mảng xanh ($S_i / C$).
+7. `P_AT_RSTAR`: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách $R^*$ của mảng xanh.
+8. `N_SERVED_PARTS`: Số lượng footprint-part được gán phục vụ độc quyền cho mảng xanh.
+9. `SERVED_BUILDING_AREA_M2`: Tổng diện tích xây dựng được gán phục vụ ($\text{m}^2$).
+10. `SERVED_BUILDING_AREA_HA`: Tổng diện tích xây dựng được gán phục vụ (ha).
+11. `SERVED_POP`: Tổng dân số được phân bổ phục vụ độc quyền của mảng xanh.
+12. `MEAN_DIST_M`: Khoảng cách trung bình từ các footprint-part được gán đến mảng xanh (m).
+13. `MAX_DIST_M`: Khoảng cách lớn nhất từ các footprint-part được gán đến mảng xanh (m).
 
 ---
 
 ## 4. 10 trường thuộc tính thống kê hành chính
 
-Bảng thuộc tính của lớp vector thống kê hành chính và tệp bảng báo cáo chứa đúng **10 trường chỉ số định lượng chuẩn hóa**:
+Bảng thuộc tính của lớp vector thống kê hành chính chứa đúng **10 trường chỉ số định lượng chuẩn hóa**:
 
 | STT | Tên trường | Nội dung chỉ số | Đơn vị | Kiểu dữ liệu | Ý nghĩa & Bản chất khoa học |
 |---|---|---|:---:|:---:|---|
@@ -120,7 +139,7 @@ $$
 
 ## 6. Sản phẩm trung gian
 
-Khi người dùng cấu hình đường dẫn lưu tại tab **Sản phẩm trung gian** trong cửa sổ Cài đặt, Plugin có thể xuất thêm các tệp sau:
+Khi người dùng cấu hình đường dẫn lưu tại tab **Sản phẩm trung gian** trong cửa sổ Cài đặt, Plugin có thể xuất thêm các tệp sau (nếu để trống, các tệp tạm thời được tạo trong thư mục tạm của hệ thống `tempfile.gettempdir()`):
 
 | Sản phẩm trung gian | Định dạng | Vai trò kỹ thuật |
 |---|---|---|
@@ -132,7 +151,7 @@ Khi người dùng cấu hình đường dẫn lưu tại tab **Sản phẩm tru
 | **Raster thực vật thô** | Raster (`.tif`) | Mặt nạ thảm thực vật ban đầu trước khi áp dụng bộ lọc diện tích tối thiểu. |
 | **Biểu đồ Histogram MNDWI & SAVI** | Ảnh (`.png`) | Biểu đồ phân bố tần suất giá trị phổ hỗ trợ đánh giá độ tin cậy của ngưỡng bóc tách. |
 | **Dấu vết công trình phân bổ dân số** | Vector (`.gpkg`) | Lớp footprint-part tích hợp trường dân số phân bổ `POP_ALLOC`. |
-| **Bảng thống kê mảng xanh** | File (`.xlsx`/`.csv`) | Bảng thuộc tính chi tiết từng patch: diện tích, bán kính $R^*$, trạng thái, dân số tiếp cận. |
+| **Bảng thống kê mảng xanh** | File (`.xlsx`/`.csv`) | Bảng thuộc tính chi tiết 13 trường của từng patch: diện tích, bán kính $R^*$, trạng thái, dân số tiếp cận. |
 
 ---
 

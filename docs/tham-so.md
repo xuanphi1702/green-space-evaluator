@@ -15,13 +15,13 @@ Người dùng có thể mở cửa sổ cấu hình bằng cách nhấn nút **
 
 | Nhóm | Tham số trên giao diện | Giá trị mặc định | Đơn vị | Ý nghĩa khoa học & Vai trò thuật toán |
 |---|---|---:|:---:|---|
-| **Chỉ số phổ** | **Ngưỡng MNDWI** | `0.0` | — | Phân tách pixel mặt nước khỏi bề mặt đất liền. Pixel có $\text{MNDWI} > 0.0$ được xác định là nước và loại trừ trước khi tính SAVI. |
+| **Chỉ số phổ** | **Ngưỡng MNDWI** | `0.0` | — | Giá trị mặc định được sử dụng trong cấu hình nghiên cứu/thử nghiệm hiện tại. Pixel có $\text{MNDWI} > 0.0$ được xác định là nước và loại trừ trước khi tính SAVI. |
 | **Chỉ số phổ** | **Hệ số hiệu chỉnh nền đất SAVI (L)** | `0.5` | — | Hệ số hiệu chỉnh tán xạ nền đất trong công thức SAVI, phù hợp với thảm thực vật mật độ trung bình. |
 | **Trích xuất mảng xanh** | **Phương thức xác định ngưỡng SAVI** | `Tự động xác định` | — | Lựa chọn giữa `Tự động xác định` (trích xuất từ vùng mẫu công viên) và `Nhập thủ công` (người dùng chỉ định ngưỡng cố định). |
-| **Trích xuất mảng xanh** | **Phương pháp xác định ngưỡng SAVI** | `Bách phân vị P10 (Mặc định)` | — | Phương pháp thống kê áp dụng trên tập mẫu công viên khi chọn chế độ tự động. |
+| **Trích xuất mảng xanh** | **Phương pháp xác định ngưỡng SAVI** | `Bách phân vị P10 (Mặc định)` | — | Phương pháp mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại áp dụng trên tập mẫu công viên khi chọn chế độ tự động. |
 | **Trích xuất mảng xanh** | **Bách phân vị tùy chỉnh P (%)** | `10.0` | `%` | Giá trị bách phân vị thiết lập khi chọn phương pháp "Bách phân vị tùy chỉnh". |
-| **Trích xuất mảng xanh** | **Diện tích mảng xanh tối thiểu** | `5000.0` | m² | Ngưỡng lọc diện tích (`gdal.SieveFilter`) nhằm loại bỏ các mảng thực vật nhỏ lẻ ngoài công viên. Mảng xanh trong công viên luôn được bảo toàn. |
-| **Vùng phục vụ** | **Bán kính phục vụ tối đa (Rmax)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $[0, R_{\max}]$ cho từng mảng xanh độc lập. |
+| **Trích xuất mảng xanh** | **Diện tích mảng xanh tối thiểu** | `5000.0` | m² | Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm loại bỏ các mảng thực vật nhỏ lẻ ngoài công viên. Mảng xanh trong công viên luôn được bảo toàn. |
+| **Vùng phục vụ** | **Bán kính phục vụ tối đa (Rmax)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $[0, R_{\max}]$ cho từng mảng xanh độc lập trong cấu hình nghiên cứu/thử nghiệm. |
 | **Vùng phục vụ** | **Chỉ tiêu diện tích mảng xanh bình quân đầu người (C)** | `6.0` | m²/người | Chỉ tiêu diện tích bình quân dùng để xác định quy mô dân số phục vụ mục tiêu của từng mảng xanh: $P_{target,i} = S_i / C$. |
 | **Thuật toán** | **Sai số hội tụ khi xác định bán kính** | `10.0` | m | Điều kiện dừng sai số khoảng cách của thuật toán tìm kiếm nhị phân (Binary Search). |
 
@@ -38,7 +38,7 @@ Người dùng có thể mở cửa sổ cấu hình bằng cách nhấn nút **
 
 Khi chọn chế độ tự động, Plugin cung cấp 6 phương pháp tính ngưỡng:
 
-1. **Bách phân vị P10 (Mặc định thử nghiệm)**: Lấy giá trị bách phân vị thứ 10 của phân bố SAVI trong tập mẫu công viên. Giúp giữ lại hầu hết các dạng thảm thực vật công viên trong khi loại trừ các điểm dị biệt mặt lát.
+1. **Bách phân vị P10 (Mặc định thử nghiệm)**: Lấy giá trị bách phân vị thứ 10 của phân bố SAVI trong tập mẫu công viên. Đây là phương pháp mặc định được lựa chọn trong cấu hình nghiên cứu/thử nghiệm hiện tại, giúp giữ lại hầu hết các dạng thảm thực vật công viên trong khi loại trừ các điểm dị biệt mặt lát.
 2. **Mean - 1.0 * Std**: Ngưỡng bằng giá trị trung bình trừ 1 lần độ lệch chuẩn ($\mu - 1.0\sigma$).
 3. **Mean - 0.5 * Std**: Ngưỡng bằng giá trị trung bình trừ 0.5 lần độ lệch chuẩn ($\mu - 0.5\sigma$).
 4. **Median (Trung vị)**: Lấy giá trị trung vị P50 của phân bố SAVI trong công viên.
@@ -60,13 +60,13 @@ P_{target,i} = \frac{S_i}{C}
 $$
 
 Trong đó:
-- $S_i$: Diện tích mảng xanh $i$ ($    ext{m}^2$).
-- $C$: **Chỉ tiêu diện tích mảng xanh bình quân đầu người** (mặc định $6.0\text{ m}^2/\text{người}$).
+- $S_i$: Diện tích mảng xanh $i$ ($\text{m}^2$).
+- $C$: **Chỉ tiêu diện tích mảng xanh bình quân đầu người** (mặc định tham chiếu $6.0\text{ m}^2/\text{người}$).
 - $P_{target,i}$: Quy mô dân số phục vụ mục tiêu (số người tối đa mà mảng xanh có thể phục vụ theo chỉ tiêu).
 
 ### 3.2. Giới hạn trên của miền tìm kiếm ($R_{\max}$)
 
-- **$R_{\max}$ (Bán kính phục vụ tối đa)**: Đóng vai trò là **giới hạn trên của miền tìm kiếm** $[0, R_{\max}]$ trong thuật toán (mặc định $300\text{ m}$).
+- **$R_{\max}$ (Bán kính phục vụ tối đa)**: Đóng vai trò là **giới hạn trên của miền tìm kiếm** $[0, R_{\max}]$ trong thuật toán (mặc định tham chiếu $300\text{ m}$).
 - Khoảng cách được mô hình hóa theo **khoảng cách hình học Euclid**, không đại diện cho cự ly đi bộ thực tế theo mạng lưới giao thông.
 - $R_{\max}$ không phải là kết quả cố định hay quy chuẩn phổ quát cho mọi mảng xanh, mà là cận trên để khống chế không gian tìm kiếm phù hợp với phạm vi nghiên cứu.
 
@@ -85,7 +85,9 @@ Trong đó $P_i(R)$ là tổng dân số được phân bổ (`POP_ALLOC`) nằm
 Thuật toán kiểm tra điều kiện và áp dụng tìm kiếm nhị phân (**Binary Search**) khi cần thiết:
 
 1. **Trường hợp `NO_SOLUTION` ($R^* = 0\text{ m}$)**:
-   - Nếu ngay tại khoảng cách $R = 0\text{ m}$ (ngay bên trong hoặc sát mảng xanh) mà $P_i(0) > P_{target,i}$, mảng xanh không đủ diện tích để đáp ứng chỉ tiêu $C$ cho dân số lân cận ngay tại nguồn. Bán kính phục vụ được gán bằng $0\text{ m}$.
+   - Xảy ra khi ngay tại khoảng cách $R = 0\text{ m}$, tổng dân số được phân bổ nằm trong phạm vi của mảng xanh đã lớn hơn quy mô phục vụ mục tiêu:
+     $$P_i(0) > P_{target,i}$$
+   - Khi đó, không tồn tại bán kính thỏa điều kiện trong miền tìm kiếm $[0, R_{\max}]$. Bán kính phục vụ được gán bằng $0\text{ m}$. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.
 2. **Trường hợp `RMAX` ($R^* = R_{\max}$)**:
    - Nếu tại giới hạn trên $R = R_{\max}$ mà vẫn thỏa mãn $P_i(R_{\max}) \le P_{target,i}$, mảng xanh có quy mô diện tích đủ lớn để phục vụ toàn bộ dân số lân cận trong bán kính tối đa. Bán kính phục vụ được gán bằng $R_{\max}$ (mặc định $300\text{ m}$).
 3. **Trường hợp `BINARY_SEARCH`**:
@@ -98,9 +100,9 @@ Thuật toán kiểm tra điều kiện và áp dụng tìm kiếm nhị phân (
 
 ## 4. Tham số kỹ thuật khác
 
-- **Ngưỡng phân tách nước MNDWI (`0.0`)**: Các pixel có chỉ số $\text{MNDWI} > 0.0$ được xác định là mặt nước và được loại trừ hoàn toàn trước khi tính chỉ số SAVI.
+- **Ngưỡng phân tách nước MNDWI (`0.0`)**: Giá trị mặc định được sử dụng trong cấu hình nghiên cứu/thử nghiệm hiện tại. Các pixel có chỉ số $\text{MNDWI} > 0.0$ được xác định là mặt nước và được loại trừ hoàn toàn trước khi tính chỉ số SAVI.
 - **Hệ số SAVI $L$ (`0.5`)**: Giá trị chuẩn hóa giúp triệt tiêu tán xạ phản xạ từ nền đất hở trong môi trường đô thị.
-- **Diện tích mảng xanh tối thiểu (`5000 m²`)**: Áp dụng cho các mảng xanh độc lập **ngoài công viên** (tương đương 50 pixel $10\text{m} \times 10\text{m}$) nhằm lọc bỏ cây xanh vườn nhà nhỏ lẻ, dải phân cách hẹp hoặc bóng cây trên đường. Toàn bộ mảng xanh nằm trong ranh công viên luôn được bảo toàn nguyên vẹn.
+- **Diện tích mảng xanh tối thiểu (`5000 m²`)**: Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu áp dụng cho các mảng xanh độc lập **ngoài công viên** (tương đương 50 pixel $10\text{m} \times 10\text{m}$) nhằm lọc bỏ cây xanh vườn nhà nhỏ lẻ, dải phân cách hẹp hoặc bóng cây trên đường. Toàn bộ mảng xanh nằm trong ranh công viên luôn được bảo toàn nguyên vẹn.
 - **Sai số hội tụ (Tolerance = `10 m`)**: Điều kiện dừng của Binary Search, đồng bộ với độ phân giải lưới 10 m của ảnh viễn thám Sentinel-2.
 
 ---
@@ -117,7 +119,7 @@ Thuật toán kiểm tra điều kiện và áp dụng tìm kiếm nhị phân (
 - **Bách phân vị tùy chỉnh**: Khi muốn thử nghiệm các mức ngưỡng phân tách chặt chẽ hơn ($P_{15}$, $P_{20}$) hoặc bao quát hơn ($P_5$).
 
 ### 🔵 Nên giữ mặc định
-- **Ngưỡng MNDWI (`0.0`)**: Chuẩn hóa cho ảnh Sentinel-2 L2A.
+- **Ngưỡng MNDWI (`0.0`)**: Giá trị tham chiếu ổn định trong thử nghiệm ảnh Sentinel-2 L2A.
 - **Hệ số $L$ (`0.5`)**: Giá trị phổ biến và ổn định của chỉ số SAVI.
 - **Sai số hội tụ (`10 m`)**: Tương ứng với kích thước 1 pixel 10 m của ảnh Sentinel-2.
 

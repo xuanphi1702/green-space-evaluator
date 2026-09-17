@@ -18,7 +18,7 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 ## 2. Bản chất dữ liệu dấu vết công trình xây dựng (Footprint)
 
 !!! info "Đại diện cho không gian xây dựng vật lý"
-    1. **Dữ liệu Google Open Buildings / OSM:** Đây là tập dữ liệu nhận diện hình học chân công trình xây dựng từ không gian viễn thám.
+    1. **Dữ liệu Google Open Buildings:** Đây là tập dữ liệu nhận diện hình học chân công trình xây dựng từ ảnh vệ tinh độ phân giải cao bằng mô hình học máy.
     2. **Không đồng nhất với nhà ở:** Dữ liệu footprint đại diện cho **không gian xây dựng vật lý (built space)**, không được đồng nhất hoàn toàn với dữ liệu nhà ở dân sinh, nơi cư trú, số căn hộ hay số hộ gia đình (vì có thể bao gồm nhà xưởng, cơ quan, trường học, bệnh viện, thương mại dịch vụ).
 
 ---
@@ -34,7 +34,7 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 ## 4. Mô hình hóa khoảng cách Euclid
 
 !!! warning "Khoảng cách Euclid so với khoảng cách mạng lưới giao thông"
-    1. **Khoảng cách đường chim bay:** Vùng phục vụ của mảng xanh được tính toán dựa trên **khoảng cách hình học Euclid (Euclidean Distance)** tính từ biên mảng xanh ra xung quanh.
+    1. **Khoảng cách hình học Euclid:** Vùng phục vụ của mảng xanh được tính toán dựa trên **khoảng cách hình học Euclid (Euclidean Distance)** tính từ biên mảng xanh ra xung quanh.
     2. **Giới hạn ứng dụng:** Khoảng cách này không phản ánh cự ly đi bộ thực tế dọc theo mạng lưới đường giao thông đô thị và chưa xét đến các rào cản vật lý như tường rào, sông ngòi chia cắt hoặc cổng vào công viên.
 
 ---
@@ -50,7 +50,7 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
        - Chỉ tiêu diện tích mảng xanh bình quân đầu người ($C$);
        - Giới hạn trên của miền tìm kiếm ($R_{\max}$).
     3. **Bản chất khoa học của $R^*$:** $R^*$ là **bán kính phục vụ lớn nhất trong miền tìm kiếm thỏa mãn điều kiện của mô hình**.
-    4. **Giới hạn $R_{\max}$:** Mặc định $300\text{ m}$ đóng vai trò là cận trên để khống chế phạm vi tìm kiếm của thuật toán, không phải là quy chuẩn áp đặt cho mọi không gian xanh.
+    4. **Giới hạn $R_{\max}$:** Mặc định tham chiếu $300\text{ m}$ đóng vai trò là cận trên để khống chế phạm vi tìm kiếm của thuật toán trong cấu hình nghiên cứu/thử nghiệm, không phải là quy chuẩn áp đặt cho mọi không gian xanh.
 
 ---
 

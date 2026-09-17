@@ -59,10 +59,9 @@ Plugin dừng lại ở Module 1 và thông báo:
 ✗ Thiếu các kênh Sentinel-2 bắt buộc: [B03, B04, B08, B11] (cần tối thiểu B03, B04, B08, B11 để tính MNDWI và SAVI)!
 ```
 
-### Cách xử lý
-- Đảm bảo chọn đủ tối thiểu 4 tệp kênh phổ của cùng một cảnh chụp Sentinel-2 Level-2A.
-- Kiểm tra tên tệp hoặc tên layer trên QGIS có chứa đúng ký hiệu nhận diện kênh: `B03` (Green), `B04` (Red), `B08` (NIR), `B11` (SWIR).
-- Có thể đổi tên layer trong bảng điều khiển lớp của QGIS để Plugin nhận diện chính xác kênh ảnh.
+### Cơ chế nhận diện và cách xử lý
+- **Cơ chế:** Plugin nhận diện kênh dựa trên sự xuất hiện của ký hiệu nhận diện kênh (`B02`, `B03`, `B04`, `B08`, `B11`, `SCL`) trong **tên layer trên QGIS** hoặc **đường dẫn/tên tệp nguồn**.
+- **Cách xử lý:** Đảm bảo danh sách tệp chọn có đủ 4 kênh bắt buộc của cùng một cảnh chụp Sentinel-2 Level-2A. Nếu tệp nguồn đã bị đổi tên không còn chứa ký hiệu kênh, người dùng có thể đổi tên layer tương ứng trong bảng điều khiển lớp (Layers Panel) của QGIS để chứa đúng ký hiệu kênh tương ứng.
 
 ---
 
@@ -70,8 +69,8 @@ Plugin dừng lại ở Module 1 và thông báo:
 
 ### 4.1. Lớp ranh giới hành chính
 - **Hiện tượng**: `✗ Không thể nạp Vector ranh giới hành chính và dân số thống kê!`
-- **Nguyên nhân**: Tệp bị hỏng, đường dẫn chứa ký tự đặc biệt hoặc lớp đang bị khóa bởi chương trình khác. Lớp chưa được chuyển về hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét).
-- **Cách xử lý**: Đảm bảo lớp mở được trong QGIS, có hệ tọa độ phẳng phù hợp (ví dụ: VN-2000 kinh tuyến trục địa phương hoặc UTM) và cấu trúc hình học hợp lệ. Có thể dùng công cụ *Fix Geometries* trong QGIS để sửa lỗi polygon tự cắt.
+- **Nguyên nhân**: Tệp bị hỏng, đường dẫn chứa ký tự đặc biệt hoặc lớp đang bị khóa bởi chương trình khác.
+- **Cách xử lý**: Đảm bảo lớp mở được trong QGIS, có cấu trúc hình học hợp lệ. Khuyến nghị lớp nên ở hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét như VN-2000 kinh tuyến trục địa phương hoặc UTM). Có thể dùng công cụ *Fix Geometries* trong QGIS để sửa lỗi polygon tự cắt.
 
 ### 4.2. Lớp công viên/vườn hoa
 - **Hiện tượng**: `✗ Không thể nạp Vector polygon công viên/vườn hoa!`
@@ -79,7 +78,7 @@ Plugin dừng lại ở Module 1 và thông báo:
 
 ### 4.3. Lớp dấu vết công trình xây dựng (Footprint)
 - **Hiện tượng**: `✗ Không thể nạp Vector dấu vết công trình xây dựng!`
-- **Cách xử lý**: Đảm bảo lớp footprint (Google Open Buildings / OSM) có hình học polygon hợp lệ và bao phủ không gian xây dựng trong khu vực nghiên cứu.
+- **Cách xử lý**: Đảm bảo lớp footprint (Google Open Buildings) có hình học polygon hợp lệ và bao phủ không gian xây dựng trong khu vực nghiên cứu.
 
 ---
 
@@ -112,10 +111,10 @@ Nhật ký tiến trình báo lỗi:
 
 ### 6.2. Trường hợp NO_SOLUTION ($R^* = 0\text{ m}$)
 - **Hiện tượng**: Trong bảng thống kê mảng xanh hoặc nhật ký tiến trình xuất hiện một số mảng xanh có trạng thái `NO_SOLUTION` và bán kính $R^* = 0\text{ m}$.
-- **Bản chất khoa học**: Đây **không phải là lỗi phần mềm**. Tình trạng này xảy ra khi mảng xanh có quy mô diện tích quá nhỏ ($S_i$ nhỏ) dẫn đến quy mô dân số phục vụ mục tiêu thấp ($P_{target,i} = S_i / C$), trong khi mật độ xây dựng và dân số phân bổ ngay sát bên mảng xanh ($R = 0\text{ m}$) đã lớn hơn $P_{target,i}$. Theo định nghĩa của mô hình, mảng xanh này không tìm thấy bán kính phục vụ thỏa điều kiện trong khoảng $[0, R_{\max}]$.
+- **Bản chất khoa học**: Đây **không phải là lỗi phần mềm**. `NO_SOLUTION` xảy ra khi ngay tại $R = 0\text{ m}$, tổng dân số được phân bổ nằm trong phạm vi phục vụ của mảng xanh đã lớn hơn quy mô dân số phục vụ mục tiêu ($P_i(0) > P_{target,i}$). Khi đó, không tồn tại bán kính thỏa điều kiện trong miền $[0, R_{\max}]$. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.
 - **Cách xử lý**:
-  - Không tùy tiện hạ chỉ tiêu $C$ chỉ để tạo ra bán kính phục vụ.
-  - Đây là bằng chứng khoa học cho thấy mảng xanh quy mô quá nhỏ không đủ khả năng phục vụ dân số xung quanh theo chỉ tiêu quy chuẩn đề ra.
+  - Không tùy tiện hạ chỉ tiêu $C$ chỉ để tạo ra bán kính phục vụ nếu không có căn cứ quy chuẩn phù hợp.
+  - Đây là kết quả mô hình hóa phản ánh tương quan không gian giữa quy mô mảng xanh và mật độ dân số phân bổ lân cận tại nguồn.
 
 ---
 
@@ -134,4 +133,4 @@ Plugin báo lỗi khi ghi tệp kết quả ra đĩa (đặc biệt là tệp Ex
 1. Đóng toàn bộ các tệp kết quả đang mở trong Excel hoặc các chương trình đọc ngoài.
 2. Nếu lớp kết quả đang được nạp trong QGIS, nhấn chuột phải vào lớp và chọn *Remove Layer* trước khi chạy lại.
 3. Chọn một tên tệp mới hoặc lưu sang một thư mục mới.
-4. Có thể để trống đường dẫn lưu để Plugin tạo các lớp kết quả tạm thời (Temporary Layers) trong bộ nhớ QGIS.
+4. Có thể để trống đường dẫn lưu để Plugin tạo các tệp kết quả tạm thời trong thư mục tạm của hệ thống (`tempfile.gettempdir()`).

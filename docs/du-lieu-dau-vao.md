@@ -11,9 +11,9 @@ Trang này hướng dẫn chi tiết về **danh mục 4 nhóm dữ liệu đầ
 | STT | Nhóm dữ liệu | Dạng dữ liệu | Vai trò kỹ thuật | Yêu cầu chuẩn bị |
 |---|---|---|---|---|
 | **1** | **Ảnh Sentinel-2** | Raster đa kênh (`.tif`, `.jp2`) | Tính toán chỉ số phổ MNDWI, SAVI để bóc tách mặt nước và mảng xanh thực vật | Đầy đủ các kênh bắt buộc (**B03, B04, B08, B11**); tùy chọn **B02, SCL**; định dạng GeoTIFF hoặc JPEG2000 |
-| **2** | **Ranh giới hành chính và dân số thống kê** | Vector Polygon | Khung tham chiếu không gian (CRS, phạm vi) và cung cấp số liệu dân số thống kê chính thức của từng đơn vị hành chính | Hệ tọa độ phẳng (Projected CRS, đơn vị mét), hình học hợp lệ; chứa trường thuộc tính dân số thống kê |
+| **2** | **Ranh giới hành chính và dân số thống kê** | Vector Polygon | Khung tham chiếu không gian (CRS, phạm vi) và cung cấp số liệu dân số thống kê chính thức của từng đơn vị hành chính | Hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét); chứa trường thuộc tính dân số thống kê |
 | **3** | **Công viên/vườn hoa** | Vector Polygon | Vùng mẫu trích xuất phân bố SAVI xác định ngưỡng thực vật và bảo toàn mảng xanh công viên | Vector polygon phạm vi công viên/vườn hoa trong khu vực nghiên cứu |
-| **4** | **Dấu vết công trình xây dựng (Footprint)** | Vector Polygon | Đại diện cho không gian xây dựng vật lý; cơ sở phân bổ dân số thống kê theo không gian (`POP_ALLOC`) | Vector polygon dấu vết chân công trình xây dựng (Google Open Buildings, OSM hoặc tương đương) |
+| **4** | **Dấu vết công trình xây dựng (Footprint)** | Vector Polygon | Đại diện cho không gian xây dựng vật lý; cơ sở phân bổ dân số thống kê theo không gian (`POP_ALLOC`) | Vector polygon dấu vết chân công trình xây dựng (Google Open Buildings) |
 
 ---
 
@@ -24,6 +24,7 @@ Trang này hướng dẫn chi tiết về **danh mục 4 nhóm dữ liệu đầ
 Plugin xử lý ảnh phản xạ bề mặt Sentinel-2 để nhận diện mặt nước và thảm thực vật mảng xanh:
 
 - **Loại sản phẩm**: Sentinel-2 **Level-2A (L2A)** (sản phẩm đã hiệu chỉnh khí quyển Bottom of Atmosphere - BOA).
+- **Cơ chế nhận diện kênh**: Plugin tự động nhận diện các kênh dựa trên chuỗi văn bản nhận diện xuất hiện trong **tên layer trên QGIS** hoặc **đường dẫn/tên tệp nguồn** (ví dụ: `B02`, `B03`, `B04`, `B08`, `B11`, `SCL`).
 - **Các kênh phổ bắt buộc**:
     - **B03** (Green - Xanh lục, 10 m) và **B11** (SWIR - Hồng ngoại sóng ngắn, 20 m): Dùng để tính toán chỉ số khác biệt nước cải tiến **MNDWI**:
 
@@ -56,7 +57,9 @@ Plugin xử lý ảnh phản xạ bề mặt Sentinel-2 để nhận diện mặ
 Lớp ranh giới hành chính đóng vai trò là **khung tham chiếu không gian** và nguồn cung cấp **số liệu dân số thống kê chính thức**:
 
 - **Bản chất dữ liệu**: Lớp vector polygon phân chia ranh giới các đơn vị hành chính (ví dụ: phường, xã, thị trấn hoặc quận, huyện) trong phạm vi nghiên cứu.
-- **Hệ tọa độ (CRS)**: **Bắt buộc sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS)** có đơn vị đo lường bằng mét (ví dụ: VN-2000 kinh tuyến trục địa phương hoặc UTM tương ứng). Việc này đảm bảo tính toán khoảng cách Euclid (m) và diện tích (m², ha) diễn ra chính xác. Plugin lấy CRS của lớp này làm chuẩn không gian cho toàn bộ quy trình.
+- **Cơ chế xử lý CRS trong Plugin**:
+    - Plugin lấy CRS của lớp ranh giới hành chính làm hệ tọa độ tham chiếu chuẩn (`crs_vn2000`) cho toàn bộ quy trình, đồng thời tự động tái chiếu (reproject) và cắt (clip) các kênh ảnh Sentinel-2 cùng các lớp vector khác theo hệ tọa độ này.
+    - **Khuyến nghị kỹ thuật:** Lớp ranh giới hành chính **nên sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét)** như VN-2000 kinh tuyến trục địa phương hoặc UTM. Nếu lớp đang ở hệ tọa độ địa lý (đơn vị độ), Plugin sẽ phát cảnh báo nhắc nhở vì các phép tính biến đổi khoảng cách Euclid (m) và diện tích (m², ha) cần đơn vị mét để đạt độ chính xác.
 - **Dân số thống kê (`POP_STAT`)**:
     - Trên giao diện Plugin, người dùng chỉ định trường thuộc tính chứa số liệu dân số thống kê chính thức của từng đơn vị hành chính.
     - Plugin tự động đọc và chuẩn hóa dữ liệu sang trường chuẩn nội bộ `POP_STAT`.
@@ -78,7 +81,7 @@ Lớp ranh giới hành chính đóng vai trò là **khung tham chiếu không g
 
 ### 2.4. Dấu vết công trình xây dựng (Footprint)
 
-- **Bản chất dữ liệu**: Google Open Buildings hoặc OpenStreetMap (OSM) là tập dữ liệu nhận diện hình học **dấu vết chân công trình xây dựng (building footprints)** từ ảnh vệ tinh độ phân giải cao.
+- **Bản chất dữ liệu**: Trong nghiên cứu hiện tại, nguồn dữ liệu được sử dụng là **Google Open Buildings** – tập dữ liệu nhận diện hình học **dấu vết chân công trình xây dựng (building footprints)** từ ảnh vệ tinh độ phân giải cao bằng trí tuệ nhân tạo. *(Lưu ý: Khác với dữ liệu OpenStreetMap (OSM) là bản đồ đóng góp bởi cộng đồng với độ hoàn thiện tùy khu vực, Google Open Buildings cung cấp các polygon dấu vết vật lý đồng nhất).*
 - **Vai trò đại diện không gian xây dựng**: Footprint đại diện cho **không gian xây dựng vật lý (physical built space)**, phản ánh quy mô và vị trí các khối kết cấu xây dựng trên bề mặt đô thị.
 - **Cơ chế phân tách hình học (footprint-part)**:
     - Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân tách thành các phần tử hình học nhỏ hơn gọi là `footprint-part` thuộc về từng đơn vị hành chính.
@@ -105,7 +108,7 @@ Lớp ranh giới hành chính đóng vai trò là **khung tham chiếu không g
 
 Trước khi nhấn nút **Phân tích**, hãy kiểm tra lại các mục sau:
 
-- [ ] **Hệ tọa độ chuẩn**: Lớp ranh giới hành chính sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét) phù hợp với khu vực nghiên cứu.
+- [ ] **Hệ tọa độ chuẩn**: Lớp ranh giới hành chính nên sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét) phù hợp với khu vực nghiên cứu.
 - [ ] **Dữ liệu vector hợp lệ**: Các lớp vector không bị lỗi tự cắt hình học (Self-intersection); có thể chạy công cụ *Fix Geometries* trong QGIS nếu cần.
 - [ ] **Đầy đủ 4 nhóm dữ liệu**: Đã chọn đủ 4 nhóm trên tab *Dữ liệu đầu vào*.
 - [ ] **Kênh Sentinel-2 đầy đủ**: Tối thiểu gồm các kênh B03, B04, B08, B11.

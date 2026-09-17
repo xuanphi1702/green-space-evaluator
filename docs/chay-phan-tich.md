@@ -21,7 +21,7 @@ Người dùng có thể mở giao diện Plugin trên QGIS theo một trong hai
 
 Cửa sổ chính của Plugin hiển thị 3 tab chức năng:
 - **Dữ liệu đầu vào**: Nạp 4 nhóm dữ liệu không gian.
-- **Sản phẩm đầu ra**: Chỉ định đường dẫn lưu trữ cho 5 sản phẩm chính.
+- **Sản phẩm đầu ra**: Chỉ định đường dẫn lưu trữ cho 5 sản phẩm chính và bảng báo cáo bổ sung.
 - **Nhật ký tiến trình**: Theo dõi tiến độ, thông báo và tổng kết thời gian thực thi.
 
 ---
@@ -40,7 +40,7 @@ Tại thẻ **Dữ liệu đầu vào**, nạp lần lượt 4 nhóm dữ liệu
    - Chọn layer polygon ranh giới hành chính trong danh sách thả xuống.
    - Tại ô chọn trường dân số, chọn trường thuộc tính chứa số liệu dân số thống kê chính thức của từng đơn vị hành chính. Plugin sẽ tự động chuẩn hóa nội bộ thành trường `POP_STAT`.
 3. **Công viên/vườn hoa**: Chọn layer polygon công viên, vườn hoa hiện hữu làm vùng mẫu trích xuất SAVI và bảo toàn mảng xanh.
-4. **Dấu vết công trình xây dựng (Footprint)**: Chọn layer polygon công trình (Google Open Buildings, OSM) đại diện cho không gian xây dựng vật lý.
+4. **Dấu vết công trình xây dựng (Footprint)**: Chọn layer polygon công trình (Google Open Buildings) đại diện cho không gian xây dựng vật lý.
 
 ---
 
@@ -55,7 +55,7 @@ Nhấn nút **Cài đặt** (biểu tượng bánh răng ở góc trên bên ph�
 
 ### Tab 1: Sản phẩm trung gian
 - Cho phép người dùng chỉ định đường dẫn lưu trữ các tệp trung gian nếu có nhu cầu lưu trữ tệp riêng để phục vụ nghiên cứu hoặc kiểm tra chất lượng (ví dụ: Sentinel-2 Stack, MNDWI, SAVI, Mặt nước, SAVI loại nước, Thực vật thô, Histogram, Dấu vết công trình phân bổ dân số, Bảng thống kê mảng xanh).
-- Nếu để trống, các sản phẩm trung gian sẽ được tự động xử lý dưới dạng tệp tạm trong bộ nhớ và tự giải phóng sau khi phân tích xong.
+- Nếu để trống, các sản phẩm trung gian sẽ được tự động tạo dưới dạng tệp tạm thời trong thư mục tạm của hệ điều hành (`tempfile.gettempdir()`) và nạp vào phiên làm việc.
 
 ### Tab 2: Tùy chỉnh nâng cao
 - Thiết lập các tham số kỹ thuật: Ngưỡng MNDWI (`0.0`), Hệ số SAVI $L$ (`0.5`), Phương thức và phương pháp xác định ngưỡng SAVI (`P10`), Diện tích mảng xanh tối thiểu ngoài công viên (`5000 m²`), Bán kính phục vụ tối đa $R_{\max}$ (`300 m`), Chỉ tiêu diện tích mảng xanh bình quân đầu người $C$ (`6.0 m²/người`), Sai số hội tụ (`10 m`).
@@ -65,22 +65,25 @@ Nhấn nút **Cài đặt** (biểu tượng bánh răng ở góc trên bên ph�
 
 ## 5. Thao tác tại tab Sản phẩm đầu ra
 
-Chuyển sang thẻ **Sản phẩm đầu ra** để chỉ định đường dẫn lưu cho 5 sản phẩm chính:
+Chuyển sang thẻ **Sản phẩm đầu ra** để chỉ định đường dẫn lưu:
 
 <div class="guide-figure" markdown>
 ![Tab Sản phẩm đầu ra của Plugin](images/san_pham_dau_ra.png)
 <div class="guide-caption"><strong>Hình 3.</strong> Giao diện chỉ định nơi lưu 5 sản phẩm đầu ra chính</div>
 </div>
 
+### 5 sản phẩm đầu ra chính:
 1. **Mảng xanh đô thị** (định dạng `.tif`).
 2. **Vùng phục vụ mảng xanh (R\*)** (định dạng `.gpkg`, `.shp` hoặc `.geojson`).
 3. **Không gian xây dựng trong vùng phục vụ** (định dạng `.gpkg`, `.shp` hoặc `.geojson`).
 4. **Không gian xây dựng ngoài vùng phục vụ** (định dạng `.gpkg`, `.shp` hoặc `.geojson`).
 5. **Thống kê theo đơn vị hành chính** (định dạng `.gpkg`, `.shp` hoặc `.geojson`).
-6. **Bảng thống kê theo đơn vị hành chính** (tùy chọn định dạng `.xlsx` hoặc `.csv`).
 
-!!! tip "Cơ chế tạo lớp tạm thời (Temporary Layers)"
-    Nếu người dùng **để trống đường dẫn**, Plugin sẽ tự động tạo các lớp kết quả tạm thời trong bộ nhớ và nạp trực tiếp lên bản đồ QGIS. Khuyến nghị chỉ định đường dẫn lưu mới để tránh bị khóa tệp khi ghi đè các sản phẩm cũ đang mở.
+### Bảng báo cáo thống kê bổ sung:
+- **Bảng thống kê theo đơn vị hành chính** (tùy chọn định dạng `.xlsx` hoặc `.csv`).
+
+!!! tip "Cơ chế tạo tệp kết quả tạm thời"
+    Nếu người dùng **để trống đường dẫn**, Plugin sẽ tự động tạo các tệp kết quả tạm thời trong thư mục tạm của hệ điều hành (`tempfile.gettempdir()`) và nạp trực tiếp lên bản đồ QGIS. Khuyến nghị người dùng chỉ định đường dẫn lưu mới để tránh bị khóa tệp khi ghi đè các sản phẩm cũ đang mở.
 
 ---
 
@@ -95,7 +98,7 @@ Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread k
 - **Module 1 (Tiền xử lý và chuẩn hóa dữ liệu):**
   - Kiểm tra tính hợp lệ hình học các lớp vector.
   - Chuẩn hóa trường dân số thống kê thành `POP_STAT`.
-  - Đồng bộ hệ tọa độ phẳng dự chiếu (mét) và tạo ảnh Sentinel-2 Stack 10 m.
+  - Tiếp nhận hệ tọa độ phẳng dự chiếu tham chiếu (mét) và tạo ảnh Sentinel-2 Stack 10 m.
 - **Module 2 (Chỉ số phổ và phân tách mảng xanh):**
   - Tính MNDWI và phân tách mặt nước.
   - Tính SAVI và xác định ngưỡng thực vật (tự động từ mẫu công viên hoặc thủ công).
@@ -123,13 +126,13 @@ Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread k
 
 Plugin tích hợp cơ chế tự động kiểm tra đối soát số liệu khắt khe trước khi kết thúc:
 
-1. **POPULATION BALANCE**: Tổng dân số phân bổ trên các footprint-part bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính.
-2. **PATCH POPULATION BALANCE**: Dân số được phân bổ cho các mảng xanh không vượt quá quy mô phục vụ mục tiêu ($P_i(R^*) \le P_{target,i}$).
-3. **WARD BUILDING AREA BALANCE**: Tổng diện tích xây dựng phục vụ và diện tích xây dựng thiếu xanh bằng đúng tổng diện tích xây dựng của phường/xã.
-4. **INPUT FOOTPRINT AREA BALANCE**: Tổng diện tích các footprint-part sau khi cắt bằng đúng diện tích footprint công trình đầu vào.
-5. **FOOTPRINT COUNT BALANCE**: Số lượng đối tượng footprint được bảo toàn đầy đủ qua các phép phân tách hình học.
-6. **PATCH BUILDING AREA BALANCE**: Cân bằng diện tích xây dựng được gán cho các mảng xanh độc lập.
-7. **EXCLUSIVE PATCH ASSIGNMENT**: Xác nhận mỗi footprint-part chỉ được gán độc quyền cho tối đa một mảng xanh duy nhất, không bị trùng lặp.
+1. **POPULATION BALANCE**: Tổng dân số phân bổ trên các footprint-part bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính ($\sum T\_DanSo = \sum D\_DaPhucVu + \sum D\_ThieuXanh$).
+2. **PATCH POPULATION BALANCE**: Dân số được phân bổ cho các mảng xanh khớp với tổng dân số được phục vụ theo phường ($\sum SERVED\_POP(PATCH) = \sum D\_DaPhucVu$).
+3. **WARD BUILDING AREA BALANCE**: Tổng diện tích xây dựng phục vụ và diện tích xây dựng thiếu xanh bằng đúng tổng diện tích xây dựng của phường/xã ($\sum S\_XayDung = \sum S\_DaPhucVu + \sum S\_ThieuXanh$).
+4. **INPUT FOOTPRINT AREA BALANCE**: Tổng diện tích các footprint-part sau khi cắt bằng đúng diện tích footprint công trình đầu vào ($\sum AREA(input) = \sum AREA(served) + \sum AREA(outside)$).
+5. **FOOTPRINT COUNT BALANCE**: Xác nhận toàn bộ footprint-part đầu vào của bước phân tích cuối được phân loại đầy đủ thành served hoặc outside ($N_{\text{input}} = N_{\text{served}} + N_{\text{outside}}$), không bị mất hoặc tạo thêm đối tượng ngoài quy trình.
+6. **PATCH BUILDING AREA BALANCE**: Cân bằng diện tích xây dựng được gán cho các mảng xanh độc lập ($\sum SERVED\_BUILDING\_AREA(PATCH) = \sum AREA(cons\_in\_buffer)$).
+7. **EXCLUSIVE PATCH ASSIGNMENT**: Xác nhận mỗi footprint-part chỉ được gán độc quyền cho tối đa một mảng xanh duy nhất, SERVED $\cap$ OUTSIDE = $\emptyset$.
 8. **GREEN AREA BALANCE**: Tổng diện tích mảng xanh được phân bổ cho các đơn vị hành chính bằng đúng tổng diện tích mảng xanh toàn khu vực nghiên cứu.
 
 ---

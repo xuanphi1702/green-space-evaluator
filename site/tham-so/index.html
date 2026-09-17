@@ -1279,7 +1279,7 @@
 <td><strong>Ngưỡng MNDWI</strong></td>
 <td style="text-align: right;"><code>0.0</code></td>
 <td style="text-align: center;">—</td>
-<td>Phân tách pixel mặt nước khỏi bề mặt đất liền. Pixel có <span class="arithmatex">\(\text{MNDWI} &gt; 0.0\)</span> được xác định là nước và loại trừ trước khi tính SAVI.</td>
+<td>Giá trị mặc định được sử dụng trong cấu hình nghiên cứu/thử nghiệm hiện tại. Pixel có <span class="arithmatex">\(\text{MNDWI} &gt; 0.0\)</span> được xác định là nước và loại trừ trước khi tính SAVI.</td>
 </tr>
 <tr>
 <td><strong>Chỉ số phổ</strong></td>
@@ -1300,7 +1300,7 @@
 <td><strong>Phương pháp xác định ngưỡng SAVI</strong></td>
 <td style="text-align: right;"><code>Bách phân vị P10 (Mặc định)</code></td>
 <td style="text-align: center;">—</td>
-<td>Phương pháp thống kê áp dụng trên tập mẫu công viên khi chọn chế độ tự động.</td>
+<td>Phương pháp mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại áp dụng trên tập mẫu công viên khi chọn chế độ tự động.</td>
 </tr>
 <tr>
 <td><strong>Trích xuất mảng xanh</strong></td>
@@ -1314,14 +1314,14 @@
 <td><strong>Diện tích mảng xanh tối thiểu</strong></td>
 <td style="text-align: right;"><code>5000.0</code></td>
 <td style="text-align: center;">m²</td>
-<td>Ngưỡng lọc diện tích (<code>gdal.SieveFilter</code>) nhằm loại bỏ các mảng thực vật nhỏ lẻ ngoài công viên. Mảng xanh trong công viên luôn được bảo toàn.</td>
+<td>Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm loại bỏ các mảng thực vật nhỏ lẻ ngoài công viên. Mảng xanh trong công viên luôn được bảo toàn.</td>
 </tr>
 <tr>
 <td><strong>Vùng phục vụ</strong></td>
 <td><strong>Bán kính phục vụ tối đa (Rmax)</strong></td>
 <td style="text-align: right;"><code>300.0</code></td>
 <td style="text-align: center;">m</td>
-<td>Giới hạn trên của miền tìm kiếm bán kính phục vụ <span class="arithmatex">\([0, R_{\max}]\)</span> cho từng mảng xanh độc lập.</td>
+<td>Giới hạn trên của miền tìm kiếm bán kính phục vụ <span class="arithmatex">\([0, R_{\max}]\)</span> cho từng mảng xanh độc lập trong cấu hình nghiên cứu/thử nghiệm.</td>
 </tr>
 <tr>
 <td><strong>Vùng phục vụ</strong></td>
@@ -1349,7 +1349,7 @@
 <h3 id="22-cac-phuong-phap-thong-ke-mau-cong-vien">2.2. Các phương pháp thống kê mẫu công viên</h3>
 <p>Khi chọn chế độ tự động, Plugin cung cấp 6 phương pháp tính ngưỡng:</p>
 <ol>
-<li><strong>Bách phân vị P10 (Mặc định thử nghiệm)</strong>: Lấy giá trị bách phân vị thứ 10 của phân bố SAVI trong tập mẫu công viên. Giúp giữ lại hầu hết các dạng thảm thực vật công viên trong khi loại trừ các điểm dị biệt mặt lát.</li>
+<li><strong>Bách phân vị P10 (Mặc định thử nghiệm)</strong>: Lấy giá trị bách phân vị thứ 10 của phân bố SAVI trong tập mẫu công viên. Đây là phương pháp mặc định được lựa chọn trong cấu hình nghiên cứu/thử nghiệm hiện tại, giúp giữ lại hầu hết các dạng thảm thực vật công viên trong khi loại trừ các điểm dị biệt mặt lát.</li>
 <li><strong>Mean - 1.0 * Std</strong>: Ngưỡng bằng giá trị trung bình trừ 1 lần độ lệch chuẩn (<span class="arithmatex">\(\mu - 1.0\sigma\)</span>).</li>
 <li><strong>Mean - 0.5 * Std</strong>: Ngưỡng bằng giá trị trung bình trừ 0.5 lần độ lệch chuẩn (<span class="arithmatex">\(\mu - 0.5\sigma\)</span>).</li>
 <li><strong>Median (Trung vị)</strong>: Lấy giá trị trung vị P50 của phân bố SAVI trong công viên.</li>
@@ -1365,12 +1365,12 @@
 P_{target,i} = \frac{S_i}{C}
 \]</div>
 <p>Trong đó:
-- <span class="arithmatex">\(S_i\)</span>: Diện tích mảng xanh <span class="arithmatex">\(i\)</span> ($    ext{m}^2$).
-- <span class="arithmatex">\(C\)</span>: <strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người</strong> (mặc định <span class="arithmatex">\(6.0\text{ m}^2/\text{người}\)</span>).
+- <span class="arithmatex">\(S_i\)</span>: Diện tích mảng xanh <span class="arithmatex">\(i\)</span> (<span class="arithmatex">\(\text{m}^2\)</span>).
+- <span class="arithmatex">\(C\)</span>: <strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người</strong> (mặc định tham chiếu <span class="arithmatex">\(6.0\text{ m}^2/\text{người}\)</span>).
 - <span class="arithmatex">\(P_{target,i}\)</span>: Quy mô dân số phục vụ mục tiêu (số người tối đa mà mảng xanh có thể phục vụ theo chỉ tiêu).</p>
 <h3 id="32-gioi-han-tren-cua-mien-tim-kiem-r_max">3.2. Giới hạn trên của miền tìm kiếm (<span class="arithmatex">\(R_{\max}\)</span>)</h3>
 <ul>
-<li><strong><span class="arithmatex">\(R_{\max}\)</span> (Bán kính phục vụ tối đa)</strong>: Đóng vai trò là <strong>giới hạn trên của miền tìm kiếm</strong> <span class="arithmatex">\([0, R_{\max}]\)</span> trong thuật toán (mặc định <span class="arithmatex">\(300\text{ m}\)</span>).</li>
+<li><strong><span class="arithmatex">\(R_{\max}\)</span> (Bán kính phục vụ tối đa)</strong>: Đóng vai trò là <strong>giới hạn trên của miền tìm kiếm</strong> <span class="arithmatex">\([0, R_{\max}]\)</span> trong thuật toán (mặc định tham chiếu <span class="arithmatex">\(300\text{ m}\)</span>).</li>
 <li>Khoảng cách được mô hình hóa theo <strong>khoảng cách hình học Euclid</strong>, không đại diện cho cự ly đi bộ thực tế theo mạng lưới giao thông.</li>
 <li><span class="arithmatex">\(R_{\max}\)</span> không phải là kết quả cố định hay quy chuẩn phổ quát cho mọi mảng xanh, mà là cận trên để khống chế không gian tìm kiếm phù hợp với phạm vi nghiên cứu.</li>
 </ul>
@@ -1384,7 +1384,9 @@ R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{target,i} \right\}
 <p>Thuật toán kiểm tra điều kiện và áp dụng tìm kiếm nhị phân (<strong>Binary Search</strong>) khi cần thiết:</p>
 <ol>
 <li><strong>Trường hợp <code>NO_SOLUTION</code> (<span class="arithmatex">\(R^* = 0\text{ m}\)</span>)</strong>:</li>
-<li>Nếu ngay tại khoảng cách <span class="arithmatex">\(R = 0\text{ m}\)</span> (ngay bên trong hoặc sát mảng xanh) mà <span class="arithmatex">\(P_i(0) &gt; P_{target,i}\)</span>, mảng xanh không đủ diện tích để đáp ứng chỉ tiêu <span class="arithmatex">\(C\)</span> cho dân số lân cận ngay tại nguồn. Bán kính phục vụ được gán bằng <span class="arithmatex">\(0\text{ m}\)</span>.</li>
+<li>Xảy ra khi ngay tại khoảng cách <span class="arithmatex">\(R = 0\text{ m}\)</span>, tổng dân số được phân bổ nằm trong phạm vi của mảng xanh đã lớn hơn quy mô phục vụ mục tiêu:
+     $<span class="arithmatex">\(P_i(0) &gt; P_{target,i}\)</span>$</li>
+<li>Khi đó, không tồn tại bán kính thỏa điều kiện trong miền tìm kiếm <span class="arithmatex">\([0, R_{\max}]\)</span>. Bán kính phục vụ được gán bằng <span class="arithmatex">\(0\text{ m}\)</span>. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.</li>
 <li><strong>Trường hợp <code>RMAX</code> (<span class="arithmatex">\(R^* = R_{\max}\)</span>)</strong>:</li>
 <li>Nếu tại giới hạn trên <span class="arithmatex">\(R = R_{\max}\)</span> mà vẫn thỏa mãn <span class="arithmatex">\(P_i(R_{\max}) \le P_{target,i}\)</span>, mảng xanh có quy mô diện tích đủ lớn để phục vụ toàn bộ dân số lân cận trong bán kính tối đa. Bán kính phục vụ được gán bằng <span class="arithmatex">\(R_{\max}\)</span> (mặc định <span class="arithmatex">\(300\text{ m}\)</span>).</li>
 <li><strong>Trường hợp <code>BINARY_SEARCH</code></strong>:</li>
@@ -1397,9 +1399,9 @@ R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{target,i} \right\}
 <hr />
 <h2 id="4-tham-so-ky-thuat-khac">4. Tham số kỹ thuật khác</h2>
 <ul>
-<li><strong>Ngưỡng phân tách nước MNDWI (<code>0.0</code>)</strong>: Các pixel có chỉ số <span class="arithmatex">\(\text{MNDWI} &gt; 0.0\)</span> được xác định là mặt nước và được loại trừ hoàn toàn trước khi tính chỉ số SAVI.</li>
+<li><strong>Ngưỡng phân tách nước MNDWI (<code>0.0</code>)</strong>: Giá trị mặc định được sử dụng trong cấu hình nghiên cứu/thử nghiệm hiện tại. Các pixel có chỉ số <span class="arithmatex">\(\text{MNDWI} &gt; 0.0\)</span> được xác định là mặt nước và được loại trừ hoàn toàn trước khi tính chỉ số SAVI.</li>
 <li><strong>Hệ số SAVI <span class="arithmatex">\(L\)</span> (<code>0.5</code>)</strong>: Giá trị chuẩn hóa giúp triệt tiêu tán xạ phản xạ từ nền đất hở trong môi trường đô thị.</li>
-<li><strong>Diện tích mảng xanh tối thiểu (<code>5000 m²</code>)</strong>: Áp dụng cho các mảng xanh độc lập <strong>ngoài công viên</strong> (tương đương 50 pixel <span class="arithmatex">\(10\text{m} \times 10\text{m}\)</span>) nhằm lọc bỏ cây xanh vườn nhà nhỏ lẻ, dải phân cách hẹp hoặc bóng cây trên đường. Toàn bộ mảng xanh nằm trong ranh công viên luôn được bảo toàn nguyên vẹn.</li>
+<li><strong>Diện tích mảng xanh tối thiểu (<code>5000 m²</code>)</strong>: Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu áp dụng cho các mảng xanh độc lập <strong>ngoài công viên</strong> (tương đương 50 pixel <span class="arithmatex">\(10\text{m} \times 10\text{m}\)</span>) nhằm lọc bỏ cây xanh vườn nhà nhỏ lẻ, dải phân cách hẹp hoặc bóng cây trên đường. Toàn bộ mảng xanh nằm trong ranh công viên luôn được bảo toàn nguyên vẹn.</li>
 <li><strong>Sai số hội tụ (Tolerance = <code>10 m</code>)</strong>: Điều kiện dừng của Binary Search, đồng bộ với độ phân giải lưới 10 m của ảnh viễn thám Sentinel-2.</li>
 </ul>
 <hr />
@@ -1417,7 +1419,7 @@ R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{target,i} \right\}
 </ul>
 <h3 id="nen-giu-mac-inh">🔵 Nên giữ mặc định</h3>
 <ul>
-<li><strong>Ngưỡng MNDWI (<code>0.0</code>)</strong>: Chuẩn hóa cho ảnh Sentinel-2 L2A.</li>
+<li><strong>Ngưỡng MNDWI (<code>0.0</code>)</strong>: Giá trị tham chiếu ổn định trong thử nghiệm ảnh Sentinel-2 L2A.</li>
 <li><strong>Hệ số <span class="arithmatex">\(L\)</span> (<code>0.5</code>)</strong>: Giá trị phổ biến và ổn định của chỉ số SAVI.</li>
 <li><strong>Sai số hội tụ (<code>10 m</code>)</strong>: Tương ứng với kích thước 1 pixel 10 m của ảnh Sentinel-2.</li>
 </ul>
