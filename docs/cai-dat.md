@@ -8,7 +8,7 @@ Trang này hướng dẫn yêu cầu môi trường và các bước cài đặt
 
 Trước khi cài đặt, hãy đảm bảo môi trường làm việc đáp ứng các điều kiện sau:
 
-- **Phiên bản QGIS**: QGIS **3.28 LTR**, **3.34 LTR** hoặc **3.44+** (khuyến nghị sử dụng các phiên bản QGIS chuẩn LTR).
+- **Phiên bản QGIS**: QGIS **3.44.12+** (khuyến nghị sử dụng các phiên bản QGIS chuẩn LTR).
 - **Môi trường Python**: Python 3 (tự động tích hợp sẵn trong bộ cài đặt chuẩn của QGIS).
 - **Thư viện phụ thuộc**:
     - **Bắt buộc**: `GDAL/OGR`, `NumPy`, `Matplotlib`, `SciPy`. Các thư viện này thông thường đã được tích hợp sẵn trong môi trường Python của bộ cài đặt QGIS Desktop chuẩn.
