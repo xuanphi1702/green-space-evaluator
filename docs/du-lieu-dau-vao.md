@@ -82,11 +82,11 @@ Lớp ranh giới hành chính đóng vai trò là **khung tham chiếu không g
 ### 2.4. Dấu vết công trình xây dựng (Footprint)
 
 - **Bản chất dữ liệu**: Trong nghiên cứu hiện tại, nguồn dữ liệu được sử dụng là **Google Open Buildings** – tập dữ liệu nhận diện hình học **dấu vết chân công trình xây dựng (building footprints)** từ ảnh vệ tinh độ phân giải cao bằng mô hình học máy. *(Lưu ý: Khác với dữ liệu OpenStreetMap (OSM) là bản đồ đóng góp bởi cộng đồng với độ hoàn thiện tùy khu vực, Google Open Buildings cung cấp các polygon dấu vết vật lý đồng nhất).*
-- **Vai trò đại diện không gian xây dựng**: Footprint đại diện cho **không gian xây dựng vật lý (physical built space)**, phản ánh quy mô và vị trí các khối kết cấu xây dựng trên bề mặt đô thị.
-- **Cơ chế phân tách hình học (footprint-part)**:
-    - Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân tách thành các phần tử hình học nhỏ hơn gọi là `footprint-part` thuộc về từng đơn vị hành chính.
+- **Vai trò đại diện không gian xây dựng**: Dấu vết công trình đại diện cho **không gian xây dựng vật lý (physical built space)**, phản ánh quy mô và vị trí các khối kết cấu xây dựng trên bề mặt đô thị.
+- **Cơ chế phân tách hình học (phần dấu vết công trình)**:
+    - Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân tách thành các phần tử hình học nhỏ hơn gọi là phần dấu vết công trình thuộc về từng đơn vị hành chính.
 - **Công thức phân bổ dân số không gian**:
-    - Dân số thống kê chính thức của đơn vị hành chính ($P_u$) được phân bổ cho từng `footprint-part` ($b$) thuộc đơn vị hành chính $u$ theo tỷ lệ diện tích:
+    - Dân số thống kê chính thức của đơn vị hành chính ($P_u$) được phân bổ cho từng phần dấu vết công trình ($b$) thuộc đơn vị hành chính $u$ theo tỷ lệ diện tích:
 
         $$
         P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}
@@ -94,13 +94,13 @@ Lớp ranh giới hành chính đóng vai trò là **khung tham chiếu không g
 
     - Trong đó:
         - $P_u$: Dân số thống kê chính thức của đơn vị hành chính $u$ (`POP_STAT`).
-        - $A_{b,u}$: Diện tích của `footprint-part` $b$ nằm trong đơn vị hành chính $u$.
-        - $\sum_j A_{j,u}$: Tổng diện tích của tất cả các `footprint-part` nằm trong đơn vị hành chính $u$.
-        - $P_{b,u}$: Dân số được phân bổ cho `footprint-part` $b$ (lưu trong trường `POP_ALLOC`).
+        - $A_{b,u}$: Diện tích của phần dấu vết công trình $b$ nằm trong đơn vị hành chính $u$.
+        - $\sum_j A_{j,u}$: Tổng diện tích của tất cả các phần dấu vết công trình nằm trong đơn vị hành chính $u$.
+        - $P_{b,u}$: Dân số được phân bổ cho phần dấu vết công trình $b$ (lưu trong trường `POP_ALLOC`).
 
-!!! warning "Lưu ý phương pháp luận về POP_ALLOC và Footprint"
+!!! warning "Lưu ý phương pháp luận về POP_ALLOC và Dấu vết công trình"
     1. **`POP_ALLOC`** là **dân số được phân bổ theo không gian phục vụ mô hình hóa**, KHÔNG phải là dân số quan sát trực tiếp, kiểm kê hộ tịch hay điều tra thực địa tại từng công trình.
-    2. **Footprint** là **dấu vết công trình xây dựng**, KHÔNG đồng nhất hoàn toàn với nhà ở dân cư, số hộ gia đình hay nơi cư trú thực tế (vì có thể bao gồm nhà xưởng, công trình công cộng, thương mại, dịch vụ).
+    2. **Dấu vết công trình xây dựng** KHÔNG đồng nhất hoàn toàn với nhà ở dân cư, số hộ gia đình hay nơi cư trú thực tế (vì có thể bao gồm nhà xưởng, công trình công cộng, thương mại, dịch vụ).
 
 ---
 

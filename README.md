@@ -12,8 +12,8 @@ Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2,
 
 - **Tiền xử lý và chuẩn hóa dữ liệu**: Tự động kiểm tra tính hợp lệ hình học các lớp vector, chuẩn hóa trường dân số thống kê thành `POP_STAT`, tiếp nhận hệ tọa độ phẳng dự chiếu tham chiếu (đơn vị mét) và tạo ảnh Sentinel-2 Stack 10 m (hỗ trợ lọc mây SCL).
 - **Trích xuất mảng xanh từ ảnh Sentinel-2**: Tính toán chỉ số phổ MNDWI và SAVI, hỗ trợ tự động xác định ngưỡng SAVI từ lớp công viên mẫu (P10) hoặc nhập thủ công, phân tách mặt nước, lọc mảng xanh theo diện tích tối thiểu và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
-- **Mô hình hóa vùng phục vụ mảng xanh**: Phân bổ dân số thống kê xuống không gian xây dựng (`POP_ALLOC`), tính lưới khoảng cách Euclid từ biên mảng xanh, xác định quy mô dân số mục tiêu ($P_{target,i} = S_i / C$) và áp dụng thuật toán tìm kiếm nhị phân (Binary Search) xác định bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện mô hình.
-- **Phân tích không gian xây dựng**: Phân tách footprint công trình thành các phần hình học (`footprint-part`), phân loại công trình nằm trong và ngoài vùng phục vụ, áp dụng thuật toán gán độc quyền (**Exclusive Assignment**) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
+- **Mô hình hóa vùng phục vụ mảng xanh**: Phân bổ dân số thống kê xuống không gian xây dựng (`POP_ALLOC`), tính lưới khoảng cách Euclid từ biên mảng xanh, xác định dân số phục vụ tối đa ($P_{max,i} = S_i / C$) và áp dụng thuật toán tìm kiếm nhị phân (Binary Search) xác định bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện mô hình.
+- **Phân tích không gian xây dựng**: Phân tách dấu vết công trình thành các phần dấu vết công trình, phân loại công trình nằm trong và ngoài vùng phục vụ, áp dụng thuật toán gán độc quyền (**Exclusive Assignment**) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
 - **Tổng hợp chỉ tiêu định lượng theo đơn vị hành chính**: Tự động tính toán 10 trường chỉ số thống kê theo từng phường/xã, thực hiện 8 phép kiểm tra tính toàn vẹn dữ liệu (**Balance Checks**) và hỗ trợ xuất bảng số liệu định dạng Excel (`.xlsx`) hoặc CSV (`.csv`).
 
 ---
@@ -31,8 +31,8 @@ Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2,
 
 1. **Mảng xanh đô thị** (Raster GeoTIFF `.tif`): Lớp thực vật mảng xanh sau khi bóc tách, trừ mặt nước và lọc diện tích.
 2. **Vùng phục vụ mảng xanh (R\*)** (Vector Polygon): Phạm vi không gian đệm bán kính lớn nhất $R^*$ thỏa điều kiện của mô hình cho từng mảng xanh độc lập.
-3. **Không gian xây dựng trong vùng phục vụ** (Vector Polygon): Các phần hình học công trình (`footprint-part`) được phục vụ bởi mảng xanh đô thị.
-4. **Không gian xây dựng ngoài vùng phục vụ** (Vector Polygon): Các phần hình học công trình (`footprint-part`) nằm ngoài vùng phục vụ mảng xanh.
+3. **Không gian xây dựng trong vùng phục vụ** (Vector Polygon): Các phần dấu vết công trình được phục vụ bởi mảng xanh đô thị.
+4. **Không gian xây dựng ngoài vùng phục vụ** (Vector Polygon): Các phần dấu vết công trình nằm ngoài vùng phục vụ mảng xanh.
 5. **Thống kê theo đơn vị hành chính** (Vector Polygon): Lớp ranh giới tích hợp 10 trường chỉ số định lượng đánh giá mức độ phục vụ mảng xanh.
 
 *(Bảng thống kê Excel/CSV là sản phẩm báo cáo bổ sung tùy chọn theo cấu hình của người dùng).*

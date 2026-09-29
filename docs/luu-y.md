@@ -7,7 +7,7 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 ## 1. Bản chất dữ liệu dân số phân bổ (`POP_ALLOC`)
 
 !!! info "Dân số phân bổ theo không gian"
-    1. **Nguồn gốc số liệu:** Trường `POP_STAT` trong Plugin được lấy từ số liệu dân số thống kê chính thức của đơn vị hành chính (phường/xã). Dân số sau đó được phân bổ xuống từng phần hình học công trình xây dựng (`footprint-part`) theo tỷ trọng diện tích:
+    1. **Nguồn gốc số liệu:** Trường `POP_STAT` trong Plugin được lấy từ số liệu dân số thống kê chính thức của đơn vị hành chính (phường/xã). Dân số sau đó được phân bổ xuống từng phần dấu vết công trình theo tỷ trọng diện tích:
     
         $$P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}$$
         
@@ -19,7 +19,7 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 
 !!! info "Đại diện cho không gian xây dựng vật lý"
     1. **Dữ liệu Google Open Buildings:** Đây là tập dữ liệu nhận diện hình học chân công trình xây dựng từ ảnh vệ tinh độ phân giải cao bằng mô hình học máy.
-    2. **Không đồng nhất với nhà ở:** Dữ liệu footprint đại diện cho **không gian xây dựng vật lý (built space)**, không được đồng nhất hoàn toàn với dữ liệu nhà ở dân sinh, nơi cư trú, số căn hộ hay số hộ gia đình (vì có thể bao gồm nhà xưởng, cơ quan, trường học, bệnh viện, thương mại dịch vụ).
+    2. **Không đồng nhất với nhà ở:** Dữ liệu dấu vết công trình đại diện cho **không gian xây dựng vật lý (built space)**, không được đồng nhất hoàn toàn với dữ liệu nhà ở dân sinh, nơi cư trú, số căn hộ hay số hộ gia đình (vì có thể bao gồm nhà xưởng, cơ quan, trường học, bệnh viện, thương mại dịch vụ).
 
 ---
 
@@ -42,7 +42,7 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 ## 5. Ý nghĩa bán kính phục vụ $R^*$ và giới hạn $R_{\max}$
 
 !!! note "Bán kính phục vụ lớn nhất thỏa điều kiện của mô hình"
-    1. **Tính độc lập của từng mảng xanh:** Mỗi mảng xanh có một quy mô dân số mục tiêu riêng $P_{target,i} = S_i / C$ và được xác định một bán kính phục vụ $R_i^*$ riêng trong khoảng $[0, R_{\max}]$.
+    1. **Tính độc lập của từng mảng xanh:** Mỗi mảng xanh có dân số phục vụ tối đa riêng $P_{max,i} = S_i / C$ và được xác định một bán kính phục vụ $R_i^*$ riêng trong khoảng $[0, R_{\max}]$.
     2. **Các yếu tố quyết định $R^*$:** Bán kính phục vụ $R^*$ phụ thuộc đồng thời vào:
        - Diện tích mảng xanh ($S_i$);
        - Phân bố không gian của các công trình xây dựng xung quanh;
@@ -58,7 +58,7 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 
 !!! tip "Loại bỏ hoàn toàn đếm lặp ở cấp độ không gian xây dựng"
     1. **Giữ nguyên vùng đệm mảng xanh:** Vùng phục vụ bán kính $R^*$ của từng mảng xanh được giữ nguyên vẹn độc lập, không gộp lại để bảo toàn tính độc lập của từng mảng xanh.
-    2. **Gán độc quyền cho công trình:** Khi một phần công trình (`footprint-part`) nằm trong vùng phục vụ của nhiều mảng xanh, nó được gán cho mảng xanh gần nhất. Mỗi `footprint-part` cuối cùng chỉ thuộc về tối đa một mảng xanh, bảo toàn nguyên tắc cân bằng dữ liệu và không đếm lặp dân số.
+    2. **Gán độc quyền cho công trình:** Khi một phần dấu vết công trình nằm trong vùng phục vụ của nhiều mảng xanh, nó được gán cho mảng xanh gần nhất. Mỗi phần dấu vết công trình cuối cùng chỉ thuộc về tối đa một mảng xanh, bảo toàn nguyên tắc cân bằng dữ liệu và không đếm lặp dân số.
 
 ---
 

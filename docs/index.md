@@ -26,8 +26,8 @@ Quy trình phân tích của Plugin gồm 5 module chức năng liên hoàn:
 
 1. **Module 1 — Chuẩn bị và kiểm tra dữ liệu đầu vào:** Tiếp nhận và kiểm tra cấu trúc hình học các lớp vector; chuẩn hóa trường dân số thống kê của đơn vị hành chính thành `POP_STAT`; thiết lập hệ tọa độ phẳng dự chiếu tham chiếu và tạo ảnh Sentinel-2 Stack 10 m.
 2. **Module 2 — Phân tách mảng xanh đô thị:** Tính toán các chỉ số quang học MNDWI và SAVI; loại trừ mặt nước; bóc tách thực vật; lọc bỏ mảng xanh nhỏ ngoài công viên theo diện tích tối thiểu và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
-3. **Module 3 — Mô hình hóa vùng phục vụ mảng xanh:** Xây dựng lưới khoảng cách Euclid từ biên mảng xanh; phân bổ dân số thống kê theo footprint công trình tạo lớp `POP_ALLOC`; xác định quy mô dân số mục tiêu ($P_{target,i} = S_i / C$) và tìm kiếm bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện của mô hình cho từng mảng xanh.
-4. **Module 4 — Phân tích không gian xây dựng:** Phân tách footprint công trình thành các phần hình học (`footprint-part`); xác định footprint-part nằm trong và ngoài vùng phục vụ; áp dụng thuật toán gán độc quyền (**Exclusive Assignment**) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
+3. **Module 3 — Mô hình hóa vùng phục vụ mảng xanh:** Xây dựng lưới khoảng cách Euclid từ biên mảng xanh; phân bổ dân số thống kê theo dấu vết công trình tạo lớp `POP_ALLOC`; xác định dân số phục vụ tối đa ($P_{max,i} = S_i / C$) và tìm kiếm bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện của mô hình cho từng mảng xanh.
+4. **Module 4 — Phân tích không gian xây dựng:** Phân tách dấu vết công trình thành các phần dấu vết công trình; xác định phần dấu vết công trình nằm trong và ngoài vùng phục vụ; áp dụng thuật toán gán độc quyền (**Exclusive Assignment**) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
 5. **Module 5 — Tổng hợp và thống kê kết quả:** Tổng hợp các chỉ tiêu định lượng theo đơn vị hành chính trực tiếp từ các lớp vector; tự động thực hiện 8 phép kiểm tra cân bằng dữ liệu (**Balance Checks**); xuất 5 sản phẩm đầu ra chính cùng các kết quả bổ sung lên QGIS và tệp lưu trữ ngoài.
 
 ---
@@ -59,7 +59,7 @@ Các tham số tính toán được quản lý trong cửa sổ **Cài đặt** 
 | **Phương pháp xác định ngưỡng SAVI** | `Bách phân vị P10 (Mặc định)` | — | Phương pháp mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại. |
 | **Diện tích mảng xanh tối thiểu** | `5000.0` | m² | Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm loại bỏ các cụm thực vật nhỏ lẻ ngoài công viên. |
 | **Bán kính phục vụ tối đa (Rmax)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $R^*$ cho từng mảng xanh trong nghiên cứu/thử nghiệm. |
-| **Chỉ tiêu diện tích mảng xanh bình quân đầu người (C)** | `6.0` | m²/người | Chỉ tiêu diện tích mảng xanh bình quân dùng để xác định quy mô dân số mục tiêu: $P_{target,i} = S_i / C$. |
+| **Chỉ tiêu diện tích mảng xanh bình quân đầu người (C)** | `6.0` | m²/người | Chỉ tiêu diện tích mảng xanh bình quân dùng để xác định dân số phục vụ tối đa: $P_{max,i} = S_i / C$. |
 | **Sai số hội tụ khi xác định bán kính** | `10.0` | m | Điều kiện dừng sai số khoảng cách của thuật toán tìm kiếm nhị phân (Binary Search). |
 
 !!! info "Các giá trị cấu hình mặc định trong nghiên cứu"
@@ -76,7 +76,7 @@ Các tham số tính toán được quản lý trong cửa sổ **Cài đặt** 
 ```
 
 1. **Khởi động Plugin:** Mở QGIS, nhấn vào biểu tượng chiếc lá trên thanh công cụ hoặc vào menu **Plugins** → **Urban Green Space Service Evaluator**.
-2. **Nạp dữ liệu:** Tại tab **Dữ liệu đầu vào**, chọn lần lượt 4 nhóm dữ liệu (Ảnh Sentinel-2, Lớp ranh giới hành chính kèm trường dân số, Lớp công viên/vườn hoa, Lớp footprint công trình).
+2. **Nạp dữ liệu:** Tại tab **Dữ liệu đầu vào**, chọn lần lượt 4 nhóm dữ liệu (Ảnh Sentinel-2, Lớp ranh giới hành chính kèm trường dân số, Lớp công viên/vườn hoa, Lớp dấu vết công trình).
 3. **Cài đặt tham số (tùy chọn):** Nhấn nút **Cài đặt** ở góc trên bên phải để điều chỉnh $R_{\max}$, $C$ hoặc diện tích mảng xanh tối thiểu nếu có nhu cầu riêng.
 4. **Chỉ định nơi lưu sản phẩm:** Chuyển sang tab **Sản phẩm đầu ra**, chọn định dạng và thư mục lưu cho 5 sản phẩm chính (hoặc để trống để tạo lớp tạm thời).
 5. **Thực thi phân tích:** Nhấn nút **Phân tích** ở góc dưới cùng. Theo dõi nhật ký tiến trình hiển thị trực tiếp. Khi hoàn tất, các lớp kết quả sẽ được tự động thêm vào bản đồ QGIS kèm kiểu dáng trực quan.
@@ -91,8 +91,8 @@ Plugin tạo ra **5 sản phẩm đầu ra chính**:
 
 1. **Mảng xanh đô thị** (Raster GeoTIFF): Lớp phân bố thảm thực vật mảng xanh sau khi phân loại chỉ số phổ, trừ mặt nước và lọc diện tích.
 2. **Vùng phục vụ mảng xanh ($R^*$)** (Vector Polygon): Phạm vi không gian đệm bán kính lớn nhất $R^*$ thỏa điều kiện của mô hình cho từng mảng xanh độc lập.
-3. **Không gian xây dựng trong vùng phục vụ** (Vector Polygon): Các phần hình học công trình (`footprint-part`) được phục vụ bởi mảng xanh đô thị.
-4. **Không gian xây dựng ngoài vùng phục vụ** (Vector Polygon): Các phần hình học công trình (`footprint-part`) nằm ngoài vùng phục vụ mảng xanh.
+3. **Không gian xây dựng trong vùng phục vụ** (Vector Polygon): Các phần dấu vết công trình được phục vụ bởi mảng xanh đô thị.
+4. **Không gian xây dựng ngoài vùng phục vụ** (Vector Polygon): Các phần dấu vết công trình nằm ngoài vùng phục vụ mảng xanh.
 5. **Thống kê theo đơn vị hành chính** (Vector Polygon): Lớp ranh giới tích hợp 10 trường chỉ số định lượng đánh giá toàn diện về diện tích mảng xanh, diện tích xây dựng và dân số được phân bổ.
 
 *Lưu ý:* Bảng số liệu thống kê chi tiết định dạng Excel (`.xlsx`) hoặc CSV (`.csv`) là sản phẩm báo cáo bổ sung tùy chọn theo cấu hình lưu của người dùng.
@@ -104,10 +104,10 @@ Plugin tạo ra **5 sản phẩm đầu ra chính**:
 ## 7. Lưu ý phương pháp luận cốt lõi
 
 !!! warning "Các nguyên tắc phương pháp luận cần lưu ý"
-    - **Dân số phân bổ (`POP_ALLOC`):** Dân số được phân bổ theo tỷ lệ diện tích footprint công trình từ dân số thống kê của đơn vị hành chính. Đây là **dân số được phân bổ theo không gian** phục vụ mô hình hóa, không phải dân số quan sát hoặc kiểm kê thực tế tại từng công trình.
+    - **Dân số phân bổ (`POP_ALLOC`):** Dân số được phân bổ theo tỷ lệ diện tích dấu vết công trình từ dân số thống kê của đơn vị hành chính. Đây là **dân số được phân bổ theo không gian** phục vụ mô hình hóa, không phải dân số quan sát hoặc kiểm kê thực tế tại từng công trình.
     - **Dấu vết công trình xây dựng (Footprint):** Đại diện cho **không gian xây dựng vật lý (built space)**, không đồng nhất hoàn toàn với nhà ở, hộ gia đình hoặc nơi cư trú.
     - **Khoảng cách Euclid:** Vùng phục vụ được tính toán theo **khoảng cách hình học Euclid**, không phải cự ly di chuyển thực tế theo mạng lưới giao thông đường bộ.
     - **Bán kính phục vụ $R^*$:** Được xác định độc lập cho từng mảng xanh dựa trên tương quan giữa diện tích mảng xanh, dân số phân bổ, chỉ tiêu $C$ và giới hạn $R_{\max}$. $R^*$ là bán kính phục vụ lớn nhất trong miền tìm kiếm thỏa mãn điều kiện của mô hình.
-    - **Xử lý chồng lấn (Exclusive Assignment):** Các vùng đệm $R^*$ của từng mảng xanh được giữ nguyên độc lập. Việc xử lý chồng lấn được thực hiện ở bước gán không gian xây dựng (Module 4): mỗi footprint-part chỉ được gán độc quyền cho một mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
+    - **Xử lý chồng lấn (Exclusive Assignment):** Các vùng đệm $R^*$ của từng mảng xanh được giữ nguyên độc lập. Việc xử lý chồng lấn được thực hiện ở bước gán không gian xây dựng (Module 4): mỗi phần dấu vết công trình chỉ được gán độc quyền cho một mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
 
 👉 Xem đầy đủ lưu ý: [Lưu ý khi sử dụng](luu-y.md) | [Lỗi thường gặp](loi-thuong-gap.md)

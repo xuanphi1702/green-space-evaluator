@@ -1173,16 +1173,16 @@
 <h3 id="24-dau-vet-cong-trinh-xay-dung-footprint">2.4. Dấu vết công trình xây dựng (Footprint)</h3>
 <ul>
 <li><strong>Bản chất dữ liệu</strong>: Trong nghiên cứu hiện tại, nguồn dữ liệu được sử dụng là <strong>Google Open Buildings</strong> – tập dữ liệu nhận diện hình học <strong>dấu vết chân công trình xây dựng (building footprints)</strong> từ ảnh vệ tinh độ phân giải cao bằng mô hình học máy. <em>(Lưu ý: Khác với dữ liệu OpenStreetMap (OSM) là bản đồ đóng góp bởi cộng đồng với độ hoàn thiện tùy khu vực, Google Open Buildings cung cấp các polygon dấu vết vật lý đồng nhất).</em></li>
-<li><strong>Vai trò đại diện không gian xây dựng</strong>: Footprint đại diện cho <strong>không gian xây dựng vật lý (physical built space)</strong>, phản ánh quy mô và vị trí các khối kết cấu xây dựng trên bề mặt đô thị.</li>
-<li><strong>Cơ chế phân tách hình học (footprint-part)</strong>:<ul>
-<li>Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân tách thành các phần tử hình học nhỏ hơn gọi là <code>footprint-part</code> thuộc về từng đơn vị hành chính.</li>
+<li><strong>Vai trò đại diện không gian xây dựng</strong>: Dấu vết công trình đại diện cho <strong>không gian xây dựng vật lý (physical built space)</strong>, phản ánh quy mô và vị trí các khối kết cấu xây dựng trên bề mặt đô thị.</li>
+<li><strong>Cơ chế phân tách hình học (phần dấu vết công trình)</strong>:<ul>
+<li>Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân tách thành các phần tử hình học nhỏ hơn gọi là phần dấu vết công trình thuộc về từng đơn vị hành chính.</li>
 </ul>
 </li>
 <li>
 <p><strong>Công thức phân bổ dân số không gian</strong>:</p>
 <ul>
 <li>
-<p>Dân số thống kê chính thức của đơn vị hành chính (<span class="arithmatex">\(P_u\)</span>) được phân bổ cho từng <code>footprint-part</code> (<span class="arithmatex">\(b\)</span>) thuộc đơn vị hành chính <span class="arithmatex">\(u\)</span> theo tỷ lệ diện tích:</p>
+<p>Dân số thống kê chính thức của đơn vị hành chính (<span class="arithmatex">\(P_u\)</span>) được phân bổ cho từng phần dấu vết công trình (<span class="arithmatex">\(b\)</span>) thuộc đơn vị hành chính <span class="arithmatex">\(u\)</span> theo tỷ lệ diện tích:</p>
 <div class="arithmatex">\[
 P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}
 \]</div>
@@ -1191,19 +1191,19 @@ P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}
 <p>Trong đó:</p>
 <ul>
 <li><span class="arithmatex">\(P_u\)</span>: Dân số thống kê chính thức của đơn vị hành chính <span class="arithmatex">\(u\)</span> (<code>POP_STAT</code>).</li>
-<li><span class="arithmatex">\(A_{b,u}\)</span>: Diện tích của <code>footprint-part</code> <span class="arithmatex">\(b\)</span> nằm trong đơn vị hành chính <span class="arithmatex">\(u\)</span>.</li>
-<li><span class="arithmatex">\(\sum_j A_{j,u}\)</span>: Tổng diện tích của tất cả các <code>footprint-part</code> nằm trong đơn vị hành chính <span class="arithmatex">\(u\)</span>.</li>
-<li><span class="arithmatex">\(P_{b,u}\)</span>: Dân số được phân bổ cho <code>footprint-part</code> <span class="arithmatex">\(b\)</span> (lưu trong trường <code>POP_ALLOC</code>).</li>
+<li><span class="arithmatex">\(A_{b,u}\)</span>: Diện tích của phần dấu vết công trình <span class="arithmatex">\(b\)</span> nằm trong đơn vị hành chính <span class="arithmatex">\(u\)</span>.</li>
+<li><span class="arithmatex">\(\sum_j A_{j,u}\)</span>: Tổng diện tích của tất cả các phần dấu vết công trình nằm trong đơn vị hành chính <span class="arithmatex">\(u\)</span>.</li>
+<li><span class="arithmatex">\(P_{b,u}\)</span>: Dân số được phân bổ cho phần dấu vết công trình <span class="arithmatex">\(b\)</span> (lưu trong trường <code>POP_ALLOC</code>).</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 <div class="admonition warning">
-<p class="admonition-title">Lưu ý phương pháp luận về POP_ALLOC và Footprint</p>
+<p class="admonition-title">Lưu ý phương pháp luận về POP_ALLOC và Dấu vết công trình</p>
 <ol>
 <li><strong><code>POP_ALLOC</code></strong> là <strong>dân số được phân bổ theo không gian phục vụ mô hình hóa</strong>, KHÔNG phải là dân số quan sát trực tiếp, kiểm kê hộ tịch hay điều tra thực địa tại từng công trình.</li>
-<li><strong>Footprint</strong> là <strong>dấu vết công trình xây dựng</strong>, KHÔNG đồng nhất hoàn toàn với nhà ở dân cư, số hộ gia đình hay nơi cư trú thực tế (vì có thể bao gồm nhà xưởng, công trình công cộng, thương mại, dịch vụ).</li>
+<li><strong>Dấu vết công trình xây dựng</strong> KHÔNG đồng nhất hoàn toàn với nhà ở dân cư, số hộ gia đình hay nơi cư trú thực tế (vì có thể bao gồm nhà xưởng, công trình công cộng, thương mại, dịch vụ).</li>
 </ol>
 </div>
 <hr />

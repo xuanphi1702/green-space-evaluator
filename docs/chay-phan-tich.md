@@ -105,16 +105,16 @@ Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread k
   - Lọc bỏ mảng xanh nhỏ ngoài công viên (< 5000 m²).
   - Phân tích liên thông 8-neighbor tạo các mảng xanh độc lập, gán `PATCH_ID` và tính diện tích $S_i$.
 - **Module 3 (Mô hình hóa vùng phục vụ mảng xanh):**
-  - Phân tách footprint theo đơn vị hành chính tạo `footprint-part` và phân bổ dân số không gian:
+  - Phân tách dấu vết công trình theo đơn vị hành chính tạo các phần dấu vết công trình và phân bổ dân số không gian:
     $$P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}$$
     tạo lớp `POP_ALLOC`.
   - Xây dựng ma trận khoảng cách hình học Euclid (EDT) từ biên từng mảng xanh.
-  - Xác định quy mô dân số mục tiêu $P_{target,i} = S_i / C$.
+  - Xác định dân số phục vụ tối đa $P_{max,i} = S_i / C$. Sau đó tính $P_i(R)$, kiểm tra $P_i(R)$ với $P_{max,i}$ và tìm $R_i^*$ lớn nhất thỏa $P_i(R_i^*) \le P_{max,i}$.
   - Tìm kiếm bán kính phục vụ lớn nhất $R^*$ trong $[0, R_{\max}]$ bằng Binary Search và xử lý các trường hợp biên (`RMAX`, `NO_SOLUTION`).
 - **Module 4 (Phân tích không gian xây dựng):**
-  - Phân tích vị trí không gian của từng `footprint-part` đối với vùng phục vụ bán kính $R^*$.
-  - Phân loại `footprint-part` nằm trong và ngoài vùng phục vụ.
-  - Áp dụng thuật toán gán độc quyền (**Exclusive Assignment**): nếu một `footprint-part` giao cắt với nhiều vùng phục vụ, nó được gán độc quyền cho mảng xanh gần nhất. Mỗi `footprint-part` chỉ thuộc tối đa một `PATCH_ID`, loại bỏ hoàn toàn đếm lặp.
+  - Phân tích vị trí không gian của từng phần dấu vết công trình đối với vùng phục vụ bán kính $R^*$.
+  - Phân loại phần dấu vết công trình nằm trong và ngoài vùng phục vụ.
+  - Áp dụng thuật toán gán độc quyền (**Exclusive Assignment**): nếu một phần dấu vết công trình giao cắt với nhiều vùng phục vụ, nó được gán độc quyền cho mảng xanh gần nhất. Mỗi phần dấu vết công trình chỉ thuộc tối đa một `PATCH_ID`, loại bỏ hoàn toàn đếm lặp.
 - **Module 5 (Tổng hợp và thống kê kết quả):**
   - Tổng hợp trực tiếp từ các lớp vector kết quả ra 10 trường chỉ số định lượng theo từng đơn vị hành chính.
   - Tự động thực thi hệ thống 8 phép kiểm tra tính toàn vẹn dữ liệu (Balance Checks).
@@ -126,13 +126,13 @@ Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread k
 
 Plugin tích hợp cơ chế tự động kiểm tra đối soát số liệu khắt khe trước khi kết thúc:
 
-1. **POPULATION BALANCE**: Tổng dân số phân bổ trên các footprint-part bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính ($\sum T\_DanSo = \sum D\_DaPhucVu + \sum D\_ThieuXanh$).
+1. **POPULATION BALANCE**: Tổng dân số phân bổ trên các phần dấu vết công trình bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính ($\sum T\_DanSo = \sum D\_DaPhucVu + \sum D\_ThieuXanh$).
 2. **PATCH POPULATION BALANCE**: Dân số được phân bổ cho các mảng xanh khớp với tổng dân số được phục vụ theo phường ($\sum SERVED\_POP(PATCH) = \sum D\_DaPhucVu$).
 3. **WARD BUILDING AREA BALANCE**: Tổng diện tích xây dựng phục vụ và diện tích xây dựng thiếu xanh bằng đúng tổng diện tích xây dựng của phường/xã ($\sum S\_XayDung = \sum S\_DaPhucVu + \sum S\_ThieuXanh$).
-4. **INPUT FOOTPRINT AREA BALANCE**: Tổng diện tích các footprint-part sau khi cắt bằng đúng diện tích footprint công trình đầu vào ($\sum AREA(input) = \sum AREA(served) + \sum AREA(outside)$).
-5. **FOOTPRINT COUNT BALANCE**: Xác nhận toàn bộ footprint-part đầu vào của bước phân tích cuối được phân loại đầy đủ thành served hoặc outside ($N_{\text{input}} = N_{\text{served}} + N_{\text{outside}}$), không bị mất hoặc tạo thêm đối tượng ngoài quy trình.
+4. **INPUT FOOTPRINT AREA BALANCE**: Tổng diện tích các phần dấu vết công trình sau khi cắt bằng đúng diện tích dấu vết công trình đầu vào ($\sum AREA(input) = \sum AREA(served) + \sum AREA(outside)$).
+5. **FOOTPRINT COUNT BALANCE**: Xác nhận toàn bộ phần dấu vết công trình đầu vào của bước phân tích cuối được phân loại đầy đủ thành served hoặc outside ($N_{\text{input}} = N_{\text{served}} + N_{\text{outside}}$), không bị mất hoặc tạo thêm đối tượng ngoài quy trình.
 6. **PATCH BUILDING AREA BALANCE**: Cân bằng diện tích xây dựng được gán cho các mảng xanh độc lập ($\sum SERVED\_BUILDING\_AREA(PATCH) = \sum AREA(cons\_in\_buffer)$).
-7. **EXCLUSIVE PATCH ASSIGNMENT**: Xác nhận mỗi footprint-part chỉ được gán độc quyền cho tối đa một mảng xanh duy nhất, SERVED $\cap$ OUTSIDE = $\emptyset$.
+7. **EXCLUSIVE PATCH ASSIGNMENT**: Xác nhận mỗi phần dấu vết công trình chỉ được gán độc quyền cho tối đa một mảng xanh duy nhất, SERVED $\cap$ OUTSIDE = $\emptyset$.
 8. **GREEN AREA BALANCE**: Tổng diện tích mảng xanh được phân bổ cho các đơn vị hành chính bằng đúng tổng diện tích mảng xanh toàn khu vực nghiên cứu.
 
 ---

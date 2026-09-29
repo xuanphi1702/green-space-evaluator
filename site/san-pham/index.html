@@ -1300,6 +1300,10 @@
 
 <h1 id="san-pham-va-chi-tieu-thong-ke">Sản phẩm và chỉ tiêu thống kê</h1>
 <p>Sau khi hoàn tất quy trình phân tích, Plugin <strong>Green Space Evaluator</strong> sẽ tạo ra <strong>5 sản phẩm đầu ra chính</strong>, tùy chọn <strong>bảng báo cáo thống kê</strong> (Excel/CSV) cùng hệ thống <strong>sản phẩm bổ sung</strong> phục vụ kiểm tra và nghiên cứu chuyên sâu. Trang này cung cấp thông tin chi tiết về cấu trúc dữ liệu, ý nghĩa các trường thuộc tính thống kê và hướng dẫn diễn giải kết quả.</p>
+<div class="guide-figure">
+<p><img alt="Các sản phẩm chính sau khi chạy Plugin" src="../images/ket_qua.png" /></p>
+<div class="guide-caption"><strong>Hình 3.</strong> Các sản phẩm chính sau khi chạy Plugin.</div>
+</div>
 <hr />
 <h2 id="1-5-san-pham-au-ra-chinh">1. 5 sản phẩm đầu ra chính</h2>
 <p>Năm sản phẩm chính được cấu hình tại thẻ <strong>Sản phẩm đầu ra</strong> trên giao diện Plugin:</p>
@@ -1333,14 +1337,14 @@
 <td><strong>Không gian xây dựng trong vùng phục vụ</strong></td>
 <td>Vector (Polygon)</td>
 <td><code>.gpkg</code>, <code>.shp</code>, <code>.geojson</code></td>
-<td>Các phần hình học công trình (<code>footprint-part</code>) nằm trong phạm vi vùng phục vụ bán kính <span class="arithmatex">\(R^*\)</span> của mảng xanh.</td>
+<td>Các phần dấu vết công trình nằm trong phạm vi vùng phục vụ bán kính <span class="arithmatex">\(R^*\)</span> của mảng xanh.</td>
 </tr>
 <tr>
 <td><strong>4</strong></td>
 <td><strong>Không gian xây dựng ngoài vùng phục vụ</strong></td>
 <td>Vector (Polygon)</td>
 <td><code>.gpkg</code>, <code>.shp</code>, <code>.geojson</code></td>
-<td>Các phần hình học công trình (<code>footprint-part</code>) nằm ngoài phạm vi vùng phục vụ mảng xanh.</td>
+<td>Các phần dấu vết công trình nằm ngoài phạm vi vùng phục vụ mảng xanh.</td>
 </tr>
 <tr>
 <td><strong>5</strong></td>
@@ -1356,7 +1360,7 @@
 <h3 id="21-mang-xanh-o-thi">2.1. Mảng xanh đô thị</h3>
 <ul>
 <li><strong>Bản chất dữ liệu</strong>: Lớp raster nhị phân (1: Mảng xanh, 0: Khác) thể hiện thảm thực vật mảng xanh tập trung sau khi bóc tách bằng chỉ số SAVI, loại trừ mặt nước (MNDWI &gt; 0.0) và lọc bỏ các mảng nhỏ ngoài công viên (&lt; 5000 m²). Toàn bộ mảng xanh trong ranh công viên mẫu luôn được bảo toàn nguyên vẹn.</li>
-<li><strong>Vai trò kỹ thuật</strong>: Đóng vai trò là nguồn phát mảng xanh để xây dựng lưới khoảng cách Euclid và cung cấp diện tích <span class="arithmatex">\(S_i\)</span> của từng patch trong mô hình xác định bán kính phục vụ.</li>
+<li><strong>Vai trò kỹ thuật</strong>: Đóng vai trò là nguồn phát mảng xanh để xây dựng lưới khoảng cách Euclid và cung cấp diện tích <span class="arithmatex">\(S_i\)</span> của từng mảng xanh trong mô hình xác định bán kính phục vụ.</li>
 <li><strong>Lưu ý</strong>: Lớp dữ liệu thể hiện hiện trạng thảm thực vật phản xạ phổ tại thời điểm chụp ảnh Sentinel-2, không đồng nhất hoàn toàn với diện tích đất cây xanh quy hoạch theo hồ sơ pháp lý.</li>
 </ul>
 <h3 id="22-vung-phuc-vu-mang-xanh-r">2.2. Vùng phục vụ mảng xanh (R*)</h3>
@@ -1370,7 +1374,7 @@
 <li><strong>Bảng thuộc tính của lớp Vùng phục vụ R* (<code>SERVICE_AREA</code>)</strong>:<ul>
 <li><code>PATCH_ID</code> (Integer): Mã định danh số nguyên duy nhất của từng mảng xanh.</li>
 <li><code>R_STAR</code> (Double): Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).</li>
-<li><code>P_TARGET</code> (Double): Quy mô dân số mục tiêu được xác định từ diện tích mảng xanh và chỉ tiêu C (<span class="arithmatex">\(P_{target,i} = S_i / C\)</span>).</li>
+<li><code>P_MAX</code> (Double): Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu C (<span class="arithmatex">\(P_{max,i} = S_i / C\)</span>).</li>
 <li><code>STATUS</code> (String): Trạng thái kết quả tìm kiếm bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).</li>
 <li><code>AREA_M2</code> (Double): Diện tích của mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span>).</li>
 <li><code>AREA_HA</code> (Double): Diện tích của mảng xanh (ha).</li>
@@ -1383,13 +1387,13 @@
 </ul>
 <h3 id="23-khong-gian-xay-dung-trong-vung-phuc-vu">2.3. Không gian xây dựng trong vùng phục vụ</h3>
 <ul>
-<li><strong>Bản chất dữ liệu</strong>: Tập hợp các đối tượng hình học công trình (<code>footprint-part</code>) nằm trong phạm vi vùng phục vụ bán kính <span class="arithmatex">\(R^*\)</span> của mảng xanh.</li>
-<li><strong>Cơ chế gán độc quyền (Exclusive Assignment)</strong>: Khi một footprint-part nằm trong phạm vi giao cắt của nhiều vùng phục vụ, Plugin tự động gán đối tượng đó cho mảng xanh gần nhất. Nhờ đó, mỗi footprint-part chỉ gắn với một <code>PATCH_ID</code> duy nhất, loại bỏ hoàn toàn việc đếm lặp dân số hoặc diện tích.</li>
+<li><strong>Bản chất dữ liệu</strong>: Tập hợp các phần dấu vết công trình nằm trong phạm vi vùng phục vụ bán kính <span class="arithmatex">\(R^*\)</span> của mảng xanh.</li>
+<li><strong>Cơ chế gán độc quyền (Exclusive Assignment)</strong>: Khi một phần dấu vết công trình nằm trong phạm vi giao cắt của nhiều vùng phục vụ, Plugin tự động gán đối tượng đó cho mảng xanh gần nhất. Nhờ đó, mỗi phần dấu vết công trình chỉ gắn với một <code>PATCH_ID</code> duy nhất, loại bỏ hoàn toàn việc đếm lặp dân số hoặc diện tích.</li>
 <li><strong>Ý nghĩa</strong>: Đại diện cho không gian xây dựng vật lý được tiếp cận mảng xanh theo khoảng cách Euclid và chỉ tiêu diện tích bình quân của mô hình.</li>
 </ul>
 <h3 id="24-khong-gian-xay-dung-ngoai-vung-phuc-vu">2.4. Không gian xây dựng ngoài vùng phục vụ</h3>
 <ul>
-<li><strong>Bản chất dữ liệu</strong>: Tập hợp các đối tượng hình học công trình (<code>footprint-part</code>) nằm ngoài phạm vi vùng phục vụ của tất cả các mảng xanh.</li>
+<li><strong>Bản chất dữ liệu</strong>: Tập hợp các phần dấu vết công trình nằm ngoài phạm vi vùng phục vụ của tất cả các mảng xanh.</li>
 <li><strong>Ý nghĩa</strong>: Thể hiện các khu vực xây dựng còn thiếu hụt không gian xanh theo tiêu chí khoảng cách và chỉ tiêu diện tích của mô hình, hỗ trợ định hướng các vị trí ưu tiên bổ sung công viên, vườn hoa mới.</li>
 </ul>
 <h3 id="25-thong-ke-theo-on-vi-hanh-chinh">2.5. Thống kê theo đơn vị hành chính</h3>
@@ -1406,20 +1410,20 @@
 <li><strong>Chuẩn mã hóa</strong>: Tệp <code>.csv</code> được xuất dưới định dạng mã hóa <code>UTF-8-SIG</code>, đảm bảo mở trực tiếp bằng Microsoft Excel hiển thị tiếng Việt chuẩn xác không bị lỗi phông chữ.</li>
 </ul>
 <h3 id="32-bang-thong-ke-chi-tiet-theo-mang-xanh-patch_service_statistics">3.2. Bảng thống kê chi tiết theo mảng xanh (<code>patch_service_statistics</code>)</h3>
-<p>Tệp thống kê chi tiết ở cấp độ từng patch (<code>patch_service_statistics.csv</code> / <code>.xlsx</code>) gồm đúng <strong>13 trường chuẩn hóa trong mã nguồn</strong>:
+<p>Tệp thống kê chi tiết ở cấp độ từng mảng xanh (<code>patch_service_statistics.csv</code> / <code>.xlsx</code>) gồm đúng <strong>13 trường chuẩn hóa trong mã nguồn</strong>:
 1. <code>PATCH_ID</code>: Mã định danh mảng xanh.
 2. <code>AREA_M2</code>: Diện tích mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span>).
 3. <code>AREA_HA</code>: Diện tích mảng xanh (ha).
 4. <code>R_STAR_M</code>: Bán kính phục vụ lớn nhất thỏa điều kiện <span class="arithmatex">\(R^*\)</span> (m).
 5. <code>STATUS</code>: Trạng thái giải bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).
-6. <code>P_TARGET</code>: Quy mô dân số mục tiêu được xác định từ diện tích mảng xanh và chỉ tiêu C (<span class="arithmatex">\(S_i / C\)</span>).
+6. <code>P_MAX</code>: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu C (<span class="arithmatex">\(P_{max,i} = S_i / C\)</span>).
 7. <code>P_AT_RSTAR</code>: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách <span class="arithmatex">\(R^*\)</span> của mảng xanh.
-8. <code>N_SERVED_PARTS</code>: Số lượng footprint-part được gán phục vụ độc quyền cho mảng xanh.
+8. <code>N_SERVED_PARTS</code>: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ độc quyền cho mảng xanh).
 9. <code>SERVED_BUILDING_AREA_M2</code>: Tổng diện tích xây dựng được gán phục vụ (<span class="arithmatex">\(\text{m}^2\)</span>).
 10. <code>SERVED_BUILDING_AREA_HA</code>: Tổng diện tích xây dựng được gán phục vụ (ha).
 11. <code>SERVED_POP</code>: Tổng dân số được phân bổ phục vụ độc quyền của mảng xanh.
-12. <code>MEAN_DIST_M</code>: Khoảng cách trung bình từ các footprint-part được gán đến mảng xanh (m).
-13. <code>MAX_DIST_M</code>: Khoảng cách lớn nhất từ các footprint-part được gán đến mảng xanh (m).</p>
+12. <code>MEAN_DIST_M</code>: Khoảng cách trung bình từ các phần dấu vết công trình được gán đến mảng xanh (m).
+13. <code>MAX_DIST_M</code>: Khoảng cách lớn nhất từ các phần dấu vết công trình được gán đến mảng xanh (m).</p>
 <hr />
 <h2 id="4-10-truong-thuoc-tinh-thong-ke-hanh-chinh">4. 10 trường thuộc tính thống kê hành chính</h2>
 <p>Bảng thuộc tính của lớp vector thống kê hành chính chứa đúng <strong>10 trường chỉ số định lượng chuẩn hóa</strong>:</p>
@@ -1457,7 +1461,7 @@
 <td>Tổng diện tích không gian xây dựng</td>
 <td style="text-align: center;">ha</td>
 <td style="text-align: center;">Double (3)</td>
-<td>Tổng diện tích các footprint-part nằm trong đơn vị hành chính.</td>
+<td>Tổng diện tích các phần dấu vết công trình nằm trong đơn vị hành chính.</td>
 </tr>
 <tr>
 <td>4</td>
@@ -1465,7 +1469,7 @@
 <td>Diện tích không gian xây dựng được phục vụ</td>
 <td style="text-align: center;">ha</td>
 <td style="text-align: center;">Double (3)</td>
-<td>Tổng diện tích các footprint-part nằm trong vùng phục vụ mảng xanh.</td>
+<td>Tổng diện tích các phần dấu vết công trình nằm trong vùng phục vụ mảng xanh.</td>
 </tr>
 <tr>
 <td>5</td>
@@ -1473,7 +1477,7 @@
 <td>Diện tích không gian xây dựng thiếu mảng xanh</td>
 <td style="text-align: center;">ha</td>
 <td style="text-align: center;">Double (3)</td>
-<td>Tổng diện tích các footprint-part nằm ngoài vùng phục vụ mảng xanh.</td>
+<td>Tổng diện tích các phần dấu vết công trình nằm ngoài vùng phục vụ mảng xanh.</td>
 </tr>
 <tr>
 <td>6</td>
@@ -1481,7 +1485,7 @@
 <td>Dân số phân bổ được phục vụ mảng xanh</td>
 <td style="text-align: center;">người</td>
 <td style="text-align: center;">Integer</td>
-<td>Tổng dân số được phân bổ (<code>POP_ALLOC</code>) cho các footprint-part nằm trong vùng phục vụ mảng xanh.</td>
+<td>Tổng dân số được phân bổ (<code>POP_ALLOC</code>) cho các phần dấu vết công trình nằm trong vùng phục vụ mảng xanh.</td>
 </tr>
 <tr>
 <td>7</td>
@@ -1489,7 +1493,7 @@
 <td>Dân số phân bổ thiếu mảng xanh</td>
 <td style="text-align: center;">người</td>
 <td style="text-align: center;">Integer</td>
-<td>Tổng dân số được phân bổ (<code>POP_ALLOC</code>) cho các footprint-part nằm ngoài vùng phục vụ mảng xanh.</td>
+<td>Tổng dân số được phân bổ (<code>POP_ALLOC</code>) cho các phần dấu vết công trình nằm ngoài vùng phục vụ mảng xanh.</td>
 </tr>
 <tr>
 <td>8</td>
@@ -1509,11 +1513,11 @@
 </tr>
 <tr>
 <td>10</td>
-<td><code>N_Patch_DuocPhucVu</code></td>
+<td><code>N_Mang_DuocPhucVu</code></td>
 <td>Số lượng mảng xanh tham gia phục vụ</td>
 <td style="text-align: center;">mảng</td>
 <td style="text-align: center;">Integer</td>
-<td>Số lượng mảng xanh độc lập có vùng phục vụ tham gia phục vụ không gian xây dựng của đơn vị hành chính.</td>
+<td>Số lượng mảng xanh độc lập có vùng phục vụ tham gia phục vụ không gian xây dựng của đơn vị hành chính <em>(tên trường phiên bản mới dự kiến đồng bộ với Plugin; trong phiên bản trước là <code>N_Patch_DuocPhucVu</code>)</em>.</td>
 </tr>
 </tbody>
 </table>
@@ -1591,12 +1595,12 @@ TL_{DaPhucVu} + TL_{ThieuXanh} = 100\%
 <tr>
 <td><strong>Dấu vết công trình phân bổ dân số</strong></td>
 <td>Vector (<code>.gpkg</code>)</td>
-<td>Lớp footprint-part tích hợp trường dân số phân bổ <code>POP_ALLOC</code>.</td>
+<td>Lớp phần dấu vết công trình tích hợp trường dân số phân bổ <code>POP_ALLOC</code>.</td>
 </tr>
 <tr>
 <td><strong>Bảng thống kê mảng xanh</strong></td>
 <td>File (<code>.xlsx</code>/<code>.csv</code>)</td>
-<td>Bảng thuộc tính chi tiết 13 trường của từng patch: diện tích, bán kính <span class="arithmatex">\(R^*\)</span>, trạng thái, dân số tiếp cận.</td>
+<td>Bảng thuộc tính chi tiết 13 trường của từng mảng xanh: diện tích, bán kính <span class="arithmatex">\(R^*\)</span>, trạng thái, dân số tiếp cận.</td>
 </tr>
 </tbody>
 </table>
@@ -1605,7 +1609,7 @@ TL_{DaPhucVu} + TL_{ThieuXanh} = 100\%
 <div class="admonition warning">
 <p class="admonition-title">Lưu ý phương pháp luận khi đọc kết quả</p>
 <ol>
-<li><strong>Bản chất dân số:</strong> Các chỉ tiêu <code>D_DaPhucVu</code>, <code>D_ThieuXanh</code>, <code>TL_ThieuXanh</code> là giá trị <strong>dân số được phân bổ theo không gian</strong> từ số liệu thống kê cấp hành chính dựa trên diện tích footprint công trình. Không được diễn giải đây là số lượng cư dân điều tra thực địa hay số hộ gia đình thực tế.</li>
+<li><strong>Bản chất dân số:</strong> Các chỉ tiêu <code>D_DaPhucVu</code>, <code>D_ThieuXanh</code>, <code>TL_ThieuXanh</code> là giá trị <strong>dân số được phân bổ theo không gian</strong> từ số liệu thống kê cấp hành chính dựa trên diện tích dấu vết công trình. Không được diễn giải đây là số lượng cư dân điều tra thực địa hay số hộ gia đình thực tế.</li>
 <li><strong>Khái niệm phục vụ:</strong> Thuật ngữ "được phục vụ" hoặc "thiếu mảng xanh" phản ánh kết quả mô hình hóa không gian bằng khoảng cách hình học Euclid và chỉ tiêu diện tích bình quân đầu người của mô hình; không đồng nhất hoàn toàn với việc người dân có tiếp cận được không gian xanh trên thực tế hay không (do phụ thuộc vào mạng lưới đường đi, lối vào công viên và rào chắn thực địa).</li>
 </ol>
 </div>

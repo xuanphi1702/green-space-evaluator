@@ -78,7 +78,7 @@ Plugin dừng lại ở Module 1 và thông báo:
 
 ### 4.3. Lớp dấu vết công trình xây dựng (Footprint)
 - **Hiện tượng**: `✗ Không thể nạp Vector dấu vết công trình xây dựng!`
-- **Cách xử lý**: Đảm bảo lớp footprint (Google Open Buildings) có hình học polygon hợp lệ và bao phủ không gian xây dựng trong khu vực nghiên cứu.
+- **Cách xử lý**: Đảm bảo lớp dấu vết công trình (Google Open Buildings) có hình học polygon hợp lệ và bao phủ không gian xây dựng trong khu vực nghiên cứu.
 
 ---
 
@@ -111,8 +111,8 @@ Nhật ký tiến trình báo lỗi:
 
 ### 6.2. Trường hợp NO_SOLUTION ($R^* = 0\text{ m}$)
 - **Hiện tượng**: Trong bảng thống kê mảng xanh hoặc nhật ký tiến trình xuất hiện một số mảng xanh có trạng thái `NO_SOLUTION` và bán kính $R^* = 0\text{ m}$.
-- **Bản chất khoa học**: Đây **không phải là lỗi phần mềm**. `NO_SOLUTION` xảy ra khi ngay tại $R = 0\text{ m}$, tổng dân số được phân bổ nằm trong phạm vi của mảng xanh đã lớn hơn quy mô dân số mục tiêu:
-  $$P_i(0) > P_{target,i}$$
+- **Bản chất khoa học**: Đây **không phải là lỗi phần mềm**. `NO_SOLUTION` xảy ra khi tại $R = 0\text{ m}$, dân số ước tính trong vùng phục vụ đã lớn hơn $P_{\max}$ của mảng xanh:
+  $$P_i(0) > P_{max,i}$$
   Khi đó, không tồn tại bán kính thỏa điều kiện trong miền $[0, R_{\max}]$. Bán kính phục vụ được gán bằng $0\text{ m}$. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.
 - **Cách xử lý**:
   - Không tùy tiện hạ chỉ tiêu $C$ chỉ để tạo ra bán kính phục vụ nếu không có căn cứ quy chuẩn phù hợp.
