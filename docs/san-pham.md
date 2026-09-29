@@ -49,7 +49,7 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 
 ### 2.3. Không gian xây dựng trong vùng phục vụ
 - **Bản chất dữ liệu**: Tập hợp các phần dấu vết công trình nằm trong phạm vi vùng phục vụ bán kính $R^*$ của mảng xanh.
-- **Cơ chế gán độc quyền (Exclusive Assignment)**: Khi một phần dấu vết công trình nằm trong phạm vi giao cắt của nhiều vùng phục vụ, Plugin tự động gán đối tượng đó cho mảng xanh gần nhất. Nhờ đó, mỗi phần dấu vết công trình chỉ gắn với một `PATCH_ID` duy nhất, loại bỏ hoàn toàn việc đếm lặp dân số hoặc diện tích.
+- **Cơ chế gán duy nhất (Exclusive Assignment)**: Khi một phần dấu vết công trình nằm trong phạm vi giao cắt của nhiều vùng phục vụ, Plugin tự động gán đối tượng đó cho mảng xanh gần nhất. Nhờ đó, mỗi phần dấu vết công trình chỉ gắn với một `PATCH_ID` duy nhất, loại bỏ hoàn toàn việc đếm lặp dân số hoặc diện tích.
 - **Ý nghĩa**: Đại diện cho không gian xây dựng vật lý được tiếp cận mảng xanh theo khoảng cách Euclid và chỉ tiêu diện tích bình quân của mô hình.
 
 ### 2.4. Không gian xây dựng ngoài vùng phục vụ
@@ -78,10 +78,10 @@ Tệp thống kê chi tiết ở cấp độ từng mảng xanh (`patch_service_
 5. `STATUS`: Trạng thái giải bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
 6. `P_MAX`: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu C ($P_{max,i} = S_i / C$).
 7. `P_AT_RSTAR`: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách $R^*$ của mảng xanh.
-8. `N_SERVED_PARTS`: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ độc quyền cho mảng xanh).
+8. `N_SERVED_PARTS`: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ duy nhất cho mảng xanh).
 9. `SERVED_BUILDING_AREA_M2`: Tổng diện tích xây dựng được gán phục vụ ($\text{m}^2$).
 10. `SERVED_BUILDING_AREA_HA`: Tổng diện tích xây dựng được gán phục vụ (ha).
-11. `SERVED_POP`: Tổng dân số được phân bổ phục vụ độc quyền của mảng xanh.
+11. `SERVED_POP`: Tổng dân số được phân bổ phục vụ duy nhất của mảng xanh.
 12. `MEAN_DIST_M`: Khoảng cách trung bình từ các phần dấu vết công trình được gán đến mảng xanh (m).
 13. `MAX_DIST_M`: Khoảng cách lớn nhất từ các phần dấu vết công trình được gán đến mảng xanh (m).
 

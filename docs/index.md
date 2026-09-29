@@ -27,7 +27,7 @@ Quy trình phân tích của Plugin gồm 5 module chức năng liên hoàn:
 1. **Module 1 — Chuẩn bị và kiểm tra dữ liệu đầu vào:** Tiếp nhận và kiểm tra cấu trúc hình học các lớp vector; chuẩn hóa trường dân số thống kê của đơn vị hành chính thành `POP_STAT`; thiết lập hệ tọa độ phẳng dự chiếu tham chiếu và tạo ảnh Sentinel-2 Stack 10 m.
 2. **Module 2 — Phân tách mảng xanh đô thị:** Tính toán các chỉ số quang học MNDWI và SAVI; loại trừ mặt nước; bóc tách thực vật; lọc bỏ mảng xanh nhỏ ngoài công viên theo diện tích tối thiểu và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
 3. **Module 3 — Mô hình hóa vùng phục vụ mảng xanh:** Xây dựng lưới khoảng cách Euclid từ biên mảng xanh; phân bổ dân số thống kê theo dấu vết công trình tạo lớp `POP_ALLOC`; xác định dân số phục vụ tối đa ($P_{max,i} = S_i / C$) và tìm kiếm bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện của mô hình cho từng mảng xanh.
-4. **Module 4 — Phân tích không gian xây dựng:** Phân tách dấu vết công trình thành các phần dấu vết công trình; xác định phần dấu vết công trình nằm trong và ngoài vùng phục vụ; áp dụng thuật toán gán độc quyền (**Exclusive Assignment**) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
+4. **Module 4 — Phân tích không gian xây dựng:** Phân tách dấu vết công trình thành các phần dấu vết công trình; xác định phần dấu vết công trình nằm trong và ngoài vùng phục vụ; áp dụng thuật toán gán duy nhất (**Exclusive Assignment**) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
 5. **Module 5 — Tổng hợp và thống kê kết quả:** Tổng hợp các chỉ tiêu định lượng theo đơn vị hành chính trực tiếp từ các lớp vector; tự động thực hiện 8 phép kiểm tra cân bằng dữ liệu (**Balance Checks**); xuất 5 sản phẩm đầu ra chính cùng các kết quả bổ sung lên QGIS và tệp lưu trữ ngoài.
 
 ---
@@ -108,6 +108,6 @@ Plugin tạo ra **5 sản phẩm đầu ra chính**:
     - **Dấu vết công trình xây dựng (Footprint):** Đại diện cho **không gian xây dựng vật lý (built space)**, không đồng nhất hoàn toàn với nhà ở, hộ gia đình hoặc nơi cư trú.
     - **Khoảng cách Euclid:** Vùng phục vụ được tính toán theo **khoảng cách hình học Euclid**, không phải cự ly di chuyển thực tế theo mạng lưới giao thông đường bộ.
     - **Bán kính phục vụ $R^*$:** Được xác định độc lập cho từng mảng xanh dựa trên tương quan giữa diện tích mảng xanh, dân số phân bổ, chỉ tiêu $C$ và giới hạn $R_{\max}$. $R^*$ là bán kính phục vụ lớn nhất trong miền tìm kiếm thỏa mãn điều kiện của mô hình.
-    - **Xử lý chồng lấn (Exclusive Assignment):** Các vùng đệm $R^*$ của từng mảng xanh được giữ nguyên độc lập. Việc xử lý chồng lấn được thực hiện ở bước gán không gian xây dựng (Module 4): mỗi phần dấu vết công trình chỉ được gán độc quyền cho một mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
+    - **Xử lý chồng lấn (Exclusive Assignment):** Các vùng đệm $R^*$ của từng mảng xanh được giữ nguyên độc lập. Việc xử lý chồng lấn được thực hiện ở bước gán không gian xây dựng (Module 4): mỗi phần dấu vết công trình chỉ được gán duy nhất cho một mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
 
 👉 Xem đầy đủ lưu ý: [Lưu ý khi sử dụng](luu-y.md) | [Lỗi thường gặp](loi-thuong-gap.md)

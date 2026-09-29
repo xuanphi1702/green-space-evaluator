@@ -114,7 +114,7 @@ Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread k
 - **Module 4 (Phân tích không gian xây dựng):**
   - Phân tích vị trí không gian của từng phần dấu vết công trình đối với vùng phục vụ bán kính $R^*$.
   - Phân loại phần dấu vết công trình nằm trong và ngoài vùng phục vụ.
-  - Áp dụng thuật toán gán độc quyền (**Exclusive Assignment**): nếu một phần dấu vết công trình giao cắt với nhiều vùng phục vụ, nó được gán độc quyền cho mảng xanh gần nhất. Mỗi phần dấu vết công trình chỉ thuộc tối đa một `PATCH_ID`, loại bỏ hoàn toàn đếm lặp.
+  - Áp dụng thuật toán gán duy nhất (**Exclusive Assignment**): nếu một phần dấu vết công trình giao cắt với nhiều vùng phục vụ, nó được gán duy nhất cho mảng xanh gần nhất. Mỗi phần dấu vết công trình chỉ thuộc tối đa một `PATCH_ID`, loại bỏ hoàn toàn đếm lặp.
 - **Module 5 (Tổng hợp và thống kê kết quả):**
   - Tổng hợp trực tiếp từ các lớp vector kết quả ra 10 trường chỉ số định lượng theo từng đơn vị hành chính.
   - Tự động thực thi hệ thống 8 phép kiểm tra tính toàn vẹn dữ liệu (Balance Checks).
@@ -132,7 +132,7 @@ Plugin tích hợp cơ chế tự động kiểm tra đối soát số liệu kh
 4. **INPUT FOOTPRINT AREA BALANCE**: Tổng diện tích các phần dấu vết công trình sau khi cắt bằng đúng diện tích dấu vết công trình đầu vào ($\sum AREA(input) = \sum AREA(served) + \sum AREA(outside)$).
 5. **FOOTPRINT COUNT BALANCE**: Xác nhận toàn bộ phần dấu vết công trình đầu vào của bước phân tích cuối được phân loại đầy đủ thành served hoặc outside ($N_{\text{input}} = N_{\text{served}} + N_{\text{outside}}$), không bị mất hoặc tạo thêm đối tượng ngoài quy trình.
 6. **PATCH BUILDING AREA BALANCE**: Cân bằng diện tích xây dựng được gán cho các mảng xanh độc lập ($\sum SERVED\_BUILDING\_AREA(PATCH) = \sum AREA(cons\_in\_buffer)$).
-7. **EXCLUSIVE PATCH ASSIGNMENT**: Xác nhận mỗi phần dấu vết công trình chỉ được gán độc quyền cho tối đa một mảng xanh duy nhất, SERVED $\cap$ OUTSIDE = $\emptyset$.
+7. **EXCLUSIVE PATCH ASSIGNMENT**: Xác nhận mỗi phần dấu vết công trình chỉ được gán duy nhất cho tối đa một mảng xanh, SERVED $\cap$ OUTSIDE = $\emptyset$.
 8. **GREEN AREA BALANCE**: Tổng diện tích mảng xanh được phân bổ cho các đơn vị hành chính bằng đúng tổng diện tích mảng xanh toàn khu vực nghiên cứu.
 
 ---

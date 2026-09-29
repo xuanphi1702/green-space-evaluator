@@ -1388,7 +1388,7 @@
 <h3 id="23-khong-gian-xay-dung-trong-vung-phuc-vu">2.3. Không gian xây dựng trong vùng phục vụ</h3>
 <ul>
 <li><strong>Bản chất dữ liệu</strong>: Tập hợp các phần dấu vết công trình nằm trong phạm vi vùng phục vụ bán kính <span class="arithmatex">\(R^*\)</span> của mảng xanh.</li>
-<li><strong>Cơ chế gán độc quyền (Exclusive Assignment)</strong>: Khi một phần dấu vết công trình nằm trong phạm vi giao cắt của nhiều vùng phục vụ, Plugin tự động gán đối tượng đó cho mảng xanh gần nhất. Nhờ đó, mỗi phần dấu vết công trình chỉ gắn với một <code>PATCH_ID</code> duy nhất, loại bỏ hoàn toàn việc đếm lặp dân số hoặc diện tích.</li>
+<li><strong>Cơ chế gán duy nhất (Exclusive Assignment)</strong>: Khi một phần dấu vết công trình nằm trong phạm vi giao cắt của nhiều vùng phục vụ, Plugin tự động gán đối tượng đó cho mảng xanh gần nhất. Nhờ đó, mỗi phần dấu vết công trình chỉ gắn với một <code>PATCH_ID</code> duy nhất, loại bỏ hoàn toàn việc đếm lặp dân số hoặc diện tích.</li>
 <li><strong>Ý nghĩa</strong>: Đại diện cho không gian xây dựng vật lý được tiếp cận mảng xanh theo khoảng cách Euclid và chỉ tiêu diện tích bình quân của mô hình.</li>
 </ul>
 <h3 id="24-khong-gian-xay-dung-ngoai-vung-phuc-vu">2.4. Không gian xây dựng ngoài vùng phục vụ</h3>
@@ -1418,10 +1418,10 @@
 5. <code>STATUS</code>: Trạng thái giải bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).
 6. <code>P_MAX</code>: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu C (<span class="arithmatex">\(P_{max,i} = S_i / C\)</span>).
 7. <code>P_AT_RSTAR</code>: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách <span class="arithmatex">\(R^*\)</span> của mảng xanh.
-8. <code>N_SERVED_PARTS</code>: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ độc quyền cho mảng xanh).
+8. <code>N_SERVED_PARTS</code>: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ duy nhất cho mảng xanh).
 9. <code>SERVED_BUILDING_AREA_M2</code>: Tổng diện tích xây dựng được gán phục vụ (<span class="arithmatex">\(\text{m}^2\)</span>).
 10. <code>SERVED_BUILDING_AREA_HA</code>: Tổng diện tích xây dựng được gán phục vụ (ha).
-11. <code>SERVED_POP</code>: Tổng dân số được phân bổ phục vụ độc quyền của mảng xanh.
+11. <code>SERVED_POP</code>: Tổng dân số được phân bổ phục vụ duy nhất của mảng xanh.
 12. <code>MEAN_DIST_M</code>: Khoảng cách trung bình từ các phần dấu vết công trình được gán đến mảng xanh (m).
 13. <code>MAX_DIST_M</code>: Khoảng cách lớn nhất từ các phần dấu vết công trình được gán đến mảng xanh (m).</p>
 <hr />

@@ -54,11 +54,11 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 
 ---
 
-## 6. Xử lý chồng lấn bằng thuật toán gán độc quyền (Exclusive Assignment)
+## 6. Xử lý chồng lấn bằng thuật toán gán duy nhất (Exclusive Assignment)
 
 !!! tip "Loại bỏ hoàn toàn đếm lặp ở cấp độ không gian xây dựng"
     1. **Giữ nguyên vùng đệm mảng xanh:** Vùng phục vụ bán kính $R^*$ của từng mảng xanh được giữ nguyên vẹn độc lập, không gộp lại để bảo toàn tính độc lập của từng mảng xanh.
-    2. **Gán độc quyền cho công trình:** Khi một phần dấu vết công trình nằm trong vùng phục vụ của nhiều mảng xanh, nó được gán cho mảng xanh gần nhất. Mỗi phần dấu vết công trình cuối cùng chỉ thuộc về tối đa một mảng xanh, bảo toàn nguyên tắc cân bằng dữ liệu và không đếm lặp dân số.
+    2. **Gán duy nhất cho công trình:** Khi một phần dấu vết công trình nằm trong vùng phục vụ của nhiều mảng xanh, nó được gán cho mảng xanh gần nhất. Mỗi phần dấu vết công trình cuối cùng chỉ thuộc về tối đa một mảng xanh, bảo toàn nguyên tắc cân bằng dữ liệu và không đếm lặp dân số.
 
 ---
 

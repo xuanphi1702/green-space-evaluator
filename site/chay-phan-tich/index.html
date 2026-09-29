@@ -1295,7 +1295,7 @@
 <li><strong>Module 4 (Phân tích không gian xây dựng):</strong></li>
 <li>Phân tích vị trí không gian của từng phần dấu vết công trình đối với vùng phục vụ bán kính <span class="arithmatex">\(R^*\)</span>.</li>
 <li>Phân loại phần dấu vết công trình nằm trong và ngoài vùng phục vụ.</li>
-<li>Áp dụng thuật toán gán độc quyền (<strong>Exclusive Assignment</strong>): nếu một phần dấu vết công trình giao cắt với nhiều vùng phục vụ, nó được gán độc quyền cho mảng xanh gần nhất. Mỗi phần dấu vết công trình chỉ thuộc tối đa một <code>PATCH_ID</code>, loại bỏ hoàn toàn đếm lặp.</li>
+<li>Áp dụng thuật toán gán duy nhất (<strong>Exclusive Assignment</strong>): nếu một phần dấu vết công trình giao cắt với nhiều vùng phục vụ, nó được gán duy nhất cho mảng xanh gần nhất. Mỗi phần dấu vết công trình chỉ thuộc tối đa một <code>PATCH_ID</code>, loại bỏ hoàn toàn đếm lặp.</li>
 <li><strong>Module 5 (Tổng hợp và thống kê kết quả):</strong></li>
 <li>Tổng hợp trực tiếp từ các lớp vector kết quả ra 10 trường chỉ số định lượng theo từng đơn vị hành chính.</li>
 <li>Tự động thực thi hệ thống 8 phép kiểm tra tính toàn vẹn dữ liệu (Balance Checks).</li>
@@ -1311,7 +1311,7 @@
 <li><strong>INPUT FOOTPRINT AREA BALANCE</strong>: Tổng diện tích các phần dấu vết công trình sau khi cắt bằng đúng diện tích dấu vết công trình đầu vào (<span class="arithmatex">\(\sum AREA(input) = \sum AREA(served) + \sum AREA(outside)\)</span>).</li>
 <li><strong>FOOTPRINT COUNT BALANCE</strong>: Xác nhận toàn bộ phần dấu vết công trình đầu vào của bước phân tích cuối được phân loại đầy đủ thành served hoặc outside (<span class="arithmatex">\(N_{\text{input}} = N_{\text{served}} + N_{\text{outside}}\)</span>), không bị mất hoặc tạo thêm đối tượng ngoài quy trình.</li>
 <li><strong>PATCH BUILDING AREA BALANCE</strong>: Cân bằng diện tích xây dựng được gán cho các mảng xanh độc lập (<span class="arithmatex">\(\sum SERVED\_BUILDING\_AREA(PATCH) = \sum AREA(cons\_in\_buffer)\)</span>).</li>
-<li><strong>EXCLUSIVE PATCH ASSIGNMENT</strong>: Xác nhận mỗi phần dấu vết công trình chỉ được gán độc quyền cho tối đa một mảng xanh duy nhất, SERVED <span class="arithmatex">\(\cap\)</span> OUTSIDE = <span class="arithmatex">\(\emptyset\)</span>.</li>
+<li><strong>EXCLUSIVE PATCH ASSIGNMENT</strong>: Xác nhận mỗi phần dấu vết công trình chỉ được gán duy nhất cho tối đa một mảng xanh, SERVED <span class="arithmatex">\(\cap\)</span> OUTSIDE = <span class="arithmatex">\(\emptyset\)</span>.</li>
 <li><strong>GREEN AREA BALANCE</strong>: Tổng diện tích mảng xanh được phân bổ cho các đơn vị hành chính bằng đúng tổng diện tích mảng xanh toàn khu vực nghiên cứu.</li>
 </ol>
 <hr />
