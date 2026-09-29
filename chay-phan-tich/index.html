@@ -1286,16 +1286,16 @@
 <li>Lọc bỏ mảng xanh nhỏ ngoài công viên (&lt; 5000 m²).</li>
 <li>Phân tích liên thông 8-neighbor tạo các mảng xanh độc lập, gán <code>PATCH_ID</code> và tính diện tích <span class="arithmatex">\(S_i\)</span>.</li>
 <li><strong>Module 3 (Mô hình hóa vùng phục vụ mảng xanh):</strong></li>
-<li>Phân tách footprint theo đơn vị hành chính tạo <code>footprint-part</code> và phân bổ dân số không gian:
+<li>Phân tách dấu vết công trình theo đơn vị hành chính tạo các phần dấu vết công trình và phân bổ dân số không gian:
     $<span class="arithmatex">\(P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}\)</span>$
     tạo lớp <code>POP_ALLOC</code>.</li>
 <li>Xây dựng ma trận khoảng cách hình học Euclid (EDT) từ biên từng mảng xanh.</li>
-<li>Xác định quy mô dân số mục tiêu <span class="arithmatex">\(P_{target,i} = S_i / C\)</span>.</li>
+<li>Xác định dân số phục vụ tối đa <span class="arithmatex">\(P_{max,i} = S_i / C\)</span>. Sau đó tính <span class="arithmatex">\(P_i(R)\)</span>, kiểm tra <span class="arithmatex">\(P_i(R)\)</span> với <span class="arithmatex">\(P_{max,i}\)</span> và tìm <span class="arithmatex">\(R_i^*\)</span> lớn nhất thỏa <span class="arithmatex">\(P_i(R_i^*) \le P_{max,i}\)</span>.</li>
 <li>Tìm kiếm bán kính phục vụ lớn nhất <span class="arithmatex">\(R^*\)</span> trong <span class="arithmatex">\([0, R_{\max}]\)</span> bằng Binary Search và xử lý các trường hợp biên (<code>RMAX</code>, <code>NO_SOLUTION</code>).</li>
 <li><strong>Module 4 (Phân tích không gian xây dựng):</strong></li>
-<li>Phân tích vị trí không gian của từng <code>footprint-part</code> đối với vùng phục vụ bán kính <span class="arithmatex">\(R^*\)</span>.</li>
-<li>Phân loại <code>footprint-part</code> nằm trong và ngoài vùng phục vụ.</li>
-<li>Áp dụng thuật toán gán độc quyền (<strong>Exclusive Assignment</strong>): nếu một <code>footprint-part</code> giao cắt với nhiều vùng phục vụ, nó được gán độc quyền cho mảng xanh gần nhất. Mỗi <code>footprint-part</code> chỉ thuộc tối đa một <code>PATCH_ID</code>, loại bỏ hoàn toàn đếm lặp.</li>
+<li>Phân tích vị trí không gian của từng phần dấu vết công trình đối với vùng phục vụ bán kính <span class="arithmatex">\(R^*\)</span>.</li>
+<li>Phân loại phần dấu vết công trình nằm trong và ngoài vùng phục vụ.</li>
+<li>Áp dụng thuật toán gán độc quyền (<strong>Exclusive Assignment</strong>): nếu một phần dấu vết công trình giao cắt với nhiều vùng phục vụ, nó được gán độc quyền cho mảng xanh gần nhất. Mỗi phần dấu vết công trình chỉ thuộc tối đa một <code>PATCH_ID</code>, loại bỏ hoàn toàn đếm lặp.</li>
 <li><strong>Module 5 (Tổng hợp và thống kê kết quả):</strong></li>
 <li>Tổng hợp trực tiếp từ các lớp vector kết quả ra 10 trường chỉ số định lượng theo từng đơn vị hành chính.</li>
 <li>Tự động thực thi hệ thống 8 phép kiểm tra tính toàn vẹn dữ liệu (Balance Checks).</li>
@@ -1305,13 +1305,13 @@
 <h2 id="7-he-thong-8-phep-kiem-tra-tinh-toan-ven-du-lieu-balance-checks">7. Hệ thống 8 phép kiểm tra tính toàn vẹn dữ liệu (Balance Checks)</h2>
 <p>Plugin tích hợp cơ chế tự động kiểm tra đối soát số liệu khắt khe trước khi kết thúc:</p>
 <ol>
-<li><strong>POPULATION BALANCE</strong>: Tổng dân số phân bổ trên các footprint-part bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính (<span class="arithmatex">\(\sum T\_DanSo = \sum D\_DaPhucVu + \sum D\_ThieuXanh\)</span>).</li>
+<li><strong>POPULATION BALANCE</strong>: Tổng dân số phân bổ trên các phần dấu vết công trình bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính (<span class="arithmatex">\(\sum T\_DanSo = \sum D\_DaPhucVu + \sum D\_ThieuXanh\)</span>).</li>
 <li><strong>PATCH POPULATION BALANCE</strong>: Dân số được phân bổ cho các mảng xanh khớp với tổng dân số được phục vụ theo phường (<span class="arithmatex">\(\sum SERVED\_POP(PATCH) = \sum D\_DaPhucVu\)</span>).</li>
 <li><strong>WARD BUILDING AREA BALANCE</strong>: Tổng diện tích xây dựng phục vụ và diện tích xây dựng thiếu xanh bằng đúng tổng diện tích xây dựng của phường/xã (<span class="arithmatex">\(\sum S\_XayDung = \sum S\_DaPhucVu + \sum S\_ThieuXanh\)</span>).</li>
-<li><strong>INPUT FOOTPRINT AREA BALANCE</strong>: Tổng diện tích các footprint-part sau khi cắt bằng đúng diện tích footprint công trình đầu vào (<span class="arithmatex">\(\sum AREA(input) = \sum AREA(served) + \sum AREA(outside)\)</span>).</li>
-<li><strong>FOOTPRINT COUNT BALANCE</strong>: Xác nhận toàn bộ footprint-part đầu vào của bước phân tích cuối được phân loại đầy đủ thành served hoặc outside (<span class="arithmatex">\(N_{\text{input}} = N_{\text{served}} + N_{\text{outside}}\)</span>), không bị mất hoặc tạo thêm đối tượng ngoài quy trình.</li>
+<li><strong>INPUT FOOTPRINT AREA BALANCE</strong>: Tổng diện tích các phần dấu vết công trình sau khi cắt bằng đúng diện tích dấu vết công trình đầu vào (<span class="arithmatex">\(\sum AREA(input) = \sum AREA(served) + \sum AREA(outside)\)</span>).</li>
+<li><strong>FOOTPRINT COUNT BALANCE</strong>: Xác nhận toàn bộ phần dấu vết công trình đầu vào của bước phân tích cuối được phân loại đầy đủ thành served hoặc outside (<span class="arithmatex">\(N_{\text{input}} = N_{\text{served}} + N_{\text{outside}}\)</span>), không bị mất hoặc tạo thêm đối tượng ngoài quy trình.</li>
 <li><strong>PATCH BUILDING AREA BALANCE</strong>: Cân bằng diện tích xây dựng được gán cho các mảng xanh độc lập (<span class="arithmatex">\(\sum SERVED\_BUILDING\_AREA(PATCH) = \sum AREA(cons\_in\_buffer)\)</span>).</li>
-<li><strong>EXCLUSIVE PATCH ASSIGNMENT</strong>: Xác nhận mỗi footprint-part chỉ được gán độc quyền cho tối đa một mảng xanh duy nhất, SERVED <span class="arithmatex">\(\cap\)</span> OUTSIDE = <span class="arithmatex">\(\emptyset\)</span>.</li>
+<li><strong>EXCLUSIVE PATCH ASSIGNMENT</strong>: Xác nhận mỗi phần dấu vết công trình chỉ được gán độc quyền cho tối đa một mảng xanh duy nhất, SERVED <span class="arithmatex">\(\cap\)</span> OUTSIDE = <span class="arithmatex">\(\emptyset\)</span>.</li>
 <li><strong>GREEN AREA BALANCE</strong>: Tổng diện tích mảng xanh được phân bổ cho các đơn vị hành chính bằng đúng tổng diện tích mảng xanh toàn khu vực nghiên cứu.</li>
 </ol>
 <hr />
