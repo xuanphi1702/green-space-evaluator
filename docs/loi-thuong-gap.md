@@ -115,7 +115,7 @@ Nhật ký tiến trình báo lỗi:
   $$P_i(0) > P_{max,i}$$
   Khi đó, không tồn tại bán kính thỏa điều kiện trong miền $[0, R_{\max}]$. Bán kính phục vụ được gán bằng $0\text{ m}$. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.
 - **Cách xử lý**:
-  - Không tùy tiện hạ chỉ tiêu $C$ chỉ để tạo ra bán kính phục vụ nếu không có căn cứ quy chuẩn phù hợp.
+  - Không tùy tiện hạ chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu $C_{\min}$ (hoặc Cₘᵢₙ) chỉ để tạo ra bán kính phục vụ nếu không có căn cứ quy chuẩn phù hợp.
   - Đây là kết quả mô hình hóa phản ánh tương quan không gian giữa quy mô mảng xanh và mật độ dân số phân bổ lân cận tại nguồn.
 
 ---

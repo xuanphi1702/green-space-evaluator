@@ -42,12 +42,12 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 ## 5. Ý nghĩa bán kính phục vụ $R^*$ và giới hạn $R_{\max}$
 
 !!! note "Bán kính phục vụ lớn nhất thỏa điều kiện của mô hình"
-    1. **Tính độc lập của từng mảng xanh:** Mỗi mảng xanh có dân số phục vụ tối đa riêng $P_{max,i} = S_i / C$ và được xác định một bán kính phục vụ $R_i^*$ riêng trong khoảng $[0, R_{\max}]$.
+    1. **Tính độc lập của từng mảng xanh:** Mỗi mảng xanh có dân số phục vụ tối đa riêng $P_{max,i} = S_i / C_{\min}$ và được xác định một bán kính phục vụ $R_i^*$ riêng trong khoảng $[0, R_{\max}]$.
     2. **Các yếu tố quyết định $R^*$:** Bán kính phục vụ $R^*$ phụ thuộc đồng thời vào:
        - Diện tích mảng xanh ($S_i$);
        - Phân bố không gian của các công trình xây dựng xung quanh;
        - Quy mô dân số phân bổ (`POP_ALLOC`);
-       - Chỉ tiêu diện tích mảng xanh bình quân đầu người ($C$);
+       - Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$);
        - Giới hạn trên của miền tìm kiếm ($R_{\max}$).
     3. **Bản chất khoa học của $R^*$:** $R^*$ là **bán kính phục vụ lớn nhất trong miền tìm kiếm thỏa mãn điều kiện của mô hình**.
     4. **Giới hạn $R_{\max}$:** Mặc định tham chiếu $300\text{ m}$ đóng vai trò là cận trên để khống chế phạm vi tìm kiếm của thuật toán trong cấu hình nghiên cứu/thử nghiệm, không phải là quy chuẩn áp đặt cho mọi không gian xanh.
@@ -65,7 +65,7 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 ## 7. Diễn giải kết quả phân tích
 
 !!! warning "Khuyến nghị diễn giải"
-    Khái niệm "trong vùng phục vụ" hay "thiếu mảng xanh" là kết quả mô hình hóa không gian dựa trên các tham số của mô hình ($C$, $R_{\max}$, khoảng cách Euclid). Không nên diễn giải đây là số liệu kiểm kê thực địa hoặc khẳng định người dân hoàn toàn không thể tiếp cận cây xanh trên thực tế. Kết quả của Plugin đóng vai trò là công cụ hỗ trợ ra quyết định và quy hoạch đô thị.
+    Khái niệm "trong vùng phục vụ" hay "thiếu mảng xanh" là kết quả mô hình hóa không gian dựa trên các tham số của mô hình ($C_{\min}$, $R_{\max}$, khoảng cách Euclid). Không nên diễn giải đây là số liệu kiểm kê thực địa hoặc khẳng định người dân hoàn toàn không thể tiếp cận cây xanh trên thực tế. Kết quả của Plugin đóng vai trò là công cụ hỗ trợ ra quyết định và quy hoạch đô thị.
 
 ---
 

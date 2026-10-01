@@ -38,7 +38,7 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 - **Bảng thuộc tính của lớp Vùng phục vụ R\* (`SERVICE_AREA`)**:
     - `PATCH_ID` (Integer): Mã định danh số nguyên duy nhất của từng mảng xanh.
     - `R_STAR` (Double): Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).
-    - `P_MAX` (Double): Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu C ($P_{max,i} = S_i / C$).
+    - `P_MAX` (Double): Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu Cₘᵢₙ ($P_{max,i} = S_i / C_{\min}$).
     - `STATUS` (String): Trạng thái kết quả tìm kiếm bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
     - `AREA_M2` (Double): Diện tích của mảng xanh ($\text{m}^2$).
     - `AREA_HA` (Double): Diện tích của mảng xanh (ha).
@@ -50,11 +50,11 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 ### 2.3. Không gian xây dựng trong vùng phục vụ
 - **Bản chất dữ liệu**: Tập hợp các phần dấu vết công trình nằm trong phạm vi vùng phục vụ bán kính $R^*$ của mảng xanh.
 - **Cơ chế gán duy nhất (Exclusive Assignment)**: Khi một phần dấu vết công trình nằm trong phạm vi giao cắt của nhiều vùng phục vụ, Plugin tự động gán đối tượng đó cho mảng xanh gần nhất. Nhờ đó, mỗi phần dấu vết công trình chỉ gắn với một `PATCH_ID` duy nhất, loại bỏ hoàn toàn việc đếm lặp dân số hoặc diện tích.
-- **Ý nghĩa**: Đại diện cho không gian xây dựng vật lý được tiếp cận mảng xanh theo khoảng cách Euclid và chỉ tiêu diện tích bình quân của mô hình.
+- **Ý nghĩa**: Đại diện cho không gian xây dựng vật lý được tiếp cận mảng xanh theo khoảng cách Euclid và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$) của mô hình.
 
 ### 2.4. Không gian xây dựng ngoài vùng phục vụ
 - **Bản chất dữ liệu**: Tập hợp các phần dấu vết công trình nằm ngoài phạm vi vùng phục vụ của tất cả các mảng xanh.
-- **Ý nghĩa**: Thể hiện các khu vực xây dựng còn thiếu hụt không gian xanh theo tiêu chí khoảng cách và chỉ tiêu diện tích của mô hình, hỗ trợ định hướng các vị trí ưu tiên bổ sung công viên, vườn hoa mới.
+- **Ý nghĩa**: Thể hiện các khu vực xây dựng còn thiếu hụt không gian xanh theo tiêu chí khoảng cách và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$) của mô hình, hỗ trợ định hướng các vị trí ưu tiên bổ sung công viên, vườn hoa mới.
 
 ### 2.5. Thống kê theo đơn vị hành chính
 - **Bản chất dữ liệu**: Lớp vector ranh giới hành chính (phường/xã) kế thừa cấu trúc hình học từ lớp ranh giới đầu vào, được tích hợp trực tiếp 10 trường chỉ số định lượng.
@@ -76,7 +76,7 @@ Tệp thống kê chi tiết ở cấp độ từng mảng xanh (`patch_service_
 3. `AREA_HA`: Diện tích mảng xanh (ha).
 4. `R_STAR_M`: Bán kính phục vụ lớn nhất thỏa điều kiện $R^*$ (m).
 5. `STATUS`: Trạng thái giải bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
-6. `P_MAX`: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu C ($P_{max,i} = S_i / C$).
+6. `P_MAX`: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu Cₘᵢₙ ($P_{max,i} = S_i / C_{\min}$).
 7. `P_AT_RSTAR`: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách $R^*$ của mảng xanh.
 8. `N_SERVED_PARTS`: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ duy nhất cho mảng xanh).
 9. `SERVED_BUILDING_AREA_M2`: Tổng diện tích xây dựng được gán phục vụ ($\text{m}^2$).
@@ -164,4 +164,4 @@ Khi người dùng cấu hình đường dẫn lưu tại tab **Sản phẩm b�
 
 !!! warning "Lưu ý phương pháp luận khi đọc kết quả"
     1. **Bản chất dân số:** Các chỉ tiêu `D_DaPhucVu`, `D_ThieuXanh`, `TL_ThieuXanh` là giá trị **dân số được phân bổ theo không gian** từ số liệu thống kê cấp hành chính dựa trên diện tích dấu vết công trình. Không được diễn giải đây là số lượng cư dân điều tra thực địa hay số hộ gia đình thực tế.
-    2. **Khái niệm phục vụ:** Thuật ngữ "được phục vụ" hoặc "thiếu mảng xanh" phản ánh kết quả mô hình hóa không gian bằng khoảng cách hình học Euclid và chỉ tiêu diện tích bình quân đầu người của mô hình; không đồng nhất hoàn toàn với việc người dân có tiếp cận được không gian xanh trên thực tế hay không (do phụ thuộc vào mạng lưới đường đi, lối vào công viên và rào chắn thực địa).
+    2. **Khái niệm phục vụ:** Thuật ngữ "được phục vụ" hoặc "thiếu mảng xanh" phản ánh kết quả mô hình hóa không gian bằng khoảng cách hình học Euclid và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$) của mô hình; không đồng nhất hoàn toàn với việc người dân có tiếp cận được không gian xanh trên thực tế hay không (do phụ thuộc vào mạng lưới đường đi, lối vào công viên và rào chắn thực địa).

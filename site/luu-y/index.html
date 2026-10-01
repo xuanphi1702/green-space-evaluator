@@ -1112,12 +1112,12 @@
 <div class="admonition note">
 <p class="admonition-title">Bán kính phục vụ lớn nhất thỏa điều kiện của mô hình</p>
 <ol>
-<li><strong>Tính độc lập của từng mảng xanh:</strong> Mỗi mảng xanh có dân số phục vụ tối đa riêng <span class="arithmatex">\(P_{max,i} = S_i / C\)</span> và được xác định một bán kính phục vụ <span class="arithmatex">\(R_i^*\)</span> riêng trong khoảng <span class="arithmatex">\([0, R_{\max}]\)</span>.</li>
+<li><strong>Tính độc lập của từng mảng xanh:</strong> Mỗi mảng xanh có dân số phục vụ tối đa riêng <span class="arithmatex">\(P_{max,i} = S_i / C_{\min}\)</span> và được xác định một bán kính phục vụ <span class="arithmatex">\(R_i^*\)</span> riêng trong khoảng <span class="arithmatex">\([0, R_{\max}]\)</span>.</li>
 <li><strong>Các yếu tố quyết định <span class="arithmatex">\(R^*\)</span>:</strong> Bán kính phục vụ <span class="arithmatex">\(R^*\)</span> phụ thuộc đồng thời vào:</li>
 <li>Diện tích mảng xanh (<span class="arithmatex">\(S_i\)</span>);</li>
 <li>Phân bố không gian của các công trình xây dựng xung quanh;</li>
 <li>Quy mô dân số phân bổ (<code>POP_ALLOC</code>);</li>
-<li>Chỉ tiêu diện tích mảng xanh bình quân đầu người (<span class="arithmatex">\(C\)</span>);</li>
+<li>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(C_{\min}\)</span>);</li>
 <li>Giới hạn trên của miền tìm kiếm (<span class="arithmatex">\(R_{\max}\)</span>).</li>
 <li><strong>Bản chất khoa học của <span class="arithmatex">\(R^*\)</span>:</strong> <span class="arithmatex">\(R^*\)</span> là <strong>bán kính phục vụ lớn nhất trong miền tìm kiếm thỏa mãn điều kiện của mô hình</strong>.</li>
 <li><strong>Giới hạn <span class="arithmatex">\(R_{\max}\)</span>:</strong> Mặc định tham chiếu <span class="arithmatex">\(300\text{ m}\)</span> đóng vai trò là cận trên để khống chế phạm vi tìm kiếm của thuật toán trong cấu hình nghiên cứu/thử nghiệm, không phải là quy chuẩn áp đặt cho mọi không gian xanh.</li>
@@ -1136,7 +1136,7 @@
 <h2 id="7-dien-giai-ket-qua-phan-tich">7. Diễn giải kết quả phân tích</h2>
 <div class="admonition warning">
 <p class="admonition-title">Khuyến nghị diễn giải</p>
-<p>Khái niệm "trong vùng phục vụ" hay "thiếu mảng xanh" là kết quả mô hình hóa không gian dựa trên các tham số của mô hình (<span class="arithmatex">\(C\)</span>, <span class="arithmatex">\(R_{\max}\)</span>, khoảng cách Euclid). Không nên diễn giải đây là số liệu kiểm kê thực địa hoặc khẳng định người dân hoàn toàn không thể tiếp cận cây xanh trên thực tế. Kết quả của Plugin đóng vai trò là công cụ hỗ trợ ra quyết định và quy hoạch đô thị.</p>
+<p>Khái niệm "trong vùng phục vụ" hay "thiếu mảng xanh" là kết quả mô hình hóa không gian dựa trên các tham số của mô hình (<span class="arithmatex">\(C_{\min}\)</span>, <span class="arithmatex">\(R_{\max}\)</span>, khoảng cách Euclid). Không nên diễn giải đây là số liệu kiểm kê thực địa hoặc khẳng định người dân hoàn toàn không thể tiếp cận cây xanh trên thực tế. Kết quả của Plugin đóng vai trò là công cụ hỗ trợ ra quyết định và quy hoạch đô thị.</p>
 </div>
 <hr />
 <h2 id="thong-tin-tac-gia">Thông tin tác giả</h2>

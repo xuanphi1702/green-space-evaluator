@@ -2,7 +2,7 @@
 
 **Green Space Evaluator** (tên hiển thị trong QGIS: *Urban Green Space Service Evaluator*) là Plugin chạy trên nền tảng QGIS hỗ trợ tự động hóa toàn diện quy trình đánh giá mức độ phục vụ của mảng xanh đô thị.
 
-Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2, dữ liệu ranh giới hành chính và dân số thống kê, lớp công viên/vườn hoa và dấu vết công trình xây dựng (footprint); mô hình hóa vùng phục vụ cho từng mảng xanh độc lập theo khoảng cách Euclid và chỉ tiêu diện tích bình quân đầu người; phân tích không gian xây dựng và tổng hợp 10 trường chỉ số định lượng theo đơn vị hành chính.
+Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2, dữ liệu ranh giới hành chính và dân số thống kê, lớp công viên/vườn hoa và dấu vết công trình xây dựng (footprint); mô hình hóa vùng phục vụ cho từng mảng xanh độc lập theo khoảng cách Euclid và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$); phân tích không gian xây dựng và tổng hợp 10 trường chỉ số định lượng theo đơn vị hành chính.
 
 ![Giao diện chính của Plugin Green Space Evaluator](docs/images/giao_dien_chinh_plugin.png)
 
@@ -12,7 +12,7 @@ Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2,
 
 - **Tiền xử lý và chuẩn hóa dữ liệu**: Tự động kiểm tra tính hợp lệ hình học các lớp vector, chuẩn hóa trường dân số thống kê thành `POP_STAT`, tiếp nhận hệ tọa độ phẳng dự chiếu tham chiếu (đơn vị mét) và tạo ảnh Sentinel-2 Stack 10 m (hỗ trợ lọc mây SCL).
 - **Trích xuất mảng xanh từ ảnh Sentinel-2**: Tính toán chỉ số phổ MNDWI và SAVI, hỗ trợ tự động xác định ngưỡng SAVI từ lớp công viên mẫu (P10) hoặc nhập thủ công, phân tách mặt nước, lọc mảng xanh theo diện tích tối thiểu và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
-- **Mô hình hóa vùng phục vụ mảng xanh**: Phân bổ dân số thống kê xuống không gian xây dựng (`POP_ALLOC`), tính lưới khoảng cách Euclid từ biên mảng xanh, xác định dân số phục vụ tối đa ($P_{max,i} = S_i / C$) và áp dụng thuật toán tìm kiếm nhị phân (Binary Search) xác định bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện mô hình.
+- **Mô hình hóa vùng phục vụ mảng xanh**: Phân bổ dân số thống kê xuống không gian xây dựng (`POP_ALLOC`), tính lưới khoảng cách Euclid từ biên mảng xanh, xác định dân số phục vụ tối đa ($P_{max,i} = S_i / C_{\min}$) và áp dụng thuật toán tìm kiếm nhị phân (Binary Search) xác định bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện mô hình.
 - **Phân tích không gian xây dựng**: Phân tách dấu vết công trình thành các phần dấu vết công trình, phân loại công trình nằm trong và ngoài vùng phục vụ, áp dụng thuật toán gán duy nhất (**Exclusive Assignment**) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
 - **Tổng hợp chỉ tiêu định lượng theo đơn vị hành chính**: Tự động tính toán 10 trường chỉ số thống kê theo từng phường/xã, thực hiện 8 phép kiểm tra tính toàn vẹn dữ liệu (**Balance Checks**) và hỗ trợ xuất bảng số liệu định dạng Excel (`.xlsx`) hoặc CSV (`.csv`).
 

@@ -58,7 +58,7 @@ Nhấn nút **Cài đặt** (biểu tượng bánh răng ở góc trên bên ph�
 - Nếu để trống, các sản phẩm bổ sung sẽ được tự động tạo dưới dạng tệp tạm thời trong thư mục tạm của hệ điều hành (`tempfile.gettempdir()`) và nạp vào phiên làm việc.
 
 ### Tab 2: Tùy chỉnh nâng cao
-- Thiết lập các tham số kỹ thuật: Ngưỡng MNDWI (`0.0`), Hệ số SAVI $L$ (`0.5`), Phương thức và phương pháp xác định ngưỡng SAVI (`P10`), Diện tích mảng xanh tối thiểu ngoài công viên (`5000 m²`), Bán kính phục vụ tối đa $R_{\max}$ (`300 m`), Chỉ tiêu diện tích mảng xanh bình quân đầu người $C$ (`6.0 m²/người`), Sai số hội tụ (`10 m`).
+- Thiết lập các tham số kỹ thuật: Ngưỡng MNDWI (`0.0`), Hệ số SAVI $L$ (`0.5`), Phương thức và phương pháp xác định ngưỡng SAVI (`P10`), Diện tích mảng xanh tối thiểu ngoài công viên (`5000 m²`), Bán kính phục vụ tối đa $R_{\max}$ (`300 m`), Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu $C_{\min}$ (hoặc Cₘᵢₙ) (`6.0 m²/người`), Sai số hội tụ (`10 m`).
 - Nhấn **OK** để lưu hoặc **Đặt lại** để quay về giá trị mặc định ban đầu.
 
 ---
@@ -109,7 +109,7 @@ Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread k
     $$P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}$$
     tạo lớp `POP_ALLOC`.
   - Xây dựng ma trận khoảng cách hình học Euclid (EDT) từ biên từng mảng xanh.
-  - Xác định dân số phục vụ tối đa $P_{max,i} = S_i / C$. Sau đó tính $P_i(R)$, kiểm tra $P_i(R)$ với $P_{max,i}$ và tìm $R_i^*$ lớn nhất thỏa $P_i(R_i^*) \le P_{max,i}$.
+  - Xác định dân số phục vụ tối đa $P_{max,i} = S_i / C_{\min}$. Sau đó tính $P_i(R)$, kiểm tra $P_i(R)$ với $P_{max,i}$ và tìm $R_i^*$ lớn nhất thỏa $P_i(R_i^*) \le P_{max,i}$.
   - Tìm kiếm bán kính phục vụ lớn nhất $R^*$ trong $[0, R_{\max}]$ bằng Binary Search và xử lý các trường hợp biên (`RMAX`, `NO_SOLUTION`).
 - **Module 4 (Phân tích không gian xây dựng):**
   - Phân tích vị trí không gian của từng phần dấu vết công trình đối với vùng phục vụ bán kính $R^*$.
