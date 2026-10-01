@@ -1374,7 +1374,7 @@
 <li><strong>Bảng thuộc tính của lớp Vùng phục vụ R* (<code>SERVICE_AREA</code>)</strong>:<ul>
 <li><code>PATCH_ID</code> (Integer): Mã định danh số nguyên duy nhất của từng mảng xanh.</li>
 <li><code>R_STAR</code> (Double): Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).</li>
-<li><code>P_MAX</code> (Double): Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu C (<span class="arithmatex">\(P_{max,i} = S_i / C\)</span>).</li>
+<li><code>P_MAX</code> (Double): Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu Cₘᵢₙ (<span class="arithmatex">\(P_{max,i} = S_i / C_{\min}\)</span>).</li>
 <li><code>STATUS</code> (String): Trạng thái kết quả tìm kiếm bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).</li>
 <li><code>AREA_M2</code> (Double): Diện tích của mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span>).</li>
 <li><code>AREA_HA</code> (Double): Diện tích của mảng xanh (ha).</li>
@@ -1389,12 +1389,12 @@
 <ul>
 <li><strong>Bản chất dữ liệu</strong>: Tập hợp các phần dấu vết công trình nằm trong phạm vi vùng phục vụ bán kính <span class="arithmatex">\(R^*\)</span> của mảng xanh.</li>
 <li><strong>Cơ chế gán duy nhất (Exclusive Assignment)</strong>: Khi một phần dấu vết công trình nằm trong phạm vi giao cắt của nhiều vùng phục vụ, Plugin tự động gán đối tượng đó cho mảng xanh gần nhất. Nhờ đó, mỗi phần dấu vết công trình chỉ gắn với một <code>PATCH_ID</code> duy nhất, loại bỏ hoàn toàn việc đếm lặp dân số hoặc diện tích.</li>
-<li><strong>Ý nghĩa</strong>: Đại diện cho không gian xây dựng vật lý được tiếp cận mảng xanh theo khoảng cách Euclid và chỉ tiêu diện tích bình quân của mô hình.</li>
+<li><strong>Ý nghĩa</strong>: Đại diện cho không gian xây dựng vật lý được tiếp cận mảng xanh theo khoảng cách Euclid và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(C_{\min}\)</span>) của mô hình.</li>
 </ul>
 <h3 id="24-khong-gian-xay-dung-ngoai-vung-phuc-vu">2.4. Không gian xây dựng ngoài vùng phục vụ</h3>
 <ul>
 <li><strong>Bản chất dữ liệu</strong>: Tập hợp các phần dấu vết công trình nằm ngoài phạm vi vùng phục vụ của tất cả các mảng xanh.</li>
-<li><strong>Ý nghĩa</strong>: Thể hiện các khu vực xây dựng còn thiếu hụt không gian xanh theo tiêu chí khoảng cách và chỉ tiêu diện tích của mô hình, hỗ trợ định hướng các vị trí ưu tiên bổ sung công viên, vườn hoa mới.</li>
+<li><strong>Ý nghĩa</strong>: Thể hiện các khu vực xây dựng còn thiếu hụt không gian xanh theo tiêu chí khoảng cách và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(C_{\min}\)</span>) của mô hình, hỗ trợ định hướng các vị trí ưu tiên bổ sung công viên, vườn hoa mới.</li>
 </ul>
 <h3 id="25-thong-ke-theo-on-vi-hanh-chinh">2.5. Thống kê theo đơn vị hành chính</h3>
 <ul>
@@ -1416,7 +1416,7 @@
 3. <code>AREA_HA</code>: Diện tích mảng xanh (ha).
 4. <code>R_STAR_M</code>: Bán kính phục vụ lớn nhất thỏa điều kiện <span class="arithmatex">\(R^*\)</span> (m).
 5. <code>STATUS</code>: Trạng thái giải bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).
-6. <code>P_MAX</code>: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu C (<span class="arithmatex">\(P_{max,i} = S_i / C\)</span>).
+6. <code>P_MAX</code>: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu Cₘᵢₙ (<span class="arithmatex">\(P_{max,i} = S_i / C_{\min}\)</span>).
 7. <code>P_AT_RSTAR</code>: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách <span class="arithmatex">\(R^*\)</span> của mảng xanh.
 8. <code>N_SERVED_PARTS</code>: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ duy nhất cho mảng xanh).
 9. <code>SERVED_BUILDING_AREA_M2</code>: Tổng diện tích xây dựng được gán phục vụ (<span class="arithmatex">\(\text{m}^2\)</span>).
@@ -1610,7 +1610,7 @@ TL_{DaPhucVu} + TL_{ThieuXanh} = 100\%
 <p class="admonition-title">Lưu ý phương pháp luận khi đọc kết quả</p>
 <ol>
 <li><strong>Bản chất dân số:</strong> Các chỉ tiêu <code>D_DaPhucVu</code>, <code>D_ThieuXanh</code>, <code>TL_ThieuXanh</code> là giá trị <strong>dân số được phân bổ theo không gian</strong> từ số liệu thống kê cấp hành chính dựa trên diện tích dấu vết công trình. Không được diễn giải đây là số lượng cư dân điều tra thực địa hay số hộ gia đình thực tế.</li>
-<li><strong>Khái niệm phục vụ:</strong> Thuật ngữ "được phục vụ" hoặc "thiếu mảng xanh" phản ánh kết quả mô hình hóa không gian bằng khoảng cách hình học Euclid và chỉ tiêu diện tích bình quân đầu người của mô hình; không đồng nhất hoàn toàn với việc người dân có tiếp cận được không gian xanh trên thực tế hay không (do phụ thuộc vào mạng lưới đường đi, lối vào công viên và rào chắn thực địa).</li>
+<li><strong>Khái niệm phục vụ:</strong> Thuật ngữ "được phục vụ" hoặc "thiếu mảng xanh" phản ánh kết quả mô hình hóa không gian bằng khoảng cách hình học Euclid và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(C_{\min}\)</span>) của mô hình; không đồng nhất hoàn toàn với việc người dân có tiếp cận được không gian xanh trên thực tế hay không (do phụ thuộc vào mạng lưới đường đi, lối vào công viên và rào chắn thực địa).</li>
 </ol>
 </div>
 

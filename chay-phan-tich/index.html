@@ -1244,7 +1244,7 @@
 </ul>
 <h3 id="tab-2-tuy-chinh-nang-cao">Tab 2: Tùy chỉnh nâng cao</h3>
 <ul>
-<li>Thiết lập các tham số kỹ thuật: Ngưỡng MNDWI (<code>0.0</code>), Hệ số SAVI <span class="arithmatex">\(L\)</span> (<code>0.5</code>), Phương thức và phương pháp xác định ngưỡng SAVI (<code>P10</code>), Diện tích mảng xanh tối thiểu ngoài công viên (<code>5000 m²</code>), Bán kính phục vụ tối đa <span class="arithmatex">\(R_{\max}\)</span> (<code>300 m</code>), Chỉ tiêu diện tích mảng xanh bình quân đầu người <span class="arithmatex">\(C\)</span> (<code>6.0 m²/người</code>), Sai số hội tụ (<code>10 m</code>).</li>
+<li>Thiết lập các tham số kỹ thuật: Ngưỡng MNDWI (<code>0.0</code>), Hệ số SAVI <span class="arithmatex">\(L\)</span> (<code>0.5</code>), Phương thức và phương pháp xác định ngưỡng SAVI (<code>P10</code>), Diện tích mảng xanh tối thiểu ngoài công viên (<code>5000 m²</code>), Bán kính phục vụ tối đa <span class="arithmatex">\(R_{\max}\)</span> (<code>300 m</code>), Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu <span class="arithmatex">\(C_{\min}\)</span> (hoặc Cₘᵢₙ) (<code>6.0 m²/người</code>), Sai số hội tụ (<code>10 m</code>).</li>
 <li>Nhấn <strong>OK</strong> để lưu hoặc <strong>Đặt lại</strong> để quay về giá trị mặc định ban đầu.</li>
 </ul>
 <hr />
@@ -1290,7 +1290,7 @@
     $<span class="arithmatex">\(P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}\)</span>$
     tạo lớp <code>POP_ALLOC</code>.</li>
 <li>Xây dựng ma trận khoảng cách hình học Euclid (EDT) từ biên từng mảng xanh.</li>
-<li>Xác định dân số phục vụ tối đa <span class="arithmatex">\(P_{max,i} = S_i / C\)</span>. Sau đó tính <span class="arithmatex">\(P_i(R)\)</span>, kiểm tra <span class="arithmatex">\(P_i(R)\)</span> với <span class="arithmatex">\(P_{max,i}\)</span> và tìm <span class="arithmatex">\(R_i^*\)</span> lớn nhất thỏa <span class="arithmatex">\(P_i(R_i^*) \le P_{max,i}\)</span>.</li>
+<li>Xác định dân số phục vụ tối đa <span class="arithmatex">\(P_{max,i} = S_i / C_{\min}\)</span>. Sau đó tính <span class="arithmatex">\(P_i(R)\)</span>, kiểm tra <span class="arithmatex">\(P_i(R)\)</span> với <span class="arithmatex">\(P_{max,i}\)</span> và tìm <span class="arithmatex">\(R_i^*\)</span> lớn nhất thỏa <span class="arithmatex">\(P_i(R_i^*) \le P_{max,i}\)</span>.</li>
 <li>Tìm kiếm bán kính phục vụ lớn nhất <span class="arithmatex">\(R^*\)</span> trong <span class="arithmatex">\([0, R_{\max}]\)</span> bằng Binary Search và xử lý các trường hợp biên (<code>RMAX</code>, <code>NO_SOLUTION</code>).</li>
 <li><strong>Module 4 (Phân tích không gian xây dựng):</strong></li>
 <li>Phân tích vị trí không gian của từng phần dấu vết công trình đối với vùng phục vụ bán kính <span class="arithmatex">\(R^*\)</span>.</li>
