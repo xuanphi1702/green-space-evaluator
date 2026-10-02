@@ -1144,16 +1144,16 @@
 <td>Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm loại bỏ các cụm thực vật nhỏ lẻ ngoài công viên.</td>
 </tr>
 <tr>
-<td><strong>Bán kính phục vụ tối đa (Rmax)</strong></td>
+<td><strong>Bán kính phục vụ tối đa (<span class="arithmatex">\(R_{\max}\)</span>)</strong></td>
 <td style="text-align: right;"><code>300.0</code></td>
 <td style="text-align: center;">m</td>
 <td>Giới hạn trên của miền tìm kiếm bán kính phục vụ <span class="arithmatex">\(R^*\)</span> cho từng mảng xanh trong nghiên cứu/thử nghiệm.</td>
 </tr>
 <tr>
-<td><strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (Cₘᵢₙ)</strong></td>
+<td><strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(C_{\min}\)</span>)</strong></td>
 <td style="text-align: right;"><code>6.0</code></td>
 <td style="text-align: center;">m²/người</td>
-<td>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu dùng để xác định dân số phục vụ tối đa: <span class="arithmatex">\(P_{max,i} = S_i / C_{\min}\)</span>.</td>
+<td>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu dùng để xác định dân số phục vụ tối đa: <span class="arithmatex">\(P_{\max, i} = S_i / C_{\min}\)</span>.</td>
 </tr>
 <tr>
 <td><strong>Sai số hội tụ khi xác định bán kính</strong></td>
@@ -1165,7 +1165,7 @@
 </table>
 <div class="admonition info">
 <p class="admonition-title">Các giá trị cấu hình mặc định trong nghiên cứu</p>
-<p>Trong cấu hình thử nghiệm, các giá trị mặc định như bán kính phục vụ tối đa <strong>300 m</strong>, chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu <strong>6.0 m²/người (Cₘᵢₙ)</strong> và diện tích lọc <strong>5000 m²</strong> được lựa chọn làm giá trị cấu hình tham chiếu phục vụ nghiên cứu. Đây không phải là các giới hạn quy chuẩn áp đặt cho mọi đô thị; người dùng có thể tùy chỉnh linh hoạt phù hợp với quy chuẩn địa phương và bối cảnh từng khu vực nghiên cứu.</p>
+<p>Trong cấu hình thử nghiệm, các giá trị mặc định như bán kính phục vụ tối đa <strong>300 m</strong>, chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu <strong>6.0 m²/người (<span class="arithmatex">\(C_{\min}\)</span>)</strong> và diện tích lọc <strong>5000 m²</strong> được lựa chọn làm giá trị cấu hình tham chiếu phục vụ nghiên cứu. Đây không phải là các giới hạn quy chuẩn áp đặt cho mọi đô thị; người dùng có thể tùy chỉnh linh hoạt phù hợp với quy chuẩn địa phương và bối cảnh từng khu vực nghiên cứu.</p>
 </div>
 <p>👉 Xem hướng dẫn chi tiết: <a href="tham-so/">Cài đặt tham số</a></p>
 <hr />
@@ -1175,7 +1175,7 @@
 <ol>
 <li><strong>Khởi động Plugin:</strong> Mở QGIS, nhấn vào biểu tượng chiếc lá trên thanh công cụ hoặc vào menu <strong>Plugins</strong> → <strong>Urban Green Space Service Evaluator</strong>.</li>
 <li><strong>Nạp dữ liệu:</strong> Tại tab <strong>Dữ liệu đầu vào</strong>, chọn lần lượt 4 nhóm dữ liệu (Ảnh Sentinel-2, Lớp ranh giới hành chính kèm trường dân số, Lớp công viên/vườn hoa, Lớp dấu vết công trình).</li>
-<li><strong>Cài đặt tham số (tùy chọn):</strong> Nhấn nút <strong>Cài đặt</strong> ở góc trên bên phải để điều chỉnh <span class="arithmatex">\(R_{\max}\)</span>, <span class="arithmatex">\(C_{\min}\)</span> (hoặc Cₘᵢₙ) hoặc diện tích mảng xanh tối thiểu nếu có nhu cầu riêng.</li>
+<li><strong>Cài đặt tham số (tùy chọn):</strong> Nhấn nút <strong>Cài đặt</strong> ở góc trên bên phải để điều chỉnh <span class="arithmatex">\(R_{\max}\)</span>, <span class="arithmatex">\(C_{\min}\)</span> hoặc diện tích mảng xanh tối thiểu nếu có nhu cầu riêng.</li>
 <li><strong>Chỉ định nơi lưu sản phẩm:</strong> Chuyển sang tab <strong>Sản phẩm đầu ra</strong>, chọn định dạng và thư mục lưu cho 5 sản phẩm chính (hoặc để trống để tạo lớp tạm thời).</li>
 <li><strong>Thực thi phân tích:</strong> Nhấn nút <strong>Phân tích</strong> ở góc dưới cùng. Theo dõi nhật ký tiến trình hiển thị trực tiếp. Khi hoàn tất, các lớp kết quả sẽ được tự động thêm vào bản đồ QGIS kèm kiểu dáng trực quan.</li>
 </ol>

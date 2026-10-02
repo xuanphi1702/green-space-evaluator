@@ -1374,7 +1374,7 @@
 <li><strong>Bảng thuộc tính của lớp Vùng phục vụ R* (<code>SERVICE_AREA</code>)</strong>:<ul>
 <li><code>PATCH_ID</code> (Integer): Mã định danh số nguyên duy nhất của từng mảng xanh.</li>
 <li><code>R_STAR</code> (Double): Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).</li>
-<li><code>P_MAX</code> (Double): Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu Cₘᵢₙ (<span class="arithmatex">\(P_{max,i} = S_i / C_{\min}\)</span>).</li>
+<li><code>P_MAX</code> (Double): Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu <span class="arithmatex">\(C_{\min}\)</span> (<span class="arithmatex">\(P_{\max, i} = S_i / C_{\min}\)</span>).</li>
 <li><code>STATUS</code> (String): Trạng thái kết quả tìm kiếm bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).</li>
 <li><code>AREA_M2</code> (Double): Diện tích của mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span>).</li>
 <li><code>AREA_HA</code> (Double): Diện tích của mảng xanh (ha).</li>
@@ -1410,20 +1410,22 @@
 <li><strong>Chuẩn mã hóa</strong>: Tệp <code>.csv</code> được xuất dưới định dạng mã hóa <code>UTF-8-SIG</code>, đảm bảo mở trực tiếp bằng Microsoft Excel hiển thị tiếng Việt chuẩn xác không bị lỗi phông chữ.</li>
 </ul>
 <h3 id="32-bang-thong-ke-chi-tiet-theo-mang-xanh-patch_service_statistics">3.2. Bảng thống kê chi tiết theo mảng xanh (<code>patch_service_statistics</code>)</h3>
-<p>Tệp thống kê chi tiết ở cấp độ từng mảng xanh (<code>patch_service_statistics.csv</code> / <code>.xlsx</code>) gồm đúng <strong>13 trường chuẩn hóa trong mã nguồn</strong>:
-1. <code>PATCH_ID</code>: Mã định danh mảng xanh.
-2. <code>AREA_M2</code>: Diện tích mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span>).
-3. <code>AREA_HA</code>: Diện tích mảng xanh (ha).
-4. <code>R_STAR_M</code>: Bán kính phục vụ lớn nhất thỏa điều kiện <span class="arithmatex">\(R^*\)</span> (m).
-5. <code>STATUS</code>: Trạng thái giải bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).
-6. <code>P_MAX</code>: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu Cₘᵢₙ (<span class="arithmatex">\(P_{max,i} = S_i / C_{\min}\)</span>).
-7. <code>P_AT_RSTAR</code>: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách <span class="arithmatex">\(R^*\)</span> của mảng xanh.
-8. <code>N_SERVED_PARTS</code>: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ duy nhất cho mảng xanh).
-9. <code>SERVED_BUILDING_AREA_M2</code>: Tổng diện tích xây dựng được gán phục vụ (<span class="arithmatex">\(\text{m}^2\)</span>).
-10. <code>SERVED_BUILDING_AREA_HA</code>: Tổng diện tích xây dựng được gán phục vụ (ha).
-11. <code>SERVED_POP</code>: Tổng dân số được phân bổ phục vụ duy nhất của mảng xanh.
-12. <code>MEAN_DIST_M</code>: Khoảng cách trung bình từ các phần dấu vết công trình được gán đến mảng xanh (m).
-13. <code>MAX_DIST_M</code>: Khoảng cách lớn nhất từ các phần dấu vết công trình được gán đến mảng xanh (m).</p>
+<p>Tệp thống kê chi tiết ở cấp độ từng mảng xanh (<code>patch_service_statistics.csv</code> / <code>.xlsx</code>) gồm đúng <strong>13 trường chuẩn hóa trong mã nguồn</strong>:</p>
+<ol>
+<li><code>PATCH_ID</code>: Mã định danh mảng xanh.</li>
+<li><code>AREA_M2</code>: Diện tích mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span>).</li>
+<li><code>AREA_HA</code>: Diện tích mảng xanh (ha).</li>
+<li><code>R_STAR_M</code>: Bán kính phục vụ lớn nhất thỏa điều kiện <span class="arithmatex">\(R^*\)</span> (m).</li>
+<li><code>STATUS</code>: Trạng thái giải bán kính (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).</li>
+<li><code>P_MAX</code>: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu <span class="arithmatex">\(C_{\min}\)</span> (<span class="arithmatex">\(P_{\max, i} = S_i / C_{\min}\)</span>).</li>
+<li><code>P_AT_RSTAR</code>: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách <span class="arithmatex">\(R^*\)</span> của mảng xanh.</li>
+<li><code>N_SERVED_PARTS</code>: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ duy nhất cho mảng xanh).</li>
+<li><code>SERVED_BUILDING_AREA_M2</code>: Tổng diện tích xây dựng được gán phục vụ (<span class="arithmatex">\(\text{m}^2\)</span>).</li>
+<li><code>SERVED_BUILDING_AREA_HA</code>: Tổng diện tích xây dựng được gán phục vụ (ha).</li>
+<li><code>SERVED_POP</code>: Tổng dân số được phân bổ phục vụ duy nhất của mảng xanh.</li>
+<li><code>MEAN_DIST_M</code>: Khoảng cách trung bình từ các phần dấu vết công trình được gán đến mảng xanh (m).</li>
+<li><code>MAX_DIST_M</code>: Khoảng cách lớn nhất từ các phần dấu vết công trình được gán đến mảng xanh (m).</li>
+</ol>
 <hr />
 <h2 id="4-10-truong-thuoc-tinh-thong-ke-hanh-chinh">4. 10 trường thuộc tính thống kê hành chính</h2>
 <p>Bảng thuộc tính của lớp vector thống kê hành chính chứa đúng <strong>10 trường chỉ số định lượng chuẩn hóa</strong>:</p>
