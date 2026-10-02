@@ -38,7 +38,7 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 - **Bảng thuộc tính của lớp Vùng phục vụ R\* (`SERVICE_AREA`)**:
     - `PATCH_ID` (Integer): Mã định danh số nguyên duy nhất của từng mảng xanh.
     - `R_STAR` (Double): Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).
-    - `P_MAX` (Double): Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu Cₘᵢₙ ($P_{max,i} = S_i / C_{\min}$).
+    - `P_MAX` (Double): Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu $C_{\min}$ ($P_{\max, i} = S_i / C_{\min}$).
     - `STATUS` (String): Trạng thái kết quả tìm kiếm bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
     - `AREA_M2` (Double): Diện tích của mảng xanh ($\text{m}^2$).
     - `AREA_HA` (Double): Diện tích của mảng xanh (ha).
@@ -70,13 +70,15 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 - **Chuẩn mã hóa**: Tệp `.csv` được xuất dưới định dạng mã hóa `UTF-8-SIG`, đảm bảo mở trực tiếp bằng Microsoft Excel hiển thị tiếng Việt chuẩn xác không bị lỗi phông chữ.
 
 ### 3.2. Bảng thống kê chi tiết theo mảng xanh (`patch_service_statistics`)
+
 Tệp thống kê chi tiết ở cấp độ từng mảng xanh (`patch_service_statistics.csv` / `.xlsx`) gồm đúng **13 trường chuẩn hóa trong mã nguồn**:
+
 1. `PATCH_ID`: Mã định danh mảng xanh.
 2. `AREA_M2`: Diện tích mảng xanh ($\text{m}^2$).
 3. `AREA_HA`: Diện tích mảng xanh (ha).
 4. `R_STAR_M`: Bán kính phục vụ lớn nhất thỏa điều kiện $R^*$ (m).
 5. `STATUS`: Trạng thái giải bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
-6. `P_MAX`: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu Cₘᵢₙ ($P_{max,i} = S_i / C_{\min}$).
+6. `P_MAX`: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu $C_{\min}$ ($P_{\max, i} = S_i / C_{\min}$).
 7. `P_AT_RSTAR`: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách $R^*$ của mảng xanh.
 8. `N_SERVED_PARTS`: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ duy nhất cho mảng xanh).
 9. `SERVED_BUILDING_AREA_M2`: Tổng diện tích xây dựng được gán phục vụ ($\text{m}^2$).

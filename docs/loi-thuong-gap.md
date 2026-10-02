@@ -111,11 +111,9 @@ Nhật ký tiến trình báo lỗi:
 
 ### 6.2. Trường hợp NO_SOLUTION ($R^* = 0\text{ m}$)
 - **Hiện tượng**: Trong bảng thống kê mảng xanh hoặc nhật ký tiến trình xuất hiện một số mảng xanh có trạng thái `NO_SOLUTION` và bán kính $R^* = 0\text{ m}$.
-- **Bản chất khoa học**: Đây **không phải là lỗi phần mềm**. `NO_SOLUTION` xảy ra khi tại $R = 0\text{ m}$, dân số ước tính trong vùng phục vụ đã lớn hơn $P_{\max}$ của mảng xanh:
-  $$P_i(0) > P_{max,i}$$
-  Khi đó, không tồn tại bán kính thỏa điều kiện trong miền $[0, R_{\max}]$. Bán kính phục vụ được gán bằng $0\text{ m}$. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.
+- **Bản chất khoa học**: Đây **không phải là lỗi phần mềm**. `NO_SOLUTION` xảy ra khi tại $R = 0\text{ m}$, dân số ước tính trong vùng phục vụ đã lớn hơn $P_{\max}$ của mảng xanh ($P_i(0) > P_{\max, i}$). Khi đó, không tồn tại bán kính thỏa điều kiện trong miền $[0, R_{\max}]$. Bán kính phục vụ được gán bằng $0\text{ m}$. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.
 - **Cách xử lý**:
-  - Không tùy tiện hạ chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu $C_{\min}$ (hoặc Cₘᵢₙ) chỉ để tạo ra bán kính phục vụ nếu không có căn cứ quy chuẩn phù hợp.
+  - Không tùy tiện hạ chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu $C_{\min}$ chỉ để tạo ra bán kính phục vụ nếu không có căn cứ quy chuẩn phù hợp.
   - Đây là kết quả mô hình hóa phản ánh tương quan không gian giữa quy mô mảng xanh và mật độ dân số phân bổ lân cận tại nguồn.
 
 ---

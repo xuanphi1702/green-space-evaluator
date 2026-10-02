@@ -106,10 +106,14 @@ Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread k
   - Phân tích liên thông 8-neighbor tạo các mảng xanh độc lập, gán `PATCH_ID` và tính diện tích $S_i$.
 - **Module 3 (Mô hình hóa vùng phục vụ mảng xanh):**
   - Phân tách dấu vết công trình theo đơn vị hành chính tạo các phần dấu vết công trình và phân bổ dân số không gian:
-    $$P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}$$
+
+    $$
+    P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}
+    $$
+
     tạo lớp `POP_ALLOC`.
   - Xây dựng ma trận khoảng cách hình học Euclid (EDT) từ biên từng mảng xanh.
-  - Xác định dân số phục vụ tối đa $P_{max,i} = S_i / C_{\min}$. Sau đó tính $P_i(R)$, kiểm tra $P_i(R)$ với $P_{max,i}$ và tìm $R_i^*$ lớn nhất thỏa $P_i(R_i^*) \le P_{max,i}$.
+  - Xác định dân số phục vụ tối đa $P_{\max, i} = S_i / C_{\min}$. Sau đó tính $P_i(R)$, kiểm tra $P_i(R)$ với $P_{\max, i}$ và tìm $R_i^*$ lớn nhất thỏa $P_i(R_i^*) \le P_{\max, i}$.
   - Tìm kiếm bán kính phục vụ lớn nhất $R^*$ trong $[0, R_{\max}]$ bằng Binary Search và xử lý các trường hợp biên (`RMAX`, `NO_SOLUTION`).
 - **Module 4 (Phân tích không gian xây dựng):**
   - Phân tích vị trí không gian của từng phần dấu vết công trình đối với vùng phục vụ bán kính $R^*$.

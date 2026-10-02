@@ -58,12 +58,12 @@ Các tham số tính toán được quản lý trong cửa sổ **Cài đặt** 
 | **Phương thức xác định ngưỡng SAVI** | `Tự động xác định` | — | Tự động tính ngưỡng từ vùng mẫu công viên/vườn hoa (mặc định theo bách phân vị P10). |
 | **Phương pháp xác định ngưỡng SAVI** | `Bách phân vị P10 (Mặc định)` | — | Phương pháp mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại. |
 | **Diện tích mảng xanh tối thiểu** | `5000.0` | m² | Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm loại bỏ các cụm thực vật nhỏ lẻ ngoài công viên. |
-| **Bán kính phục vụ tối đa (Rmax)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $R^*$ cho từng mảng xanh trong nghiên cứu/thử nghiệm. |
-| **Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (Cₘᵢₙ)** | `6.0` | m²/người | Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu dùng để xác định dân số phục vụ tối đa: $P_{max,i} = S_i / C_{\min}$. |
+| **Bán kính phục vụ tối đa ($R_{\max}$)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $R^*$ cho từng mảng xanh trong nghiên cứu/thử nghiệm. |
+| **Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$)** | `6.0` | m²/người | Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu dùng để xác định dân số phục vụ tối đa: $P_{\max, i} = S_i / C_{\min}$. |
 | **Sai số hội tụ khi xác định bán kính** | `10.0` | m | Điều kiện dừng sai số khoảng cách của thuật toán tìm kiếm nhị phân (Binary Search). |
 
 !!! info "Các giá trị cấu hình mặc định trong nghiên cứu"
-    Trong cấu hình thử nghiệm, các giá trị mặc định như bán kính phục vụ tối đa **300 m**, chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu **6.0 m²/người (Cₘᵢₙ)** và diện tích lọc **5000 m²** được lựa chọn làm giá trị cấu hình tham chiếu phục vụ nghiên cứu. Đây không phải là các giới hạn quy chuẩn áp đặt cho mọi đô thị; người dùng có thể tùy chỉnh linh hoạt phù hợp với quy chuẩn địa phương và bối cảnh từng khu vực nghiên cứu.
+    Trong cấu hình thử nghiệm, các giá trị mặc định như bán kính phục vụ tối đa **300 m**, chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu **6.0 m²/người ($C_{\min}$)** và diện tích lọc **5000 m²** được lựa chọn làm giá trị cấu hình tham chiếu phục vụ nghiên cứu. Đây không phải là các giới hạn quy chuẩn áp đặt cho mọi đô thị; người dùng có thể tùy chỉnh linh hoạt phù hợp với quy chuẩn địa phương và bối cảnh từng khu vực nghiên cứu.
 
 👉 Xem hướng dẫn chi tiết: [Cài đặt tham số](tham-so.md)
 
@@ -77,7 +77,7 @@ Các tham số tính toán được quản lý trong cửa sổ **Cài đặt** 
 
 1. **Khởi động Plugin:** Mở QGIS, nhấn vào biểu tượng chiếc lá trên thanh công cụ hoặc vào menu **Plugins** → **Urban Green Space Service Evaluator**.
 2. **Nạp dữ liệu:** Tại tab **Dữ liệu đầu vào**, chọn lần lượt 4 nhóm dữ liệu (Ảnh Sentinel-2, Lớp ranh giới hành chính kèm trường dân số, Lớp công viên/vườn hoa, Lớp dấu vết công trình).
-3. **Cài đặt tham số (tùy chọn):** Nhấn nút **Cài đặt** ở góc trên bên phải để điều chỉnh $R_{\max}$, $C_{\min}$ (hoặc Cₘᵢₙ) hoặc diện tích mảng xanh tối thiểu nếu có nhu cầu riêng.
+3. **Cài đặt tham số (tùy chọn):** Nhấn nút **Cài đặt** ở góc trên bên phải để điều chỉnh $R_{\max}$, $C_{\min}$ hoặc diện tích mảng xanh tối thiểu nếu có nhu cầu riêng.
 4. **Chỉ định nơi lưu sản phẩm:** Chuyển sang tab **Sản phẩm đầu ra**, chọn định dạng và thư mục lưu cho 5 sản phẩm chính (hoặc để trống để tạo lớp tạm thời).
 5. **Thực thi phân tích:** Nhấn nút **Phân tích** ở góc dưới cùng. Theo dõi nhật ký tiến trình hiển thị trực tiếp. Khi hoàn tất, các lớp kết quả sẽ được tự động thêm vào bản đồ QGIS kèm kiểu dáng trực quan.
 

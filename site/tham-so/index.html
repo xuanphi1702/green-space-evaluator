@@ -659,10 +659,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-dan-so-phuc-vu-toi-a-p_maxi" class="md-nav__link">
+  <a href="#31-dan-so-phuc-vu-toi-a-p_max-i" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1. Dân số phục vụ tối đa (\(P_{max,i}\))
+        3.1. Dân số phục vụ tối đa (\(P_{\max, i}\))
       
     </span>
   </a>
@@ -1114,10 +1114,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-dan-so-phuc-vu-toi-a-p_maxi" class="md-nav__link">
+  <a href="#31-dan-so-phuc-vu-toi-a-p_max-i" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1. Dân số phục vụ tối đa (\(P_{max,i}\))
+        3.1. Dân số phục vụ tối đa (\(P_{\max, i}\))
       
     </span>
   </a>
@@ -1318,17 +1318,17 @@
 </tr>
 <tr>
 <td><strong>Vùng phục vụ</strong></td>
-<td><strong>Bán kính phục vụ tối đa (Rmax)</strong></td>
+<td><strong>Bán kính phục vụ tối đa (<span class="arithmatex">\(R_{\max}\)</span>)</strong></td>
 <td style="text-align: right;"><code>300.0</code></td>
 <td style="text-align: center;">m</td>
 <td>Giới hạn trên của miền tìm kiếm bán kính phục vụ <span class="arithmatex">\([0, R_{\max}]\)</span> cho từng mảng xanh độc lập trong cấu hình nghiên cứu/thử nghiệm.</td>
 </tr>
 <tr>
 <td><strong>Vùng phục vụ</strong></td>
-<td><strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (Cₘᵢₙ)</strong></td>
+<td><strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(C_{\min}\)</span>)</strong></td>
 <td style="text-align: right;"><code>6.0</code></td>
 <td style="text-align: center;">m²/người</td>
-<td>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu dùng để xác định dân số phục vụ tối đa: <span class="arithmatex">\(P_{max,i} = S_i / C_{\min}\)</span>.</td>
+<td>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu dùng để xác định dân số phục vụ tối đa: <span class="arithmatex">\(P_{\max, i} = S_i / C_{\min}\)</span>.</td>
 </tr>
 <tr>
 <td><strong>Thuật toán</strong></td>
@@ -1359,15 +1359,15 @@
 <hr />
 <h2 id="3-mo-hinh-hoa-vung-phuc-vu-mang-xanh">3. Mô hình hóa vùng phục vụ mảng xanh</h2>
 <p>Vùng phục vụ của từng mảng xanh được mô hình hóa độc lập dựa trên diện tích mảng xanh, dân số được phân bổ theo không gian và khoảng cách Euclid.</p>
-<h3 id="31-dan-so-phuc-vu-toi-a-p_maxi">3.1. Dân số phục vụ tối đa (<span class="arithmatex">\(P_{max,i}\)</span>)</h3>
+<h3 id="31-dan-so-phuc-vu-toi-a-p_max-i">3.1. Dân số phục vụ tối đa (<span class="arithmatex">\(P_{\max, i}\)</span>)</h3>
 <p>Với mỗi mảng xanh độc lập <span class="arithmatex">\(i\)</span> có diện tích <span class="arithmatex">\(S_i\)</span>, dân số phục vụ tối đa được xác định theo:</p>
 <div class="arithmatex">\[
-P_{max,i} = \frac{S_i}{C_{\min}}
+P_{\max, i} = \frac{S_i}{C_{\min}}
 \]</div>
 <p>Trong đó:
-- <span class="arithmatex">\(P_{max,i}\)</span>: Dân số phục vụ tối đa của mảng xanh <span class="arithmatex">\(i\)</span> (người).
+- <span class="arithmatex">\(P_{\max, i}\)</span>: Dân số phục vụ tối đa của mảng xanh <span class="arithmatex">\(i\)</span> (người).
 - <span class="arithmatex">\(S_i\)</span>: Diện tích mảng xanh <span class="arithmatex">\(i\)</span> (<span class="arithmatex">\(\text{m}^2\)</span>).
-- <span class="arithmatex">\(C_{\min}\)</span> (hoặc <span class="arithmatex">\(Cₘᵢₙ\)</span>): Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (giá trị cấu hình hiện tại của nghiên cứu là <span class="arithmatex">\(6.0\text{ m}^2/\text{người}\)</span>).</p>
+- <span class="arithmatex">\(C_{\min}\)</span>: Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (giá trị cấu hình hiện tại của nghiên cứu là <span class="arithmatex">\(6.0\text{ m}^2/\text{người}\)</span>).</p>
 <h3 id="32-gioi-han-tren-cua-mien-tim-kiem-r_max">3.2. Giới hạn trên của miền tìm kiếm (<span class="arithmatex">\(R_{\max}\)</span>)</h3>
 <ul>
 <li><strong><span class="arithmatex">\(R_{\max}\)</span> (Bán kính phục vụ tối đa)</strong>: Đóng vai trò là <strong>giới hạn trên của miền tìm kiếm</strong> <span class="arithmatex">\([0, R_{\max}]\)</span> trong thuật toán (mặc định tham chiếu <span class="arithmatex">\(300\text{ m}\)</span>).</li>
@@ -1377,20 +1377,15 @@ P_{max,i} = \frac{S_i}{C_{\min}}
 <h3 id="33-xac-inh-ban-kinh-phuc-vu-lon-nhat-thoa-ieu-kien-r">3.3. Xác định bán kính phục vụ lớn nhất thỏa điều kiện (<span class="arithmatex">\(R^*\)</span>)</h3>
 <p>Với mỗi mảng xanh <span class="arithmatex">\(i\)</span>, bán kính phục vụ <span class="arithmatex">\(R_i^*\)</span> được xác định là <strong>bán kính lớn nhất trong miền tìm kiếm <span class="arithmatex">\([0, R_{\max}]\)</span> thỏa điều kiện tổng dân số phân bổ tiếp cận không vượt quá dân số phục vụ tối đa</strong>:</p>
 <div class="arithmatex">\[
-R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{max,i} \right\}
+R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{\max, i} \right\}
 \]</div>
 <p>Trong đó <span class="arithmatex">\(P_i(R)\)</span> là tổng dân số được phân bổ (<code>POP_ALLOC</code>) nằm trong phạm vi khoảng cách hình học Euclid <span class="arithmatex">\(\le R\)</span> tính từ biên của mảng xanh <span class="arithmatex">\(i\)</span>.</p>
 <h3 id="34-thuat-toan-tim-kiem-va-3-trang-thai-ket-qua">3.4. Thuật toán tìm kiếm và 3 trạng thái kết quả</h3>
 <p>Thuật toán kiểm tra điều kiện và áp dụng tìm kiếm nhị phân (<strong>Binary Search</strong>) khi cần thiết:</p>
 <ol>
-<li><strong>Trường hợp <code>NO_SOLUTION</code> (<span class="arithmatex">\(R^* = 0\text{ m}\)</span>)</strong>:</li>
-<li>Xảy ra khi ngay tại khoảng cách <span class="arithmatex">\(R = 0\text{ m}\)</span>, dân số ước tính trong vùng phục vụ đã lớn hơn <span class="arithmatex">\(P_{\max}\)</span> của mảng xanh:
-     $<span class="arithmatex">\(P_i(0) &gt; P_{max,i}\)</span>$</li>
-<li>Khi đó, không tồn tại bán kính thỏa điều kiện trong miền tìm kiếm <span class="arithmatex">\([0, R_{\max}]\)</span>. Bán kính phục vụ được gán bằng <span class="arithmatex">\(0\text{ m}\)</span>. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.</li>
-<li><strong>Trường hợp <code>RMAX</code> (<span class="arithmatex">\(R^* = R_{\max}\)</span>)</strong>:</li>
-<li>Nếu tại giới hạn trên <span class="arithmatex">\(R = R_{\max}\)</span> vẫn thỏa điều kiện <span class="arithmatex">\(P_i(R_{\max}) \le P_{max,i}\)</span>, thuật toán gán bán kính phục vụ <span class="arithmatex">\(R^* = R_{\max}\)</span> và trạng thái kết quả là RMAX.</li>
-<li><strong>Trường hợp <code>BINARY_SEARCH</code></strong>:</li>
-<li>Khi <span class="arithmatex">\(P_i(0) \le P_{max,i}\)</span> nhưng <span class="arithmatex">\(P_i(R_{\max}) &gt; P_{max,i}\)</span>, thuật toán tìm kiếm nhị phân sẽ thu hẹp dần khoảng cách <span class="arithmatex">\([R_{left}, R_{right}]\)</span> cho đến khi đạt sai số hội tụ (mặc định <span class="arithmatex">\(10\text{ m}\)</span>). Kết quả trả về bán kính phục vụ lớn nhất thỏa điều kiện.</li>
+<li><strong>Trường hợp vô nghiệm (<code>no_solution</code> / <code>NO_SOLUTION</code> / <span class="arithmatex">\(R^* = 0\text{ m}\)</span>)</strong>: Xảy ra khi ngay tại khoảng cách <span class="arithmatex">\(R = 0\text{ m}\)</span>, dân số ước tính trong vùng phục vụ đã lớn hơn <span class="arithmatex">\(P_{\max}\)</span> của mảng xanh (<span class="arithmatex">\(P_i(0) &gt; P_{\max, i}\)</span>). Khi đó, không tồn tại bán kính thỏa điều kiện trong miền tìm kiếm <span class="arithmatex">\([0, R_{\max}]\)</span>. Bán kính phục vụ được gán bằng <span class="arithmatex">\(0\text{ m}\)</span>. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.</li>
+<li><strong>Trường hợp <span class="arithmatex">\(R_{\max}\)</span> (<code>RMAX</code> / <span class="arithmatex">\(R^* = R_{\max}\)</span>)</strong>: Nếu tại giới hạn trên <span class="arithmatex">\(R = R_{\max}\)</span> vẫn thỏa điều kiện <span class="arithmatex">\(P_i(R_{\max}) \le P_{\max, i}\)</span>, thuật toán gán bán kính phục vụ <span class="arithmatex">\(R^* = R_{\max}\)</span> và trạng thái kết quả là <code>RMAX</code>.</li>
+<li><strong>Trường hợp tìm kiếm nhị phân (<code>BINARY_SEARCH</code>)</strong>: Khi <span class="arithmatex">\(P_i(0) \le P_{\max, i}\)</span> nhưng <span class="arithmatex">\(P_i(R_{\max}) &gt; P_{\max, i}\)</span>, thuật toán tìm kiếm nhị phân sẽ thu hẹp dần khoảng cách <span class="arithmatex">\([R_{\text{low}}, R_{\text{high}}]\)</span> cho đến khi đạt sai số hội tụ (mặc định <span class="arithmatex">\(10\text{ m}\)</span>). Kết quả trả về bán kính phục vụ lớn nhất thỏa điều kiện.</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Bản chất khái niệm bán kính phục vụ R*</p>
@@ -1409,7 +1404,7 @@ R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{max,i} \right\}
 <h3 id="co-the-chu-ong-thay-oi">🟢 Có thể chủ động thay đổi</h3>
 <ul>
 <li><strong>Bán kính phục vụ tối đa (<span class="arithmatex">\(R_{\max}\)</span>)</strong>: Khi cần mở rộng hoặc thu hẹp miền tìm kiếm phù hợp với cự ly nghiên cứu của đề tài.</li>
-<li><strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(C_{\min}\)</span> / <span class="arithmatex">\(Cₘᵢₙ\)</span>)</strong>: Khi áp dụng các chỉ tiêu quy chuẩn khác nhau (ví dụ: <span class="arithmatex">\(4.0\)</span>, <span class="arithmatex">\(6.0\)</span>, <span class="arithmatex">\(8.0\text{ m}^2/\text{người}\)</span>) hoặc kịch bản nghiên cứu so sánh.</li>
+<li><strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(C_{\min}\)</span>)</strong>: Khi áp dụng các chỉ tiêu quy chuẩn khác nhau (ví dụ: <span class="arithmatex">\(4.0\)</span>, <span class="arithmatex">\(6.0\)</span>, <span class="arithmatex">\(8.0\text{ m}^2/\text{người}\)</span>) hoặc kịch bản nghiên cứu so sánh.</li>
 <li><strong>Diện tích lọc mảng xanh tối thiểu</strong>: Khi cần điều chỉnh quy mô mảng xanh ngoài công viên phù hợp với hiện trạng khu vực.</li>
 </ul>
 <h3 id="nen-can-nhac-ky">🟡 Nên cân nhắc kỹ</h3>
@@ -1427,10 +1422,12 @@ R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{max,i} \right\}
 <h2 id="6-tinh-lan-truyen-cua-tham-so">6. Tính lan truyền của tham số</h2>
 <div class="admonition warning">
 <p class="admonition-title">Lưu ý tính liên hoàn giữa các module</p>
-<p>Các tham số trong Plugin có mối liên hệ chuỗi chặt chẽ:
-1. Thay đổi ngưỡng <strong>MNDWI</strong> hoặc <strong>SAVI</strong> sẽ thay đổi diện tích mảng xanh <span class="arithmatex">\(S_i\)</span>.
-2. Diện tích <span class="arithmatex">\(S_i\)</span> thay đổi làm thay đổi dân số phục vụ tối đa <span class="arithmatex">\(P_{max,i} = S_i / C_{\min}\)</span>, từ đó trực tiếp làm thay đổi bán kính <span class="arithmatex">\(R_i^*\)</span>.
-3. Bán kính <span class="arithmatex">\(R^*\)</span> thay đổi sẽ làm thay đổi kết quả phân loại không gian xây dựng (trong/ngoài vùng phục vụ) và toàn bộ các chỉ tiêu thống kê hành chính ở Module 5.</p>
+<p>Các tham số trong Plugin có mối liên hệ chuỗi chặt chẽ:</p>
+<ol>
+<li>Thay đổi ngưỡng <strong>MNDWI</strong> hoặc <strong>SAVI</strong> sẽ thay đổi diện tích mảng xanh <span class="arithmatex">\(S_i\)</span>.</li>
+<li>Diện tích <span class="arithmatex">\(S_i\)</span> thay đổi làm thay đổi dân số phục vụ tối đa <span class="arithmatex">\(P_{\max, i} = S_i / C_{\min}\)</span>, từ đó trực tiếp làm thay đổi bán kính <span class="arithmatex">\(R_i^*\)</span>.</li>
+<li>Bán kính <span class="arithmatex">\(R^*\)</span> thay đổi sẽ làm thay đổi kết quả phân loại không gian xây dựng (trong/ngoài vùng phục vụ) và toàn bộ các chỉ tiêu thống kê hành chính ở Module 5.</li>
+</ol>
 </div>
 
 

@@ -21,8 +21,8 @@ Người dùng có thể mở cửa sổ cấu hình bằng cách nhấn nút **
 | **Trích xuất mảng xanh** | **Phương pháp xác định ngưỡng SAVI** | `Bách phân vị P10 (Mặc định)` | — | Phương pháp mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại áp dụng trên tập mẫu công viên khi chọn chế độ tự động. |
 | **Trích xuất mảng xanh** | **Bách phân vị tùy chỉnh P (%)** | `10.0` | `%` | Giá trị bách phân vị thiết lập khi chọn phương pháp "Bách phân vị tùy chỉnh". |
 | **Trích xuất mảng xanh** | **Diện tích mảng xanh tối thiểu** | `5000.0` | m² | Giá trị cấu hình mặc định/tham chiếu trong nghiên cứu/thử nghiệm nhằm loại bỏ các mảng thực vật nhỏ lẻ ngoài công viên. Mảng xanh trong công viên luôn được bảo toàn. |
-| **Vùng phục vụ** | **Bán kính phục vụ tối đa (Rmax)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $[0, R_{\max}]$ cho từng mảng xanh độc lập trong cấu hình nghiên cứu/thử nghiệm. |
-| **Vùng phục vụ** | **Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (Cₘᵢₙ)** | `6.0` | m²/người | Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu dùng để xác định dân số phục vụ tối đa: $P_{max,i} = S_i / C_{\min}$. |
+| **Vùng phục vụ** | **Bán kính phục vụ tối đa ($R_{\max}$)** | `300.0` | m | Giới hạn trên của miền tìm kiếm bán kính phục vụ $[0, R_{\max}]$ cho từng mảng xanh độc lập trong cấu hình nghiên cứu/thử nghiệm. |
+| **Vùng phục vụ** | **Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$)** | `6.0` | m²/người | Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu dùng để xác định dân số phục vụ tối đa: $P_{\max, i} = S_i / C_{\min}$. |
 | **Thuật toán** | **Sai số hội tụ khi xác định bán kính** | `10.0` | m | Điều kiện dừng sai số khoảng cách của thuật toán tìm kiếm nhị phân (Binary Search). |
 
 ---
@@ -51,18 +51,18 @@ Khi chọn chế độ tự động, Plugin cung cấp 6 phương pháp tính ng
 
 Vùng phục vụ của từng mảng xanh được mô hình hóa độc lập dựa trên diện tích mảng xanh, dân số được phân bổ theo không gian và khoảng cách Euclid.
 
-### 3.1. Dân số phục vụ tối đa ($P_{max,i}$)
+### 3.1. Dân số phục vụ tối đa ($P_{\max, i}$)
 
 Với mỗi mảng xanh độc lập $i$ có diện tích $S_i$, dân số phục vụ tối đa được xác định theo:
 
 $$
-P_{max,i} = \frac{S_i}{C_{\min}}
+P_{\max, i} = \frac{S_i}{C_{\min}}
 $$
 
 Trong đó:
-- $P_{max,i}$: Dân số phục vụ tối đa của mảng xanh $i$ (người).
+- $P_{\max, i}$: Dân số phục vụ tối đa của mảng xanh $i$ (người).
 - $S_i$: Diện tích mảng xanh $i$ ($\text{m}^2$).
-- $C_{\min}$ (hoặc $Cₘᵢₙ$): Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (giá trị cấu hình hiện tại của nghiên cứu là $6.0\text{ m}^2/\text{người}$).
+- $C_{\min}$: Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (giá trị cấu hình hiện tại của nghiên cứu là $6.0\text{ m}^2/\text{người}$).
 
 ### 3.2. Giới hạn trên của miền tìm kiếm ($R_{\max}$)
 
@@ -75,7 +75,7 @@ Trong đó:
 Với mỗi mảng xanh $i$, bán kính phục vụ $R_i^*$ được xác định là **bán kính lớn nhất trong miền tìm kiếm $[0, R_{\max}]$ thỏa điều kiện tổng dân số phân bổ tiếp cận không vượt quá dân số phục vụ tối đa**:
 
 $$
-R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{max,i} \right\}
+R_i^* = \max \left\{ R \in [0, R_{\max}] \mid P_i(R) \le P_{\max, i} \right\}
 $$
 
 Trong đó $P_i(R)$ là tổng dân số được phân bổ (`POP_ALLOC`) nằm trong phạm vi khoảng cách hình học Euclid $\le R$ tính từ biên của mảng xanh $i$.
@@ -84,14 +84,9 @@ Trong đó $P_i(R)$ là tổng dân số được phân bổ (`POP_ALLOC`) nằm
 
 Thuật toán kiểm tra điều kiện và áp dụng tìm kiếm nhị phân (**Binary Search**) khi cần thiết:
 
-1. **Trường hợp `NO_SOLUTION` ($R^* = 0\text{ m}$)**:
-   - Xảy ra khi ngay tại khoảng cách $R = 0\text{ m}$, dân số ước tính trong vùng phục vụ đã lớn hơn $P_{\max}$ của mảng xanh:
-     $$P_i(0) > P_{max,i}$$
-   - Khi đó, không tồn tại bán kính thỏa điều kiện trong miền tìm kiếm $[0, R_{\max}]$. Bán kính phục vụ được gán bằng $0\text{ m}$. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.
-2. **Trường hợp `RMAX` ($R^* = R_{\max}$)**:
-   - Nếu tại giới hạn trên $R = R_{\max}$ vẫn thỏa điều kiện $P_i(R_{\max}) \le P_{max,i}$, thuật toán gán bán kính phục vụ $R^* = R_{\max}$ và trạng thái kết quả là RMAX.
-3. **Trường hợp `BINARY_SEARCH`**:
-   - Khi $P_i(0) \le P_{max,i}$ nhưng $P_i(R_{\max}) > P_{max,i}$, thuật toán tìm kiếm nhị phân sẽ thu hẹp dần khoảng cách $[R_{left}, R_{right}]$ cho đến khi đạt sai số hội tụ (mặc định $10\text{ m}$). Kết quả trả về bán kính phục vụ lớn nhất thỏa điều kiện.
+1. **Trường hợp vô nghiệm (`no_solution` / `NO_SOLUTION` / $R^* = 0\text{ m}$)**: Xảy ra khi ngay tại khoảng cách $R = 0\text{ m}$, dân số ước tính trong vùng phục vụ đã lớn hơn $P_{\max}$ của mảng xanh ($P_i(0) > P_{\max, i}$). Khi đó, không tồn tại bán kính thỏa điều kiện trong miền tìm kiếm $[0, R_{\max}]$. Bán kính phục vụ được gán bằng $0\text{ m}$. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.
+2. **Trường hợp $R_{\max}$ (`RMAX` / $R^* = R_{\max}$)**: Nếu tại giới hạn trên $R = R_{\max}$ vẫn thỏa điều kiện $P_i(R_{\max}) \le P_{\max, i}$, thuật toán gán bán kính phục vụ $R^* = R_{\max}$ và trạng thái kết quả là `RMAX`.
+3. **Trường hợp tìm kiếm nhị phân (`BINARY_SEARCH`)**: Khi $P_i(0) \le P_{\max, i}$ nhưng $P_i(R_{\max}) > P_{\max, i}$, thuật toán tìm kiếm nhị phân sẽ thu hẹp dần khoảng cách $[R_{\text{low}}, R_{\text{high}}]$ cho đến khi đạt sai số hội tụ (mặc định $10\text{ m}$). Kết quả trả về bán kính phục vụ lớn nhất thỏa điều kiện.
 
 !!! note "Bản chất khái niệm bán kính phục vụ R*"
     Trong tài liệu và báo cáo khoa học, $R^*$ được gọi chuẩn xác là **"bán kính phục vụ lớn nhất thỏa điều kiện"** hoặc **"bán kính phục vụ lớn nhất trong miền tìm kiếm thỏa điều kiện của mô hình"**.
@@ -111,7 +106,7 @@ Thuật toán kiểm tra điều kiện và áp dụng tìm kiếm nhị phân (
 
 ### 🟢 Có thể chủ động thay đổi
 - **Bán kính phục vụ tối đa ($R_{\max}$)**: Khi cần mở rộng hoặc thu hẹp miền tìm kiếm phù hợp với cự ly nghiên cứu của đề tài.
-- **Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$ / $Cₘᵢₙ$)**: Khi áp dụng các chỉ tiêu quy chuẩn khác nhau (ví dụ: $4.0$, $6.0$, $8.0\text{ m}^2/\text{người}$) hoặc kịch bản nghiên cứu so sánh.
+- **Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$)**: Khi áp dụng các chỉ tiêu quy chuẩn khác nhau (ví dụ: $4.0$, $6.0$, $8.0\text{ m}^2/\text{người}$) hoặc kịch bản nghiên cứu so sánh.
 - **Diện tích lọc mảng xanh tối thiểu**: Khi cần điều chỉnh quy mô mảng xanh ngoài công viên phù hợp với hiện trạng khu vực.
 
 ### 🟡 Nên cân nhắc kỹ
@@ -129,6 +124,7 @@ Thuật toán kiểm tra điều kiện và áp dụng tìm kiếm nhị phân (
 
 !!! warning "Lưu ý tính liên hoàn giữa các module"
     Các tham số trong Plugin có mối liên hệ chuỗi chặt chẽ:
+
     1. Thay đổi ngưỡng **MNDWI** hoặc **SAVI** sẽ thay đổi diện tích mảng xanh $S_i$.
-    2. Diện tích $S_i$ thay đổi làm thay đổi dân số phục vụ tối đa $P_{max,i} = S_i / C_{\min}$, từ đó trực tiếp làm thay đổi bán kính $R_i^*$.
+    2. Diện tích $S_i$ thay đổi làm thay đổi dân số phục vụ tối đa $P_{\max, i} = S_i / C_{\min}$, từ đó trực tiếp làm thay đổi bán kính $R_i^*$.
     3. Bán kính $R^*$ thay đổi sẽ làm thay đổi kết quả phân loại không gian xây dựng (trong/ngoài vùng phục vụ) và toàn bộ các chỉ tiêu thống kê hành chính ở Module 5.

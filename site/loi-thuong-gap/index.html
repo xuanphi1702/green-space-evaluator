@@ -1617,11 +1617,9 @@ hoặc:
 <h3 id="62-truong-hop-no_solution-r-0text-m">6.2. Trường hợp NO_SOLUTION (<span class="arithmatex">\(R^* = 0\text{ m}\)</span>)</h3>
 <ul>
 <li><strong>Hiện tượng</strong>: Trong bảng thống kê mảng xanh hoặc nhật ký tiến trình xuất hiện một số mảng xanh có trạng thái <code>NO_SOLUTION</code> và bán kính <span class="arithmatex">\(R^* = 0\text{ m}\)</span>.</li>
-<li><strong>Bản chất khoa học</strong>: Đây <strong>không phải là lỗi phần mềm</strong>. <code>NO_SOLUTION</code> xảy ra khi tại <span class="arithmatex">\(R = 0\text{ m}\)</span>, dân số ước tính trong vùng phục vụ đã lớn hơn <span class="arithmatex">\(P_{\max}\)</span> của mảng xanh:
-  $<span class="arithmatex">\(P_i(0) &gt; P_{max,i}\)</span>$
-  Khi đó, không tồn tại bán kính thỏa điều kiện trong miền <span class="arithmatex">\([0, R_{\max}]\)</span>. Bán kính phục vụ được gán bằng <span class="arithmatex">\(0\text{ m}\)</span>. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.</li>
+<li><strong>Bản chất khoa học</strong>: Đây <strong>không phải là lỗi phần mềm</strong>. <code>NO_SOLUTION</code> xảy ra khi tại <span class="arithmatex">\(R = 0\text{ m}\)</span>, dân số ước tính trong vùng phục vụ đã lớn hơn <span class="arithmatex">\(P_{\max}\)</span> của mảng xanh (<span class="arithmatex">\(P_i(0) &gt; P_{\max, i}\)</span>). Khi đó, không tồn tại bán kính thỏa điều kiện trong miền <span class="arithmatex">\([0, R_{\max}]\)</span>. Bán kính phục vụ được gán bằng <span class="arithmatex">\(0\text{ m}\)</span>. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và phân bố không gian xây dựng quanh mảng xanh.</li>
 <li><strong>Cách xử lý</strong>:</li>
-<li>Không tùy tiện hạ chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu <span class="arithmatex">\(C_{\min}\)</span> (hoặc Cₘᵢₙ) chỉ để tạo ra bán kính phục vụ nếu không có căn cứ quy chuẩn phù hợp.</li>
+<li>Không tùy tiện hạ chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu <span class="arithmatex">\(C_{\min}\)</span> chỉ để tạo ra bán kính phục vụ nếu không có căn cứ quy chuẩn phù hợp.</li>
 <li>Đây là kết quả mô hình hóa phản ánh tương quan không gian giữa quy mô mảng xanh và mật độ dân số phân bổ lân cận tại nguồn.</li>
 </ul>
 <hr />
