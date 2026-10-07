@@ -6,14 +6,14 @@ Trang này hướng dẫn chi tiết về **danh mục 4 nhóm dữ liệu đầ
 
 ## 1. Danh mục 4 nhóm dữ liệu đầu vào
 
-Để thực hiện toàn diện quy trình phân tích, Plugin yêu cầu **4 nhóm dữ liệu đầu vào**:
+Để thực hiện toàn diện quy trình phân tích, Plugin yêu cầu **4 nhóm dữ liệu chuẩn**:
 
 | STT | Nhóm dữ liệu | Dạng dữ liệu | Vai trò kỹ thuật | Yêu cầu chuẩn bị |
 |---|---|---|---|---|
 | **1** | **Ảnh Sentinel-2** | Raster đa kênh (`.tif`, `.jp2`) | Tính toán chỉ số phổ MNDWI, SAVI để bóc tách mặt nước và mảng xanh thực vật | Đầy đủ các kênh bắt buộc (**B03, B04, B08, B11**); tùy chọn **B02, SCL**; định dạng GeoTIFF hoặc JPEG2000 |
-| **2** | **Ranh giới hành chính và dân số thống kê** | Vector Polygon | Khung tham chiếu không gian (CRS, phạm vi) và cung cấp số liệu dân số thống kê chính thức của từng đơn vị hành chính | Hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét); chứa trường thuộc tính dân số thống kê |
-| **3** | **Công viên/vườn hoa** | Vector Polygon | Vùng mẫu trích xuất phân bố SAVI xác định ngưỡng thực vật và bảo toàn mảng xanh công viên | Vector polygon phạm vi công viên/vườn hoa trong khu vực nghiên cứu |
-| **4** | **Dấu vết công trình xây dựng (Footprint)** | Vector Polygon | Đại diện cho không gian xây dựng vật lý; cơ sở phân bổ dân số thống kê theo không gian (`POP_ALLOC`) | Vector polygon dấu vết chân công trình xây dựng (Google Open Buildings) |
+| **2** | **Ranh giới hành chính và dân số thống kê** | Vector Polygon | Khung tham chiếu không gian (CRS, phạm vi) và cung cấp số liệu dân số thống kê chính thức của từng đơn vị hành chính | Hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét); chứa trường thuộc tính dân số thống kê chính thức |
+| **3** | **Dấu vết công trình xây dựng (Building Footprints)** | Vector Polygon | Đại diện cho không gian xây dựng vật lý; cơ sở phân chia thành các footprint-part và phân bổ dân số thống kê theo không gian (`POP_ALLOC`) | Vector polygon dấu vết chân công trình xây dựng (ví dụ Google Open Buildings) |
+| **4** | **Các tham số phân tích** | Cấu hình tham số | Các ngưỡng quang phổ, chỉ tiêu không gian và tham số tìm kiếm nghiệm số học | Thiết lập cấu hình tại cửa sổ Cài đặt |
 
 ---
 
@@ -26,7 +26,7 @@ Plugin xử lý ảnh phản xạ bề mặt Sentinel-2 để nhận diện mặ
 - **Loại sản phẩm**: Sentinel-2 **Level-2A (L2A)** (sản phẩm đã hiệu chỉnh khí quyển Bottom of Atmosphere - BOA).
 - **Cơ chế nhận diện kênh**: Plugin tự động nhận diện các kênh dựa trên chuỗi văn bản nhận diện xuất hiện trong **tên layer trên QGIS** hoặc **đường dẫn/tên tệp nguồn** (ví dụ: `B02`, `B03`, `B04`, `B08`, `B11`, `SCL`).
 - **Các kênh phổ bắt buộc**:
-    - **B03** (Green - Xanh lục, 10 m) và **B11** (SWIR - Hồng ngoại sóng ngắn, 20 m): Dùng để tính toán chỉ số khác biệt nước cải tiến **MNDWI**:
+    - **B03** (Green - Xanh lục, 10 m) và **B11** (SWIR-1 - Hồng ngoại sóng ngắn, 20 m): Dùng để tính toán chỉ số khác biệt nước cải tiến **MNDWI**:
 
         $$
         \text{MNDWI} = \frac{\text{B03} - \text{B11}}{\text{B03} + \text{B11}}
@@ -38,10 +38,10 @@ Plugin xử lý ảnh phản xạ bề mặt Sentinel-2 để nhận diện mặ
         \text{SAVI} = \frac{\text{B08} - \text{B04}}{\text{B08} + \text{B04} + L} \times (1 + L)
         $$
 
-        *(với hệ số hiệu chỉnh nền đất $L = 0.5$, là giá trị mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại)*
+        *(với hệ số hiệu chỉnh nền đất $L = 0.50$, giá trị cấu hình chuẩn production)*
 
 - **Các kênh phổ tùy chọn**:
-    - **B02** (Blue - Xanh lam, 10 m): Hỗ trợ ghép kênh tạo tổ hợp ảnh màu thực True Color (RGB) trong tệp ảnh Sentinel-2 Stack.
+    - **B02** (Blue - Xanh lam, 10 m): Hỗ trợ ghép kênh tạo tổ hợp ảnh màu tự nhiên RGB trong tệp ảnh Sentinel-2 Stack.
     - **SCL** (Scene Classification Layer, 20 m): Kênh phân loại cảnh quan dùng để tạo mặt nạ lọc tự động mây và bóng mây trước khi tính chỉ số phổ.
 
 **Checklist chuẩn bị ảnh Sentinel-2:**
@@ -56,37 +56,25 @@ Plugin xử lý ảnh phản xạ bề mặt Sentinel-2 để nhận diện mặ
 
 Lớp ranh giới hành chính đóng vai trò là **khung tham chiếu không gian** và nguồn cung cấp **số liệu dân số thống kê chính thức**:
 
-- **Bản chất dữ liệu**: Lớp vector polygon phân chia ranh giới các đơn vị hành chính (ví dụ: phường, xã, thị trấn hoặc quận, huyện) trong phạm vi nghiên cứu.
-- **Cơ chế xử lý CRS trong Plugin**:
-    - Plugin lấy CRS của lớp ranh giới hành chính làm hệ tọa độ tham chiếu chuẩn (`crs_vn2000`) cho toàn bộ quy trình, đồng thời tự động tái chiếu (reproject) và cắt (clip) các kênh ảnh Sentinel-2 cùng các lớp vector khác theo hệ tọa độ này.
-    - **Khuyến nghị kỹ thuật:** Lớp ranh giới hành chính **nên sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét)** như VN-2000 kinh tuyến trục địa phương hoặc UTM. Nếu lớp đang ở hệ tọa độ địa lý (đơn vị độ), Plugin sẽ phát cảnh báo nhắc nhở vì các phép tính biến đổi khoảng cách Euclid (m) và diện tích (m², ha) cần đơn vị mét để đạt độ chính xác.
+- **Bản chất dữ liệu**: Lớp vector polygon phân chia ranh giới các đơn vị hành chính (phường, xã, thị trấn hoặc quận, huyện) trong phạm vi nghiên cứu.
+- **Yêu cầu Hệ tọa độ (CRS)**:
+    - Lớp ranh giới hành chính và dữ liệu dân số công trình **bắt buộc sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét)** như VN-2000 kinh tuyến trục địa phương hoặc UTM để tính diện tích m² và khoảng cách chính xác.
+    - Plugin kiểm tra và đồng bộ CRS theo yêu cầu của từng giai đoạn xử lý; riêng trong Module 4, nếu CRS của `OUT_BUFFER` khác CRS của footprint-population, hình học `OUT_BUFFER` được chuyển đổi trong bộ nhớ về CRS phân tích trước khi overlay.
 - **Dân số thống kê (`POP_STAT`)**:
     - Trên giao diện Plugin, người dùng chỉ định trường thuộc tính chứa số liệu dân số thống kê chính thức của từng đơn vị hành chính.
     - Plugin tự động đọc và chuẩn hóa dữ liệu sang trường chuẩn nội bộ `POP_STAT`.
-    - Dữ liệu này là số liệu thống kê chính thức của chính quyền địa phương hoặc cơ quan thống kê, đảm bảo tính pháp lý và tin cậy cao.
+    - Dữ liệu này là số liệu thống kê thuộc tính chính thức, không lấy từ raster dân số.
 
 ---
 
-### 2.3. Lớp công viên/vườn hoa
+### 2.3. Dấu vết công trình xây dựng (Footprint)
 
-- **Bản chất dữ liệu**: Lớp vector polygon thể hiện phạm vi các công viên, vườn hoa hoặc mảng xanh công cộng hiện hữu.
-- **Vai trò trong Plugin**: Đảm nhận 2 vai trò kỹ thuật quan trọng:
-    1. **Vùng mẫu trích xuất SAVI**: Khi chạy ở chế độ tự động, Plugin trích xuất phân bố giá trị SAVI bên trong các đa giác công viên mẫu để tính toán ngưỡng phân tách thực vật khách quan (theo P10, Mean - Std, Median...).
-    2. **Bảo toàn mảng xanh công viên**: Các pixel thực vật được nhận diện nằm bên trong ranh giới công viên sẽ được bảo toàn nguyên vẹn, không bị loại trừ bởi bộ lọc diện tích tối thiểu.
-
-!!! info "Phân biệt công viên mẫu và kết quả mảng xanh đô thị"
-    Lớp công viên/vườn hoa chỉ đóng vai trò là **vùng mẫu trích xuất ngưỡng và vùng bảo toàn**. Kết quả "Mảng xanh đô thị" đầu ra là toàn bộ thảm thực vật được bóc tách trên khắp khu vực nghiên cứu (bao gồm cả mảng xanh trong công viên và các mảng xanh độc lập ngoài công viên đạt quy mô diện tích tối thiểu).
-
----
-
-### 2.4. Dấu vết công trình xây dựng (Footprint)
-
-- **Bản chất dữ liệu**: Trong nghiên cứu hiện tại, nguồn dữ liệu được sử dụng là **Google Open Buildings** – tập dữ liệu nhận diện hình học **dấu vết chân công trình xây dựng (building footprints)** từ ảnh vệ tinh độ phân giải cao bằng mô hình học máy. *(Lưu ý: Khác với dữ liệu OpenStreetMap (OSM) là bản đồ đóng góp bởi cộng đồng với độ hoàn thiện tùy khu vực, Google Open Buildings cung cấp các polygon dấu vết vật lý đồng nhất).*
+- **Bản chất dữ liệu**: Lớp polygon nhận diện hình học **dấu vết chân công trình xây dựng (building footprints)** (ví dụ từ Google Open Buildings hoặc dữ liệu đo đạc thành lập bản đồ).
 - **Vai trò đại diện không gian xây dựng**: Dấu vết công trình đại diện cho **không gian xây dựng vật lý (physical built space)**, phản ánh quy mô và vị trí các khối kết cấu xây dựng trên bề mặt đô thị.
-- **Cơ chế phân tách hình học (phần dấu vết công trình)**:
-    - Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân tách thành các phần tử hình học nhỏ hơn gọi là phần dấu vết công trình thuộc về từng đơn vị hành chính.
+- **Cơ chế phân chia thành footprint-part**:
+    - Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân chia thành các phần tử hình học nhỏ hơn gọi là footprint-part thuộc về từng đơn vị hành chính.
 - **Công thức phân bổ dân số không gian**:
-    - Dân số thống kê chính thức của đơn vị hành chính ($P_u$) được phân bổ cho từng phần dấu vết công trình ($b$) thuộc đơn vị hành chính $u$ theo tỷ lệ diện tích:
+    - Dân số thống kê chính thức của đơn vị hành chính ($P_u$) được phân bổ cho từng footprint-part ($b$) thuộc đơn vị hành chính $u$ theo tỷ lệ diện tích:
 
         $$
         P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}
@@ -94,13 +82,19 @@ Lớp ranh giới hành chính đóng vai trò là **khung tham chiếu không g
 
     - Trong đó:
         - $P_u$: Dân số thống kê chính thức của đơn vị hành chính $u$ (`POP_STAT`).
-        - $A_{b,u}$: Diện tích của phần dấu vết công trình $b$ nằm trong đơn vị hành chính $u$.
-        - $\sum_j A_{j,u}$: Tổng diện tích của tất cả các phần dấu vết công trình nằm trong đơn vị hành chính $u$.
-        - $P_{b,u}$: Dân số được phân bổ cho phần dấu vết công trình $b$ (lưu trong trường `POP_ALLOC`).
+        - $A_{b,u}$: Diện tích của footprint-part $b$ nằm trong đơn vị hành chính $u$.
+        - $\sum_j A_{j,u}$: Tổng diện tích của tất cả các footprint-part nằm trong đơn vị hành chính $u$.
+        - $P_{b,u}$: Dân số được phân bổ cho footprint-part $b$ (lưu trong trường `POP_ALLOC`).
 
 !!! warning "Lưu ý phương pháp luận về POP_ALLOC và Dấu vết công trình"
     1. **`POP_ALLOC`** là **dân số được phân bổ theo không gian phục vụ mô hình hóa**, KHÔNG phải là dân số quan sát trực tiếp, kiểm kê hộ tịch hay điều tra thực địa tại từng công trình.
-    2. **Dấu vết công trình xây dựng** KHÔNG đồng nhất hoàn toàn với nhà ở dân cư, số hộ gia đình hay nơi cư trú thực tế (vì có thể bao gồm nhà xưởng, công trình công cộng, thương mại, dịch vụ).
+    2. **Dấu vết công trình xây dựng** đại diện cho không gian xây dựng vật lý, KHÔNG đồng nhất hoàn toàn với nhà ở dân cư, số hộ gia đình hay nơi cư trú thực tế.
+
+---
+
+### 2.4. Các tham số phân tích
+
+Các tham số phân tích không phải là tệp dữ liệu không gian mà là các thiết lập ngưỡng được quản lý trong cửa sổ **Cài đặt ⚙️ → Tùy chỉnh nâng cao** (gồm ngưỡng MNDWI, ngưỡng SAVI, diện tích mảng xanh tối thiểu $A_{\min}$, bán kính tối đa $R_{\max}$, chỉ tiêu $C_{\min}$, bước tìm kiếm $\Delta d$, và sai số hội tụ dân số $e$).
 
 ---
 
@@ -108,8 +102,8 @@ Lớp ranh giới hành chính đóng vai trò là **khung tham chiếu không g
 
 Trước khi nhấn nút **Phân tích**, hãy kiểm tra lại các mục sau:
 
-- [ ] **Hệ tọa độ chuẩn**: Lớp ranh giới hành chính nên sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét) phù hợp với khu vực nghiên cứu.
-- [ ] **Dữ liệu vector hợp lệ**: Các lớp vector không bị lỗi tự cắt hình học (Self-intersection); có thể chạy công cụ *Fix Geometries* trong QGIS nếu cần.
-- [ ] **Đầy đủ 4 nhóm dữ liệu**: Đã chọn đủ 4 nhóm trên tab *Dữ liệu đầu vào*.
-- [ ] **Kênh Sentinel-2 đầy đủ**: Tối thiểu gồm các kênh B03, B04, B08, B11.
+- [ ] **Hệ tọa độ phẳng dự chiếu**: Lớp ranh giới hành chính và footprint công trình sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét) phù hợp.
+- [ ] **Dữ liệu vector hợp lệ**: Các lớp vector có cấu trúc hình học hợp lệ (Valid Geometries).
+- [ ] **Đầy đủ dữ liệu đầu vào**: Đã chọn đầy đủ các kênh ảnh Sentinel-2, lớp ranh giới hành chính và lớp dấu vết công trình.
+- [ ] **Kênh Sentinel-2 đầy đủ**: Tối thiểu gồm các kênh bắt buộc B03, B04, B08, B11.
 - [ ] **Trường dân số hợp lệ**: Đã chọn đúng trường thuộc tính chứa số liệu dân số thống kê dạng số dương.

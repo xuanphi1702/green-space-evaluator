@@ -10,10 +10,10 @@ Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2,
 
 ## Tính năng chính
 
-- **Tiền xử lý và chuẩn hóa dữ liệu**: Tự động kiểm tra tính hợp lệ hình học các lớp vector, chuẩn hóa trường dân số thống kê thành `POP_STAT`, tiếp nhận hệ tọa độ phẳng dự chiếu tham chiếu (đơn vị mét) và tạo ảnh Sentinel-2 Stack 10 m (hỗ trợ lọc mây SCL).
-- **Trích xuất mảng xanh từ ảnh Sentinel-2**: Tính toán chỉ số phổ MNDWI và SAVI, hỗ trợ tự động xác định ngưỡng SAVI từ lớp công viên mẫu (P10) hoặc nhập thủ công, phân tách mặt nước, lọc mảng xanh theo diện tích tối thiểu và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
-- **Mô hình hóa vùng phục vụ mảng xanh**: Phân bổ dân số thống kê xuống không gian xây dựng (`POP_ALLOC`), tính lưới khoảng cách Euclid từ biên mảng xanh, xác định dân số phục vụ tối đa ($P_{\max, i} = S_i / C_{\min}$) và áp dụng thuật toán tìm kiếm nhị phân (Binary Search) xác định bán kính phục vụ lớn nhất $R^*$ thỏa điều kiện mô hình.
-- **Phân tích không gian xây dựng**: Phân tách dấu vết công trình thành các phần dấu vết công trình, phân loại công trình nằm trong và ngoài vùng phục vụ, áp dụng thuật toán gán duy nhất (**Exclusive Assignment**) cho mảng xanh gần nhất để loại trừ hoàn toàn việc đếm lặp.
+- **Tiền xử lý và chuẩn hóa dữ liệu**: Tự động kiểm tra tính hợp lệ hình học các lớp vector, chuẩn hóa trường dân số thống kê thành `POP_STAT`, chuyển đổi và đồng bộ CRS dự chiếu (đơn vị mét) và tạo ảnh Sentinel-2 Stack 10 m (hỗ trợ lọc mây SCL).
+- **Trích xuất mảng xanh từ ảnh Sentinel-2**: Tính toán chỉ số phổ MNDWI (ngưỡng mặc định 0.000) và SAVI ($L=0.50$, ngưỡng mặc định 0.165), tự động bóc tách mặt nước, lọc mảng xanh theo diện tích tối thiểu ($A_{\min} = 5000\text{ m}^2$) và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
+- **Mô hình hóa vùng phục vụ mảng xanh**: Phân bổ dân số thống kê xuống dấu vết công trình xây dựng (`POP_BUILDING`), xác định khoảng cách vùng phục vụ theo bán kính Euclid từ biên mảng xanh, giới hạn dân số phục vụ tối đa ($P_{\max, i} = S_i / C_{\min}$) và áp dụng thuật toán tìm kiếm hai giai đoạn (dò thô $\Delta d = 50\text{ m}$, chia đôi nhị phân sai số $e = 1.0\text{ người}$) để xác định bán kính khả thi $R^* = R_{\text{low}}$ cho từng mảng xanh độc lập.
+- **Phân tích không gian xây dựng**: Hợp nhất hình học vùng phục vụ thành `SERVICE_UNION`, phân rã không gian xây dựng thành `SERVED` (trong vùng phục vụ) và `OUTSIDE` (ngoài vùng phục vụ), bảo toàn dân số theo tỷ lệ diện tích (`POP_FRAGMENT` qua `SOURCE_POP_ALLOC`) mà không phụ thuộc gán độc quyền mảng xanh gần nhất.
 - **Tổng hợp chỉ tiêu định lượng theo đơn vị hành chính**: Tự động tính toán 10 trường chỉ số thống kê theo từng phường/xã, thực hiện 8 phép kiểm tra tính toàn vẹn dữ liệu (**Balance Checks**) và hỗ trợ xuất bảng số liệu định dạng Excel (`.xlsx`) hoặc CSV (`.csv`).
 
 ---
@@ -21,19 +21,19 @@ Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2,
 ## 4 Nhóm dữ liệu đầu vào
 
 1. **Ảnh Sentinel-2**: Kênh bắt buộc B03, B04, B08, B11; kênh tùy chọn B02, SCL.
-2. **Ranh giới hành chính và dân số thống kê**: Lớp polygon ranh giới hành chính (khuyến nghị CRS phẳng, đơn vị mét) kèm trường dân số thống kê chính thức (chuẩn hóa thành `POP_STAT`).
-3. **Công viên/vườn hoa**: Vector polygon phạm vi công viên, vườn hoa làm mẫu trích xuất SAVI và bảo toàn mảng xanh.
-4. **Dấu vết công trình xây dựng (Footprint)**: Vector polygon dấu vết chân công trình xây dựng (Google Open Buildings) đại diện cho không gian xây dựng vật lý.
+2. **Ranh giới hành chính và dân số thống kê**: Lớp polygon ranh giới hành chính (CRS dự chiếu phẳng, đơn vị mét) kèm trường dân số thống kê chính thức (chuẩn hóa thành `POP_STAT`).
+3. **Dấu vết công trình xây dựng (Footprint)**: Vector polygon chân công trình xây dựng (Google Open Buildings) đại diện cho không gian xây dựng vật lý.
+4. **Tham số phân tích**: Ngưỡng MNDWI, SAVI, diện tích mảng xanh tối thiểu ($A_{\min}$), bán kính tối đa ($R_{\max}$), chỉ tiêu mảng xanh bình quân ($C_{\min}$).
 
 ---
 
 ## 5 Sản phẩm đầu ra chính
 
 1. **Mảng xanh đô thị** (Raster GeoTIFF `.tif`): Lớp thực vật mảng xanh sau khi bóc tách, trừ mặt nước và lọc diện tích.
-2. **Vùng phục vụ mảng xanh (R\*)** (Vector Polygon): Phạm vi không gian đệm bán kính lớn nhất $R^*$ thỏa điều kiện của mô hình cho từng mảng xanh độc lập.
-3. **Không gian xây dựng trong vùng phục vụ** (Vector Polygon): Các phần dấu vết công trình được phục vụ bởi mảng xanh đô thị.
-4. **Không gian xây dựng ngoài vùng phục vụ** (Vector Polygon): Các phần dấu vết công trình nằm ngoài vùng phục vụ mảng xanh.
-5. **Thống kê theo đơn vị hành chính** (Vector Polygon): Lớp ranh giới tích hợp 10 trường chỉ số định lượng đánh giá mức độ phục vụ mảng xanh.
+2. **Vùng phục vụ mảng xanh (R\*)** (Vector Polygon): Phạm vi không gian đệm bán kính khả thi $R^*$ cho từng mảng xanh độc lập.
+3. **Không gian xây dựng trong vùng phục vụ** (Vector Polygon): Các phần diện tích công trình được phục vụ bởi mảng xanh đô thị (`SERVED`).
+4. **Không gian xây dựng ngoài vùng phục vụ** (Vector Polygon): Các phần diện tích công trình nằm ngoài vùng phục vụ mảng xanh (`OUTSIDE`).
+5. **Thống kê kết quả theo đơn vị hành chính** (Vector Polygon): Lớp ranh giới tích hợp 10 trường chỉ số định lượng đánh giá mức độ phục vụ mảng xanh.
 
 *(Bảng thống kê Excel/CSV là sản phẩm báo cáo bổ sung tùy chọn theo cấu hình của người dùng).*
 

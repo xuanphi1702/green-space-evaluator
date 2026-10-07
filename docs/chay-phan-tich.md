@@ -7,7 +7,7 @@ Trang này hướng dẫn chi tiết từng bước thực thi quy trình phân 
 ## 1. Các bước thực hiện tổng quan
 
 ```
-[BƯỚC 1: Nạp 4 nhóm dữ liệu] ➔ [BƯỚC 2: Cài đặt tham số (tùy chọn)] ➔ [BƯỚC 3: Chọn nơi lưu sản phẩm] ➔ [BƯỚC 4: Nhấn "Phân tích"]
+[BƯỚC 1: Nạp dữ liệu đầu vào] ➔ [BƯỚC 2: Kiểm tra tham số] ➔ [BƯỚC 3: Chọn nơi lưu sản phẩm] ➔ [BƯỚC 4: Nhấn "Phân tích"]
 ```
 
 ---
@@ -20,7 +20,7 @@ Người dùng có thể mở giao diện Plugin trên QGIS theo một trong hai
 2. **Từ thanh công cụ**: Nhấn trực tiếp vào biểu tượng **chiếc lá** trên thanh công cụ của QGIS.
 
 Cửa sổ chính của Plugin hiển thị 3 tab chức năng:
-- **Dữ liệu đầu vào**: Nạp 4 nhóm dữ liệu không gian.
+- **Dữ liệu đầu vào**: Nạp dữ liệu ảnh Sentinel-2, ranh giới hành chính kèm trường dân số thống kê và dấu vết công trình xây dựng.
 - **Sản phẩm đầu ra**: Chỉ định đường dẫn lưu trữ cho 5 sản phẩm chính và bảng báo cáo bổ sung.
 - **Nhật ký tiến trình**: Theo dõi tiến độ, thông báo và tổng kết thời gian thực thi.
 
@@ -28,7 +28,7 @@ Cửa sổ chính của Plugin hiển thị 3 tab chức năng:
 
 ## 3. Thao tác tại tab Dữ liệu đầu vào
 
-Tại thẻ **Dữ liệu đầu vào**, nạp lần lượt 4 nhóm dữ liệu:
+Tại thẻ **Dữ liệu đầu vào**, nạp các dữ liệu cần thiết:
 
 <div class="guide-figure" markdown>
 ![Tab Dữ liệu đầu vào trên giao diện chính của Plugin](images/giao_dien_chinh_plugin.png)
@@ -39,8 +39,7 @@ Tại thẻ **Dữ liệu đầu vào**, nạp lần lượt 4 nhóm dữ liệu
 2. **Ranh giới hành chính và dân số thống kê**:
    - Chọn layer polygon ranh giới hành chính trong danh sách thả xuống.
    - Tại ô chọn trường dân số, chọn trường thuộc tính chứa số liệu dân số thống kê chính thức của từng đơn vị hành chính. Plugin sẽ tự động chuẩn hóa nội bộ thành trường `POP_STAT`.
-3. **Công viên/vườn hoa**: Chọn layer polygon công viên, vườn hoa hiện hữu làm vùng mẫu trích xuất SAVI và bảo toàn mảng xanh.
-4. **Dấu vết công trình xây dựng (Footprint)**: Chọn layer polygon công trình (Google Open Buildings) đại diện cho không gian xây dựng vật lý.
+3. **Dấu vết công trình xây dựng (Footprint)**: Chọn layer polygon công trình xây dựng đại diện cho không gian xây dựng vật lý.
 
 ---
 
@@ -54,11 +53,11 @@ Nhấn nút **Cài đặt** (biểu tượng bánh răng ở góc trên bên ph�
 </div>
 
 ### Tab 1: Sản phẩm bổ sung
-- Cho phép người dùng chỉ định đường dẫn lưu trữ các sản phẩm bổ sung nếu có nhu cầu lưu trữ tệp riêng để phục vụ nghiên cứu hoặc kiểm tra chất lượng (ví dụ: Sentinel-2 Stack, MNDWI, SAVI, Mặt nước, SAVI loại nước, Thực vật thô, Histogram, Dấu vết công trình phân bổ dân số, Bảng thống kê mảng xanh).
+- Cho phép người dùng chỉ định đường dẫn lưu trữ các sản phẩm bổ sung nếu có nhu cầu lưu trữ tệp riêng để phục vụ nghiên cứu hoặc kiểm tra chất lượng (ví dụ: `OUT_BUFFER` - vùng phục vụ riêng của từng mảng xanh, Sentinel-2 Stack, MNDWI, SAVI, Mặt nước, Bảng thống kê mảng xanh).
 - Nếu để trống, các sản phẩm bổ sung sẽ được tự động tạo dưới dạng tệp tạm thời trong thư mục tạm của hệ điều hành (`tempfile.gettempdir()`) và nạp vào phiên làm việc.
 
 ### Tab 2: Tùy chỉnh nâng cao
-- Thiết lập các tham số kỹ thuật: Ngưỡng MNDWI (`0.0`), Hệ số SAVI $L$ (`0.5`), Phương thức và phương pháp xác định ngưỡng SAVI (`P10`), Diện tích mảng xanh tối thiểu ngoài công viên (`5000 m²`), Bán kính phục vụ tối đa $R_{\max}$ (`300 m`), Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu $C_{\min}$ (hoặc Cₘᵢₙ) (`6.0 m²/người`), Sai số hội tụ (`10 m`).
+- Thiết lập các tham số kỹ thuật: Ngưỡng MNDWI (`0.000`), Hệ số SAVI $L$ (`0.50`), Ngưỡng SAVI nhập thủ công (`0.165`), Diện tích mảng xanh tối thiểu ($A_{\min} = 5000\text{ m}^2$), Bán kính phục vụ tối đa $R_{\max}$ (`300 m`), Chỉ tiêu diện tích mảng xanh tối thiểu $C_{\min}$ (`6.0 m²/người`), Bước tìm kiếm bán kính $\Delta d$ (`50 m`), Ngưỡng hội tụ dân số $e$ (`1.0 người`).
 - Nhấn **OK** để lưu hoặc **Đặt lại** để quay về giá trị mặc định ban đầu.
 
 ---
@@ -73,11 +72,11 @@ Chuyển sang thẻ **Sản phẩm đầu ra** để chỉ định đường d�
 </div>
 
 ### 5 sản phẩm đầu ra chính:
-1. **Mảng xanh đô thị** (định dạng `.tif`).
-2. **Vùng phục vụ mảng xanh (R\*)** (định dạng `.gpkg`, `.shp` hoặc `.geojson`).
-3. **Không gian xây dựng trong vùng phục vụ** (định dạng `.gpkg`, `.shp` hoặc `.geojson`).
-4. **Không gian xây dựng ngoài vùng phục vụ** (định dạng `.gpkg`, `.shp` hoặc `.geojson`).
-5. **Thống kê theo đơn vị hành chính** (định dạng `.gpkg`, `.shp` hoặc `.geojson`).
+1. **Mảng xanh đô thị** (Raster, `.tif`).
+2. **Vùng phục vụ mảng xanh** (Vector Polygon, `.gpkg`, `.shp` hoặc `.geojson`).
+3. **Không gian xây dựng trong vùng phục vụ** (Vector Polygon, `.gpkg`, `.shp` hoặc `.geojson`).
+4. **Không gian xây dựng ngoài vùng phục vụ** (Vector Polygon, `.gpkg`, `.shp` hoặc `.geojson`).
+5. **Thống kê kết quả theo đơn vị hành chính** (Vector Polygon, `.gpkg`, `.shp` hoặc `.geojson`).
 
 ### Bảng báo cáo thống kê bổ sung:
 - **Bảng thống kê theo đơn vị hành chính** (tùy chọn định dạng `.xlsx` hoặc `.csv`).
@@ -89,10 +88,10 @@ Chuyển sang thẻ **Sản phẩm đầu ra** để chỉ định đường d�
 
 ## 6. Chuỗi thực thi 5 Module
 
-Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread không gây đơ giao diện QGIS theo chuỗi 5 module:
+Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread không gây đơ giao diện QGIS theo chuỗi 5 module liên hoàn:
 
 ```
-[Module 1: Chuẩn bị dữ liệu] ➔ [Module 2: Phân tách mảng xanh] ➔ [Module 3: Vùng phục vụ R*] ➔ [Module 4: Không gian xây dựng] ➔ [Module 5: Thống kê Hành chính]
+[Module 1: Chuẩn bị dữ liệu] ➔ [Module 2: Phân tách mảng xanh] ➔ [Module 3: Vùng phục vụ riêng R*] ➔ [Module 4: Vùng phục vụ chung SERVICE_UNION] ➔ [Module 5: Thống kê Hành chính]
 ```
 
 - **Module 1 (Tiền xử lý và chuẩn hóa dữ liệu):**
@@ -100,44 +99,40 @@ Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread k
   - Chuẩn hóa trường dân số thống kê thành `POP_STAT`.
   - Tiếp nhận hệ tọa độ phẳng dự chiếu tham chiếu (mét) và tạo ảnh Sentinel-2 Stack 10 m.
 - **Module 2 (Chỉ số phổ và phân tách mảng xanh):**
-  - Tính MNDWI và phân tách mặt nước.
-  - Tính SAVI và xác định ngưỡng thực vật (tự động từ mẫu công viên hoặc thủ công).
-  - Lọc bỏ mảng xanh nhỏ ngoài công viên (< 5000 m²).
-  - Phân tích liên thông 8-neighbor tạo các mảng xanh độc lập, gán `PATCH_ID` và tính diện tích $S_i$.
-- **Module 3 (Mô hình hóa vùng phục vụ mảng xanh):**
-  - Phân tách dấu vết công trình theo đơn vị hành chính tạo các phần dấu vết công trình và phân bổ dân số không gian:
-
-    $$
-    P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}
-    $$
-
-    tạo lớp `POP_ALLOC`.
-  - Xây dựng ma trận khoảng cách hình học Euclid (EDT) từ biên từng mảng xanh.
-  - Xác định dân số phục vụ tối đa $P_{\max, i} = S_i / C_{\min}$. Sau đó tính $P_i(R)$, kiểm tra $P_i(R)$ với $P_{\max, i}$ và tìm $R_i^*$ lớn nhất thỏa $P_i(R_i^*) \le P_{\max, i}$.
-  - Tìm kiếm bán kính phục vụ lớn nhất $R^*$ trong $[0, R_{\max}]$ bằng Binary Search và xử lý các trường hợp biên (`RMAX`, `NO_SOLUTION`).
+  - Tính MNDWI và phân tách mặt nước (ngưỡng 0.000).
+  - Tính SAVI ($L = 0.50$) và bóc tách thực vật (ngưỡng 0.165).
+  - Lọc bỏ mảng xanh nhỏ manh mún (< 5000 m²).
+  - Phân tích liên thông 8-lân cận tạo các mảng xanh độc lập, gán `PATCH_ID` và vector hóa thành `green_patches`.
+- **Module 3 (Xác định bán kính phục vụ riêng $R^*$):**
+  - Phân chia footprint công trình theo đơn vị hành chính tạo các footprint-part và phân bổ dân số không gian `POP_ALLOC`.
+  - Xây dựng chỉ mục không gian `QgsSpatialIndex` dùng chung cho toàn bộ tập footprint-part.
+  - Xác định dân số phục vụ tối đa $P_{\max, i} = S_i / C_{\min}$.
+  - Xác định bán kính khả thi $R^*$ cho từng mảng xanh qua phương pháp tìm kiếm hai giai đoạn (khoanh vùng nghiệm theo bước $\Delta d = 50\text{ m}$ và tinh chỉnh nhị phân theo ngưỡng hội tụ dân số $e = 1.0\text{ người}$).
+  - Tạo vùng phục vụ riêng `OUT_BUFFER` cho từng mảng xanh.
 - **Module 4 (Phân tích không gian xây dựng):**
-  - Phân tích vị trí không gian của từng phần dấu vết công trình đối với vùng phục vụ bán kính $R^*$.
-  - Phân loại phần dấu vết công trình nằm trong và ngoài vùng phục vụ.
-  - Áp dụng thuật toán gán duy nhất (**Exclusive Assignment**): nếu một phần dấu vết công trình giao cắt với nhiều vùng phục vụ, nó được gán duy nhất cho mảng xanh gần nhất. Mỗi phần dấu vết công trình chỉ thuộc tối đa một `PATCH_ID`, loại bỏ hoàn toàn đếm lặp.
+  - Hợp nhất Unary Union các vùng phục vụ riêng thành vùng phục vụ mảng xanh chung (`SERVICE_UNION`), loại bỏ đếm lặp vùng chồng lấn.
+  - Phân tích giao cắt hình học giữa `SERVICE_UNION` và các footprint-part.
+  - Phân rã thành các phần diện tích xây dựng nằm trong vùng phục vụ (`SERVED`) và ngoài vùng phục vụ (`OUTSIDE`).
+  - Phân bổ dân số nguồn `SOURCE_POP_ALLOC` cho từng phần diện tích xây dựng thành `POP_FRAGMENT` theo tỷ lệ diện tích thực tế.
 - **Module 5 (Tổng hợp và thống kê kết quả):**
   - Tổng hợp trực tiếp từ các lớp vector kết quả ra 10 trường chỉ số định lượng theo từng đơn vị hành chính.
-  - Tự động thực thi hệ thống 8 phép kiểm tra tính toàn vẹn dữ liệu (Balance Checks).
-  - Xuất các lớp kết quả và bảng số liệu báo cáo (Excel/CSV).
+  - Tự động thực thi hệ thống 8 phép kiểm tra cân bằng dữ liệu (Balance Checks).
+  - Xuất 5 sản phẩm đầu ra chính và bảng số liệu báo cáo (Excel/CSV).
 
 ---
 
 ## 7. Hệ thống 8 phép kiểm tra tính toàn vẹn dữ liệu (Balance Checks)
 
-Plugin tích hợp cơ chế tự động kiểm tra đối soát số liệu khắt khe trước khi kết thúc:
+Plugin tích hợp cơ chế tự động kiểm tra đối soát số liệu khắt khe bằng giá trị thực độ chính xác cao (Raw Full-Precision) trước khi kết thúc:
 
-1. **POPULATION BALANCE**: Tổng dân số phân bổ trên các phần dấu vết công trình bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính ($\sum T\_DanSo = \sum D\_DaPhucVu + \sum D\_ThieuXanh$).
-2. **PATCH POPULATION BALANCE**: Dân số được phân bổ cho các mảng xanh khớp với tổng dân số được phục vụ theo phường ($\sum SERVED\_POP(PATCH) = \sum D\_DaPhucVu$).
-3. **WARD BUILDING AREA BALANCE**: Tổng diện tích xây dựng phục vụ và diện tích xây dựng thiếu xanh bằng đúng tổng diện tích xây dựng của phường/xã ($\sum S\_XayDung = \sum S\_DaPhucVu + \sum S\_ThieuXanh$).
-4. **INPUT FOOTPRINT AREA BALANCE**: Tổng diện tích các phần dấu vết công trình sau khi cắt bằng đúng diện tích dấu vết công trình đầu vào ($\sum AREA(input) = \sum AREA(served) + \sum AREA(outside)$).
-5. **FOOTPRINT COUNT BALANCE**: Xác nhận toàn bộ phần dấu vết công trình đầu vào của bước phân tích cuối được phân loại đầy đủ thành served hoặc outside ($N_{\text{input}} = N_{\text{served}} + N_{\text{outside}}$), không bị mất hoặc tạo thêm đối tượng ngoài quy trình.
-6. **PATCH BUILDING AREA BALANCE**: Cân bằng diện tích xây dựng được gán cho các mảng xanh độc lập ($\sum SERVED\_BUILDING\_AREA(PATCH) = \sum AREA(cons\_in\_buffer)$).
-7. **EXCLUSIVE PATCH ASSIGNMENT**: Xác nhận mỗi phần dấu vết công trình chỉ được gán duy nhất cho tối đa một mảng xanh, SERVED $\cap$ OUTSIDE = $\emptyset$.
-8. **GREEN AREA BALANCE**: Tổng diện tích mảng xanh được phân bổ cho các đơn vị hành chính bằng đúng tổng diện tích mảng xanh toàn khu vực nghiên cứu.
+1. **Cân bằng dân số toàn cục (Global Population Balance)**: Tổng dân số phân bổ trên các phần diện tích xây dựng bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính ($\sum \text{raw\_T\_DanSo} = \sum \text{raw\_D\_DaPhucVu} + \sum \text{raw\_D\_ThieuXanh}$).
+2. **Cân bằng dân số theo phường (Ward-level Population Balance)**: Dân số được phân bổ trong từng phường khớp chính xác với tổng dân số phục vụ và thiếu xanh của phường đó.
+3. **Cân bằng diện tích xây dựng theo phường (Ward Area Balance)**: Tổng diện tích xây dựng được phục vụ và diện tích xây dựng thiếu xanh bằng đúng tổng diện tích xây dựng của phường/xã.
+4. **Cân bằng tổng diện tích không gian xây dựng (Global Area Balance)**: Tổng diện tích các phần diện tích xây dựng `SERVED` và `OUTSIDE` sau khi phân cắt bằng đúng tổng diện tích footprint nguồn đầu vào ($|\Delta A| \le 0.01\text{ m}^2$).
+5. **Cân bằng diện tích mảng xanh gốc (Green-space Area Balance)**: Tổng diện tích mảng xanh phân bổ cho các đơn vị hành chính khớp với tổng diện tích mảng xanh gốc trong phạm vi ranh giới hành chính.
+6. **Cân bằng dân số vùng phục vụ (Service Union Population Balance)**: Kiểm tra tính nhất quán giữa tổng dân số phục vụ cấp phường ($\sum \text{raw\_D\_DaPhucVu}$) và tổng `POP_FRAGMENT` của lớp `SERVED` toàn cục. Đồng thời ghi nhận lượng dân số bị đếm lặp nếu chỉ cộng rời rạc các vùng phục vụ riêng `OUT_BUFFER`.
+7. **Kiểm tra tính đầy đủ footprint-part đầu vào (Footprint-part Completeness)**: Kiểm tra toàn bộ footprint-part đầu vào được bảo toàn khi phân chia thành `SERVED` và `OUTSIDE`, không bị thiếu hoặc phát sinh phần tử ngoài tập đầu vào ($\text{Unique}(\text{SERVED} \cup \text{OUTSIDE}) \equiv \text{Input Footprint Parts}$).
+8. **Tính đầy đủ và hợp lệ logic thuộc tính (Attribute Logic)**: Kiểm tra tất cả các chỉ tiêu thuộc tính nằm trong miền giá trị hợp lệ (tỷ lệ 0-100%, diện tích $\ge 0$, dân số $\ge 0$).
 
 ---
 
@@ -160,7 +155,7 @@ Người dùng có thể nhấn nút **Sao chép log** hoặc **Lưu log** ra t�
 Khi hoàn thành (100%):
 - Hộp thoại *Thành công* hiển thị kèm bảng tổng kết thời gian thực thi của từng module.
 - 5 sản phẩm đầu ra chính được tự động nạp lên danh sách lớp (Layers Panel) của QGIS.
-- Các lớp được tự động áp dụng kiểu hiển thị (QML Style) chuyên nghiệp: mảng xanh màu xanh lá đậm, vùng phục vụ màu xanh rừng trong suốt, không gian xây dựng thiếu xanh màu đỏ tươi.
+- Các lớp được tự động áp dụng kiểu hiển thị (QML Style) chuyên nghiệp: mảng xanh màu xanh lá đậm, vùng phục vụ chung màu xanh rừng trong suốt, không gian xây dựng thiếu xanh màu đỏ tươi.
 
 <div class="guide-figure" markdown>
 ![Các lớp kết quả được nạp tự động lên giao diện QGIS kèm kiểu dáng trực quan](images/ket_qua_qgis.png)

@@ -15,48 +15,38 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 
 | STT | Tên sản phẩm | Loại dữ liệu | Định dạng hỗ trợ | Nội dung & Vai trò kỹ thuật |
 |---|---|---|---|---|
-| **1** | **Mảng xanh đô thị** | Raster | `.tif` (GeoTIFF) | Lớp raster thể hiện phân bố thảm thực vật mảng xanh sau khi phân loại chỉ số phổ, trừ mặt nước và lọc diện tích. |
-| **2** | **Vùng phục vụ mảng xanh (R\*)** | Vector (Polygon) | `.gpkg`, `.shp`, `.geojson` | Phạm vi không gian đệm bán kính lớn nhất $R^*$ thỏa điều kiện của mô hình cho từng mảng xanh độc lập. |
-| **3** | **Không gian xây dựng trong vùng phục vụ** | Vector (Polygon) | `.gpkg`, `.shp`, `.geojson` | Các phần dấu vết công trình nằm trong phạm vi vùng phục vụ bán kính $R^*$ của mảng xanh. |
-| **4** | **Không gian xây dựng ngoài vùng phục vụ** | Vector (Polygon) | `.gpkg`, `.shp`, `.geojson` | Các phần dấu vết công trình nằm ngoài phạm vi vùng phục vụ mảng xanh. |
-| **5** | **Thống kê theo đơn vị hành chính** | Vector (Polygon) | `.gpkg`, `.shp`, `.geojson` | Lớp ranh giới tích hợp 10 trường chỉ số định lượng đánh giá toàn diện mức độ phục vụ mảng xanh. |
+| **1** | **Mảng xanh đô thị** | Raster | `.tif` (GeoTIFF) | Lớp raster thể hiện phân bố thảm thực vật mảng xanh sau khi phân loại chỉ số phổ, loại trừ mặt nước và lọc diện tích tối thiểu $A_{\min} = 5000\text{ m}^2$. |
+| **2** | **Vùng phục vụ mảng xanh** | Vector (Polygon) | `.gpkg`, `.shp`, `.geojson` | Vùng phục vụ chung (`SERVICE_UNION`) được tạo bằng cách hợp nhất các vùng phục vụ riêng của từng mảng xanh theo bán kính khả thi $R^*$. Các phần chồng lấn chỉ được tính một lần. |
+| **3** | **Không gian xây dựng trong vùng phục vụ** | Vector (Polygon) | `.gpkg`, `.shp`, `.geojson` | Các phần diện tích không gian xây dựng (`SERVED`) nằm trong vùng phục vụ chung. Mỗi phần diện tích mang trường dân số `POP_FRAGMENT` được phân bổ từ `SOURCE_POP_ALLOC` theo tỷ lệ diện tích. |
+| **4** | **Không gian xây dựng ngoài vùng phục vụ** | Vector (Polygon) | `.gpkg`, `.shp`, `.geojson` | Các phần diện tích không gian xây dựng (`OUTSIDE`) nằm ngoài vùng phục vụ chung trong phạm vi phân tích. |
+| **5** | **Thống kê kết quả theo đơn vị hành chính** | Vector (Polygon) | `.gpkg`, `.shp`, `.geojson` | Lớp ranh giới dạng Vector tích hợp 10 trường chỉ số định lượng đánh giá toàn diện mức độ phục vụ mảng xanh theo từng đơn vị hành chính. |
 
 ---
 
 ## 2. Chi tiết từng sản phẩm chính
 
-### 2.1. Mảng xanh đô thị
-- **Bản chất dữ liệu**: Lớp raster nhị phân (1: Mảng xanh, 0: Khác) thể hiện thảm thực vật mảng xanh tập trung sau khi bóc tách bằng chỉ số SAVI, loại trừ mặt nước (MNDWI > 0.0) và lọc bỏ các mảng nhỏ ngoài công viên (< 5000 m²). Toàn bộ mảng xanh trong ranh công viên mẫu luôn được bảo toàn nguyên vẹn.
-- **Vai trò kỹ thuật**: Đóng vai trò là nguồn phát mảng xanh để xây dựng lưới khoảng cách Euclid và cung cấp diện tích $S_i$ của từng mảng xanh trong mô hình xác định bán kính phục vụ.
+### 2.1. Mảng xanh đô thị (`OUT_PARK`)
+- **Bản chất dữ liệu**: Lớp raster nhị phân (1: Mảng xanh, 0: Khác) thể hiện thảm thực vật mảng xanh sau khi bóc tách bằng chỉ số SAVI (ngưỡng 0.165, $L = 0.50$), loại trừ mặt nước (MNDWI > 0.000) và lọc bỏ các mảng nhỏ dưới $5000\text{ m}^2$.
+- **Vai trò kỹ thuật**: Đóng vai trò là nguồn phát mảng xanh để tính diện tích $S_i$ và xây dựng vùng đệm phục vụ cho từng mảng xanh.
 - **Lưu ý**: Lớp dữ liệu thể hiện hiện trạng thảm thực vật phản xạ phổ tại thời điểm chụp ảnh Sentinel-2, không đồng nhất hoàn toàn với diện tích đất cây xanh quy hoạch theo hồ sơ pháp lý.
 
-### 2.2. Vùng phục vụ mảng xanh (R*)
-- **Bản chất dữ liệu**: Lớp vector polygon vùng đệm không gian được tạo ra từ việc mở rộng từng mảng xanh độc lập với bán kính phục vụ lớn nhất $R_i^*$.
+### 2.2. Vùng phục vụ mảng xanh (`OUT_SERVICE_UNION`)
+- **Bản chất dữ liệu**: Lớp vector polygon vùng phục vụ chung (`SERVICE_UNION`), được tạo bằng cách hợp nhất (`unaryUnion`) các vùng phục vụ riêng của từng mảng xanh theo bán kính khả thi $R^*$.
 - **Đặc điểm quan trọng**:
-    - Mỗi mảng xanh có một bán kính $R^*$ riêng biệt và một polygon vùng phục vụ riêng biệt gắn liền với mã định danh `PATCH_ID`.
-    - Các polygon vùng phục vụ được giữ nguyên độc lập, **không thực hiện gộp (merge) hay thu nhỏ (shrink)** ngay cả khi các vùng đệm có sự chồng lấn không gian.
-- **Bảng thuộc tính của lớp Vùng phục vụ R\* (`SERVICE_AREA`)**:
-    - `PATCH_ID` (Integer): Mã định danh số nguyên duy nhất của từng mảng xanh.
-    - `R_STAR` (Double): Bán kính phục vụ lớn nhất thỏa điều kiện tìm kiếm được (m).
-    - `P_MAX` (Double): Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu $C_{\min}$ ($P_{\max, i} = S_i / C_{\min}$).
-    - `STATUS` (String): Trạng thái kết quả tìm kiếm bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
-    - `AREA_M2` (Double): Diện tích của mảng xanh ($\text{m}^2$).
-    - `AREA_HA` (Double): Diện tích của mảng xanh (ha).
-    - `P_RMIN` (Double): Dân số phân bổ tiếp cận tại bán kính $R = 0\text{ m}$.
-    - `P_RMAX` (Double): Dân số phân bổ tiếp cận tại bán kính $R = R_{\max}$.
-    - `P_AT_RSTAR` (Double): Tổng dân số được phân bổ nằm trong phạm vi khoảng cách $R^*$ của mảng xanh.
-    - `ITERATIONS` (Integer): Số bước lặp của thuật toán tìm kiếm nhị phân.
+    - `SERVICE_UNION` đại diện cho toàn bộ phạm vi dịch vụ của mạng lưới mảng xanh trong đô thị.
+    - Các phần diện tích chồng lấn giữa nhiều vùng phục vụ riêng được hợp nhất và **chỉ tính đúng một lần**, loại bỏ hoàn toàn hiện tượng đếm lặp dân số và diện tích phục vụ.
 
-### 2.3. Không gian xây dựng trong vùng phục vụ
-- **Bản chất dữ liệu**: Tập hợp các phần dấu vết công trình nằm trong phạm vi vùng phục vụ bán kính $R^*$ của mảng xanh.
-- **Cơ chế gán duy nhất (Exclusive Assignment)**: Khi một phần dấu vết công trình nằm trong phạm vi giao cắt của nhiều vùng phục vụ, Plugin tự động gán đối tượng đó cho mảng xanh gần nhất. Nhờ đó, mỗi phần dấu vết công trình chỉ gắn với một `PATCH_ID` duy nhất, loại bỏ hoàn toàn việc đếm lặp dân số hoặc diện tích.
-- **Ý nghĩa**: Đại diện cho không gian xây dựng vật lý được tiếp cận mảng xanh theo khoảng cách Euclid và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$) của mô hình.
+### 2.3. Không gian xây dựng trong vùng phục vụ (`OUT_SERVED_RES`)
+- **Bản chất dữ liệu**: Tập hợp các phần diện tích không gian xây dựng (`SERVED`) nằm bên trong vùng phục vụ chung `SERVICE_UNION`.
+- **Cơ chế phân bổ dân số**: Mỗi phần diện tích mang trường `POP_FRAGMENT` được phân bổ từ dân số nguồn `SOURCE_POP_ALLOC` theo tỷ lệ diện tích:
+  $$\text{POP\_FRAGMENT} = \text{SOURCE\_POP\_ALLOC} \times \frac{\text{AREA\_M2}}{\text{SOURCE\_AREA\_M2}}$$
+- **Ý nghĩa**: Đại diện cho không gian xây dựng vật lý được tiếp cận dịch vụ mảng xanh theo mô hình khoảng cách hình học và chỉ tiêu diện tích mảng xanh tối thiểu ($C_{\min}$).
 
-### 2.4. Không gian xây dựng ngoài vùng phục vụ
-- **Bản chất dữ liệu**: Tập hợp các phần dấu vết công trình nằm ngoài phạm vi vùng phục vụ của tất cả các mảng xanh.
-- **Ý nghĩa**: Thể hiện các khu vực xây dựng còn thiếu hụt không gian xanh theo tiêu chí khoảng cách và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$) của mô hình, hỗ trợ định hướng các vị trí ưu tiên bổ sung công viên, vườn hoa mới.
+### 2.4. Không gian xây dựng ngoài vùng phục vụ (`OUT_AFF_RES`)
+- **Bản chất dữ liệu**: Tập hợp các phần diện tích không gian xây dựng (`OUTSIDE`) nằm ngoài vùng phục vụ chung `SERVICE_UNION` trong phạm vi phân tích.
+- **Ý nghĩa**: Thể hiện các khu vực xây dựng còn thiếu hụt không gian xanh theo tiêu chí khoảng cách và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$) của mô hình, hỗ trợ định hướng các vị trí ưu tiên bổ sung công viên, mảng xanh mới.
 
-### 2.5. Thống kê theo đơn vị hành chính
+### 2.5. Thống kê kết quả theo đơn vị hành chính (`OUT_STATS`)
 - **Bản chất dữ liệu**: Lớp vector ranh giới hành chính (phường/xã) kế thừa cấu trúc hình học từ lớp ranh giới đầu vào, được tích hợp trực tiếp 10 trường chỉ số định lượng.
 - **Phương pháp tổng hợp**: Tổng hợp trực tiếp từ các lớp vector kết quả hình học và số liệu phân bổ không gian.
 
@@ -69,23 +59,20 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 - **Cấu trúc dữ liệu**: Mỗi hàng tương ứng với một đơn vị hành chính và chứa đầy đủ 10 trường chỉ số định lượng.
 - **Chuẩn mã hóa**: Tệp `.csv` được xuất dưới định dạng mã hóa `UTF-8-SIG`, đảm bảo mở trực tiếp bằng Microsoft Excel hiển thị tiếng Việt chuẩn xác không bị lỗi phông chữ.
 
-### 3.2. Bảng thống kê chi tiết theo mảng xanh (`patch_service_statistics`)
+### 3.2. Bảng thống kê chi tiết theo mảng xanh (`OUT_PATCH_STATS`)
 
-Tệp thống kê chi tiết ở cấp độ từng mảng xanh (`patch_service_statistics.csv` / `.xlsx`) gồm đúng **13 trường chuẩn hóa trong mã nguồn**:
-
-1. `PATCH_ID`: Mã định danh mảng xanh.
-2. `AREA_M2`: Diện tích mảng xanh ($\text{m}^2$).
-3. `AREA_HA`: Diện tích mảng xanh (ha).
-4. `R_STAR_M`: Bán kính phục vụ lớn nhất thỏa điều kiện $R^*$ (m).
-5. `STATUS`: Trạng thái giải bán kính (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
-6. `P_MAX`: Dân số phục vụ tối đa tương ứng với diện tích mảng xanh và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu $C_{\min}$ ($P_{\max, i} = S_i / C_{\min}$).
-7. `P_AT_RSTAR`: Tổng dân số được phân bổ nằm trong phạm vi khoảng cách $R^*$ của mảng xanh.
-8. `N_SERVED_PARTS`: Số phần dấu vết công trình được gán cho mảng (Số lượng phần dấu vết công trình được gán phục vụ duy nhất cho mảng xanh).
-9. `SERVED_BUILDING_AREA_M2`: Tổng diện tích xây dựng được gán phục vụ ($\text{m}^2$).
-10. `SERVED_BUILDING_AREA_HA`: Tổng diện tích xây dựng được gán phục vụ (ha).
-11. `SERVED_POP`: Tổng dân số được phân bổ phục vụ duy nhất của mảng xanh.
-12. `MEAN_DIST_M`: Khoảng cách trung bình từ các phần dấu vết công trình được gán đến mảng xanh (m).
-13. `MAX_DIST_M`: Khoảng cách lớn nhất từ các phần dấu vết công trình được gán đến mảng xanh (m).
+Tệp thống kê chi tiết ở cấp độ từng mảng xanh gồm các trường thông tin chuẩn hóa:
+- `PATCH_ID`: Mã định danh số nguyên duy nhất của từng mảng xanh.
+- `AREA_M2`, `AREA_HA`: Diện tích mảng xanh ($\text{m}^2$ và ha).
+- `P_MAX`: Dân số phục vụ tối đa theo diện tích: $P_{\max, i} = S_i / C_{\min}$.
+- `P_RMIN`: Dân số phân bổ tiếp cận tại $R = 0\text{ m}$.
+- `P_RMAX`: Dân số phân bổ tiếp cận tại $R = R_{\max}$.
+- `R_STAR`: Bán kính phục vụ tối ưu tìm được (m).
+- `STATUS`: Trạng thái giải nghiệm (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
+- `P_AT_RSTAR`: Dân số thực tế nằm trong vùng phục vụ riêng của mảng xanh ứng với bán kính $R^*$.
+- `POP_GAP`: Độ lệch giữa dân số trần và dân số phục vụ thực tế ($P_{\max, i} - P_{\text{at\_rstar}}$).
+- `POP_BRACKET`: Khoảng chênh lệch dân số giữa hai cận khi kết thúc tìm kiếm ($P_{\text{high}} - P_{\text{low}}$).
+- `ITERATIONS`: Số vòng lặp tinh chỉnh nhị phân.
 
 ---
 
@@ -98,13 +85,13 @@ Bảng thuộc tính của lớp vector thống kê hành chính chứa đúng *
 | 1 | `T_DanSo` | Tổng dân số thống kê của đơn vị hành chính | người | Integer | Dân số thống kê chính thức của đơn vị hành chính (`POP_STAT`). |
 | 2 | `S_MangXanh` | Tổng diện tích mảng xanh phân bổ cho đơn vị hành chính | ha | Double (3) | Tổng diện tích mảng xanh được phân bổ cho đơn vị hành chính theo tỷ trọng diện tích giao cắt của từng mảng xanh với ranh giới hành chính. |
 | 3 | `S_XayDung` | Tổng diện tích không gian xây dựng | ha | Double (3) | Tổng diện tích các phần dấu vết công trình nằm trong đơn vị hành chính. |
-| 4 | `S_DaPhucVu` | Diện tích không gian xây dựng được phục vụ | ha | Double (3) | Tổng diện tích các phần dấu vết công trình nằm trong vùng phục vụ mảng xanh. |
-| 5 | `S_ThieuXanh` | Diện tích không gian xây dựng thiếu mảng xanh | ha | Double (3) | Tổng diện tích các phần dấu vết công trình nằm ngoài vùng phục vụ mảng xanh. |
-| 6 | `D_DaPhucVu` | Dân số phân bổ được phục vụ mảng xanh | người | Integer | Tổng dân số được phân bổ (`POP_ALLOC`) cho các phần dấu vết công trình nằm trong vùng phục vụ mảng xanh. |
-| 7 | `D_ThieuXanh` | Dân số phân bổ thiếu mảng xanh | người | Integer | Tổng dân số được phân bổ (`POP_ALLOC`) cho các phần dấu vết công trình nằm ngoài vùng phục vụ mảng xanh. |
+| 4 | `S_DaPhucVu` | Diện tích không gian xây dựng được phục vụ | ha | Double (3) | Tổng diện tích các phần diện tích xây dựng nằm trong vùng phục vụ mảng xanh chung (`SERVICE_UNION`). |
+| 5 | `S_ThieuXanh` | Diện tích không gian xây dựng thiếu mảng xanh | ha | Double (3) | Tổng diện tích các phần diện tích xây dựng nằm ngoài vùng phục vụ mảng xanh chung. |
+| 6 | `D_DaPhucVu` | Dân số phân bổ được phục vụ mảng xanh | người | Integer | Tổng dân số phân bổ (`POP_FRAGMENT`) của các phần diện tích xây dựng nằm trong vùng phục vụ mảng xanh chung. |
+| 7 | `D_ThieuXanh` | Dân số phân bổ thiếu mảng xanh | người | Integer | Tổng dân số phân bổ (`POP_FRAGMENT`) của các phần diện tích xây dựng nằm ngoài vùng phục vụ mảng xanh chung. |
 | 8 | `TL_DaPhucVu` | Tỷ lệ dân số phân bổ được phục vụ | % | Double (3) | Tỷ lệ phần trăm dân số phân bổ được phục vụ so với tổng dân số của đơn vị hành chính. |
 | 9 | `TL_ThieuXanh` | Tỷ lệ dân số phân bổ thiếu mảng xanh | % | Double (3) | Tỷ lệ phần trăm dân số phân bổ nằm ngoài vùng phục vụ so với tổng dân số của đơn vị hành chính. |
-| 10 | `N_Mang_DuocPhucVu` | Số lượng mảng xanh tham gia phục vụ | mảng | Integer | Số lượng mảng xanh độc lập có vùng phục vụ tham gia phục vụ không gian xây dựng của đơn vị hành chính *(tên trường phiên bản mới dự kiến đồng bộ với Plugin; trong phiên bản trước là `N_Patch_DuocPhucVu`)*. |
+| 10 | `N_Mang_DuocPhucVu` | Số lượng mảng xanh có vùng phục vụ giao cắt | mảng | Integer | Số lượng mảng xanh có vùng phục vụ riêng (`OUT_BUFFER`) giao cắt với ranh giới của đơn vị hành chính. |
 
 ---
 
@@ -116,49 +103,50 @@ Các chỉ tiêu thống kê được tính toán tuần tự theo các công th
 Tổng diện tích xây dựng của đơn vị hành chính là tổng diện tích của phần được phục vụ và phần thiếu xanh:
 
 $$
-S_{XayDung} = S_{DaPhucVu} + S_{ThieuXanh}
+S_{\text{XayDung}} = S_{\text{DaPhucVu}} + S_{\text{ThieuXanh}}
 $$
 
 ### 5.2. Cân bằng dân số phân bổ
 Tổng dân số thống kê của đơn vị hành chính bằng tổng dân số phân bổ được phục vụ và dân số phân bổ thiếu xanh:
 
 $$
-T_{DanSo} = D_{DaPhucVu} + D_{ThieuXanh}
+T_{\text{DanSo}} = D_{\text{DaPhucVu}} + D_{\text{ThieuXanh}}
 $$
 
 ### 5.3. Tỷ lệ dân số phân bổ được phục vụ và thiếu mảng xanh
 
 $$
-TL_{DaPhucVu} = \frac{D_{DaPhucVu}}{T_{DanSo}} \times 100
+TL_{\text{DaPhucVu}} = \frac{D_{\text{DaPhucVu}}}{T_{\text{DanSo}}} \times 100
 $$
 
 $$
-TL_{ThieuXanh} = \frac{D_{ThieuXanh}}{T_{DanSo}} \times 100
+TL_{\text{ThieuXanh}} = \frac{D_{\text{ThieuXanh}}}{T_{\text{DanSo}}} \times 100
 $$
 
 Trong đó:
 
 $$
-TL_{DaPhucVu} + TL_{ThieuXanh} = 100\%
+TL_{\text{DaPhucVu}} + TL_{\text{ThieuXanh}} = 100\%
 $$
 
 ---
 
 ## 6. Sản phẩm bổ sung
 
-Khi người dùng cấu hình đường dẫn lưu tại tab **Sản phẩm bổ sung** trong cửa sổ Cài đặt, Plugin có thể xuất thêm các tệp sau (nếu để trống, các tệp tạm thời được tạo trong thư mục tạm của hệ thống `tempfile.gettempdir()`):
+Khi người dùng cấu hình đường dẫn lưu tại tab **Sản phẩm bổ sung** trong cửa sổ Cài đặt, Plugin có thể xuất thêm các tệp sau:
 
 | Sản phẩm bổ sung | Định dạng | Vai trò kỹ thuật |
 |---|---|---|
+| **Vùng phục vụ riêng của từng mảng xanh (`OUT_BUFFER`)** | Vector (`.gpkg`) | Vùng phục vụ độc lập của từng mảng xanh theo $R^*$, phục vụ tạo `SERVICE_UNION` và đối soát chi tiết. |
 | **Ảnh Sentinel-2 Stack** | Raster (`.tif`) | Ảnh đa kênh ghép gồm các kênh bắt buộc và tùy chọn cắt theo ranh giới, độ phân giải 10 m. |
 | **Raster MNDWI** | Raster (`.tif`) | Ảnh chỉ số khác biệt nước cải tiến. |
 | **Raster mặt nước** | Raster (`.tif`) | Mặt nạ nhị phân thể hiện bề mặt nước sông, suối, hồ kênh rạch. |
 | **Raster SAVI** | Raster (`.tif`) | Ảnh chỉ số thực vật điều chỉnh theo đất trên toàn cảnh. |
 | **Raster SAVI (loại bỏ nước)** | Raster (`.tif`) | Chỉ số SAVI trên đất liền sau khi đã trừ mặt nạ nước. |
-| **Raster thực vật thô** | Raster (`.tif`) | Mặt nạ thảm thực vật ban đầu trước khi áp dụng bộ lọc diện tích tối thiểu. |
+| **Raster thực vật** | Raster (`.tif`) | Mặt nạ thảm thực vật ban đầu trước khi áp dụng bộ lọc diện tích tối thiểu. |
+| **Vector mảng xanh đô thị** | Vector (`.gpkg`) | Lớp vector polygon các mảng xanh sau khi vector hóa. |
 | **Biểu đồ Histogram MNDWI & SAVI** | Ảnh (`.png`) | Biểu đồ phân bố tần suất giá trị phổ hỗ trợ đánh giá độ tin cậy của ngưỡng bóc tách. |
-| **Dấu vết công trình phân bổ dân số** | Vector (`.gpkg`) | Lớp phần dấu vết công trình tích hợp trường dân số phân bổ `POP_ALLOC`. |
-| **Bảng thống kê mảng xanh** | File (`.xlsx`/`.csv`) | Bảng thuộc tính chi tiết 13 trường của từng mảng xanh: diện tích, bán kính $R^*$, trạng thái, dân số tiếp cận. |
+| **Bảng thống kê mảng xanh** | File (`.xlsx`/`.csv`) | Bảng thuộc tính chi tiết từng mảng xanh: diện tích, bán kính $R^*$, trạng thái, dân số tiếp cận. |
 
 ---
 
@@ -166,4 +154,4 @@ Khi người dùng cấu hình đường dẫn lưu tại tab **Sản phẩm b�
 
 !!! warning "Lưu ý phương pháp luận khi đọc kết quả"
     1. **Bản chất dân số:** Các chỉ tiêu `D_DaPhucVu`, `D_ThieuXanh`, `TL_ThieuXanh` là giá trị **dân số được phân bổ theo không gian** từ số liệu thống kê cấp hành chính dựa trên diện tích dấu vết công trình. Không được diễn giải đây là số lượng cư dân điều tra thực địa hay số hộ gia đình thực tế.
-    2. **Khái niệm phục vụ:** Thuật ngữ "được phục vụ" hoặc "thiếu mảng xanh" phản ánh kết quả mô hình hóa không gian bằng khoảng cách hình học Euclid và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$) của mô hình; không đồng nhất hoàn toàn với việc người dân có tiếp cận được không gian xanh trên thực tế hay không (do phụ thuộc vào mạng lưới đường đi, lối vào công viên và rào chắn thực địa).
+    2. **Khái niệm phục vụ:** Thuật ngữ "được phục vụ" hoặc "thiếu mảng xanh" phản ánh kết quả mô hình hóa không gian bằng khoảng cách hình học và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$) của mô hình; không đồng nhất hoàn toàn với việc người dân có tiếp cận được không gian xanh trên thực tế hay không (do phụ thuộc vào mạng lưới đường đi, lối vào công viên và rào chắn thực địa).
