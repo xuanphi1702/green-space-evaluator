@@ -555,10 +555,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#23-lop-cong-vienvuon-hoa" class="md-nav__link">
+  <a href="#23-dau-vet-cong-trinh-xay-dung-footprint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.3. Lớp công viên/vườn hoa
+        2.3. Dấu vết công trình xây dựng (Footprint)
       
     </span>
   </a>
@@ -566,10 +566,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#24-dau-vet-cong-trinh-xay-dung-footprint" class="md-nav__link">
+  <a href="#24-cac-tham-so-phan-tich" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.4. Dấu vết công trình xây dựng (Footprint)
+        2.4. Các tham số phân tích
       
     </span>
   </a>
@@ -997,10 +997,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#23-lop-cong-vienvuon-hoa" class="md-nav__link">
+  <a href="#23-dau-vet-cong-trinh-xay-dung-footprint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.3. Lớp công viên/vườn hoa
+        2.3. Dấu vết công trình xây dựng (Footprint)
       
     </span>
   </a>
@@ -1008,10 +1008,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#24-dau-vet-cong-trinh-xay-dung-footprint" class="md-nav__link">
+  <a href="#24-cac-tham-so-phan-tich" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2.4. Dấu vết công trình xây dựng (Footprint)
+        2.4. Các tham số phân tích
       
     </span>
   </a>
@@ -1058,7 +1058,7 @@
 <p>Trang này hướng dẫn chi tiết về <strong>danh mục 4 nhóm dữ liệu đầu vào cần thiết</strong> và <strong>cách chuẩn bị dữ liệu chuẩn xác trước khi đưa vào Plugin Green Space Evaluator</strong>.</p>
 <hr />
 <h2 id="1-danh-muc-4-nhom-du-lieu-au-vao">1. Danh mục 4 nhóm dữ liệu đầu vào</h2>
-<p>Để thực hiện toàn diện quy trình phân tích, Plugin yêu cầu <strong>4 nhóm dữ liệu đầu vào</strong>:</p>
+<p>Để thực hiện toàn diện quy trình phân tích, Plugin yêu cầu <strong>4 nhóm dữ liệu chuẩn</strong>:</p>
 <table>
 <thead>
 <tr>
@@ -1082,21 +1082,21 @@
 <td><strong>Ranh giới hành chính và dân số thống kê</strong></td>
 <td>Vector Polygon</td>
 <td>Khung tham chiếu không gian (CRS, phạm vi) và cung cấp số liệu dân số thống kê chính thức của từng đơn vị hành chính</td>
-<td>Hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét); chứa trường thuộc tính dân số thống kê</td>
+<td>Hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét); chứa trường thuộc tính dân số thống kê chính thức</td>
 </tr>
 <tr>
 <td><strong>3</strong></td>
-<td><strong>Công viên/vườn hoa</strong></td>
+<td><strong>Dấu vết công trình xây dựng (Building Footprints)</strong></td>
 <td>Vector Polygon</td>
-<td>Vùng mẫu trích xuất phân bố SAVI xác định ngưỡng thực vật và bảo toàn mảng xanh công viên</td>
-<td>Vector polygon phạm vi công viên/vườn hoa trong khu vực nghiên cứu</td>
+<td>Đại diện cho không gian xây dựng vật lý; cơ sở phân chia thành các footprint-part và phân bổ dân số thống kê theo không gian (<code>POP_ALLOC</code>)</td>
+<td>Vector polygon dấu vết chân công trình xây dựng (ví dụ Google Open Buildings)</td>
 </tr>
 <tr>
 <td><strong>4</strong></td>
-<td><strong>Dấu vết công trình xây dựng (Footprint)</strong></td>
-<td>Vector Polygon</td>
-<td>Đại diện cho không gian xây dựng vật lý; cơ sở phân bổ dân số thống kê theo không gian (<code>POP_ALLOC</code>)</td>
-<td>Vector polygon dấu vết chân công trình xây dựng (Google Open Buildings)</td>
+<td><strong>Các tham số phân tích</strong></td>
+<td>Cấu hình tham số</td>
+<td>Các ngưỡng quang phổ, chỉ tiêu không gian và tham số tìm kiếm nghiệm số học</td>
+<td>Thiết lập cấu hình tại cửa sổ Cài đặt</td>
 </tr>
 </tbody>
 </table>
@@ -1111,7 +1111,7 @@
 <p><strong>Các kênh phổ bắt buộc</strong>:</p>
 <ul>
 <li>
-<p><strong>B03</strong> (Green - Xanh lục, 10 m) và <strong>B11</strong> (SWIR - Hồng ngoại sóng ngắn, 20 m): Dùng để tính toán chỉ số khác biệt nước cải tiến <strong>MNDWI</strong>:</p>
+<p><strong>B03</strong> (Green - Xanh lục, 10 m) và <strong>B11</strong> (SWIR-1 - Hồng ngoại sóng ngắn, 20 m): Dùng để tính toán chỉ số khác biệt nước cải tiến <strong>MNDWI</strong>:</p>
 <div class="arithmatex">\[
 \text{MNDWI} = \frac{\text{B03} - \text{B11}}{\text{B03} + \text{B11}}
 \]</div>
@@ -1121,14 +1121,14 @@
 <div class="arithmatex">\[
 \text{SAVI} = \frac{\text{B08} - \text{B04}}{\text{B08} + \text{B04} + L} \times (1 + L)
 \]</div>
-<p><em>(với hệ số hiệu chỉnh nền đất <span class="arithmatex">\(L = 0.5\)</span>, là giá trị mặc định trong cấu hình nghiên cứu/thử nghiệm hiện tại)</em></p>
+<p><em>(với hệ số hiệu chỉnh nền đất <span class="arithmatex">\(L = 0.50\)</span>, giá trị cấu hình chuẩn production)</em></p>
 </li>
 </ul>
 </li>
 <li>
 <p><strong>Các kênh phổ tùy chọn</strong>:</p>
 <ul>
-<li><strong>B02</strong> (Blue - Xanh lam, 10 m): Hỗ trợ ghép kênh tạo tổ hợp ảnh màu thực True Color (RGB) trong tệp ảnh Sentinel-2 Stack.</li>
+<li><strong>B02</strong> (Blue - Xanh lam, 10 m): Hỗ trợ ghép kênh tạo tổ hợp ảnh màu tự nhiên RGB trong tệp ảnh Sentinel-2 Stack.</li>
 <li><strong>SCL</strong> (Scene Classification Layer, 20 m): Kênh phân loại cảnh quan dùng để tạo mặt nạ lọc tự động mây và bóng mây trước khi tính chỉ số phổ.</li>
 </ul>
 </li>
@@ -1142,47 +1142,33 @@
 <h3 id="22-ranh-gioi-hanh-chinh-va-dan-so-thong-ke">2.2. Ranh giới hành chính và dân số thống kê</h3>
 <p>Lớp ranh giới hành chính đóng vai trò là <strong>khung tham chiếu không gian</strong> và nguồn cung cấp <strong>số liệu dân số thống kê chính thức</strong>:</p>
 <ul>
-<li><strong>Bản chất dữ liệu</strong>: Lớp vector polygon phân chia ranh giới các đơn vị hành chính (ví dụ: phường, xã, thị trấn hoặc quận, huyện) trong phạm vi nghiên cứu.</li>
-<li><strong>Cơ chế xử lý CRS trong Plugin</strong>:<ul>
-<li>Plugin lấy CRS của lớp ranh giới hành chính làm hệ tọa độ tham chiếu chuẩn (<code>crs_vn2000</code>) cho toàn bộ quy trình, đồng thời tự động tái chiếu (reproject) và cắt (clip) các kênh ảnh Sentinel-2 cùng các lớp vector khác theo hệ tọa độ này.</li>
-<li><strong>Khuyến nghị kỹ thuật:</strong> Lớp ranh giới hành chính <strong>nên sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét)</strong> như VN-2000 kinh tuyến trục địa phương hoặc UTM. Nếu lớp đang ở hệ tọa độ địa lý (đơn vị độ), Plugin sẽ phát cảnh báo nhắc nhở vì các phép tính biến đổi khoảng cách Euclid (m) và diện tích (m², ha) cần đơn vị mét để đạt độ chính xác.</li>
+<li><strong>Bản chất dữ liệu</strong>: Lớp vector polygon phân chia ranh giới các đơn vị hành chính (phường, xã, thị trấn hoặc quận, huyện) trong phạm vi nghiên cứu.</li>
+<li><strong>Yêu cầu Hệ tọa độ (CRS)</strong>:<ul>
+<li>Lớp ranh giới hành chính và dữ liệu dân số công trình <strong>bắt buộc sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét)</strong> như VN-2000 kinh tuyến trục địa phương hoặc UTM để tính diện tích m² và khoảng cách chính xác.</li>
+<li>Plugin kiểm tra và đồng bộ CRS theo yêu cầu của từng giai đoạn xử lý; riêng trong Module 4, nếu CRS của <code>OUT_BUFFER</code> khác CRS của footprint-population, hình học <code>OUT_BUFFER</code> được chuyển đổi trong bộ nhớ về CRS phân tích trước khi overlay.</li>
 </ul>
 </li>
 <li><strong>Dân số thống kê (<code>POP_STAT</code>)</strong>:<ul>
 <li>Trên giao diện Plugin, người dùng chỉ định trường thuộc tính chứa số liệu dân số thống kê chính thức của từng đơn vị hành chính.</li>
 <li>Plugin tự động đọc và chuẩn hóa dữ liệu sang trường chuẩn nội bộ <code>POP_STAT</code>.</li>
-<li>Dữ liệu này là số liệu thống kê chính thức của chính quyền địa phương hoặc cơ quan thống kê, đảm bảo tính pháp lý và tin cậy cao.</li>
+<li>Dữ liệu này là số liệu thống kê thuộc tính chính thức, không lấy từ raster dân số.</li>
 </ul>
 </li>
 </ul>
 <hr />
-<h3 id="23-lop-cong-vienvuon-hoa">2.3. Lớp công viên/vườn hoa</h3>
+<h3 id="23-dau-vet-cong-trinh-xay-dung-footprint">2.3. Dấu vết công trình xây dựng (Footprint)</h3>
 <ul>
-<li><strong>Bản chất dữ liệu</strong>: Lớp vector polygon thể hiện phạm vi các công viên, vườn hoa hoặc mảng xanh công cộng hiện hữu.</li>
-<li><strong>Vai trò trong Plugin</strong>: Đảm nhận 2 vai trò kỹ thuật quan trọng:<ol>
-<li><strong>Vùng mẫu trích xuất SAVI</strong>: Khi chạy ở chế độ tự động, Plugin trích xuất phân bố giá trị SAVI bên trong các đa giác công viên mẫu để tính toán ngưỡng phân tách thực vật khách quan (theo P10, Mean - Std, Median...).</li>
-<li><strong>Bảo toàn mảng xanh công viên</strong>: Các pixel thực vật được nhận diện nằm bên trong ranh giới công viên sẽ được bảo toàn nguyên vẹn, không bị loại trừ bởi bộ lọc diện tích tối thiểu.</li>
-</ol>
-</li>
-</ul>
-<div class="admonition info">
-<p class="admonition-title">Phân biệt công viên mẫu và kết quả mảng xanh đô thị</p>
-<p>Lớp công viên/vườn hoa chỉ đóng vai trò là <strong>vùng mẫu trích xuất ngưỡng và vùng bảo toàn</strong>. Kết quả "Mảng xanh đô thị" đầu ra là toàn bộ thảm thực vật được bóc tách trên khắp khu vực nghiên cứu (bao gồm cả mảng xanh trong công viên và các mảng xanh độc lập ngoài công viên đạt quy mô diện tích tối thiểu).</p>
-</div>
-<hr />
-<h3 id="24-dau-vet-cong-trinh-xay-dung-footprint">2.4. Dấu vết công trình xây dựng (Footprint)</h3>
-<ul>
-<li><strong>Bản chất dữ liệu</strong>: Trong nghiên cứu hiện tại, nguồn dữ liệu được sử dụng là <strong>Google Open Buildings</strong> – tập dữ liệu nhận diện hình học <strong>dấu vết chân công trình xây dựng (building footprints)</strong> từ ảnh vệ tinh độ phân giải cao bằng mô hình học máy. <em>(Lưu ý: Khác với dữ liệu OpenStreetMap (OSM) là bản đồ đóng góp bởi cộng đồng với độ hoàn thiện tùy khu vực, Google Open Buildings cung cấp các polygon dấu vết vật lý đồng nhất).</em></li>
+<li><strong>Bản chất dữ liệu</strong>: Lớp polygon nhận diện hình học <strong>dấu vết chân công trình xây dựng (building footprints)</strong> (ví dụ từ Google Open Buildings hoặc dữ liệu đo đạc thành lập bản đồ).</li>
 <li><strong>Vai trò đại diện không gian xây dựng</strong>: Dấu vết công trình đại diện cho <strong>không gian xây dựng vật lý (physical built space)</strong>, phản ánh quy mô và vị trí các khối kết cấu xây dựng trên bề mặt đô thị.</li>
-<li><strong>Cơ chế phân tách hình học (phần dấu vết công trình)</strong>:<ul>
-<li>Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân tách thành các phần tử hình học nhỏ hơn gọi là phần dấu vết công trình thuộc về từng đơn vị hành chính.</li>
+<li><strong>Cơ chế phân chia thành footprint-part</strong>:<ul>
+<li>Khi một polygon công trình xây dựng cắt qua ranh giới hành chính, phần hình học của nó được phân chia thành các phần tử hình học nhỏ hơn gọi là footprint-part thuộc về từng đơn vị hành chính.</li>
 </ul>
 </li>
 <li>
 <p><strong>Công thức phân bổ dân số không gian</strong>:</p>
 <ul>
 <li>
-<p>Dân số thống kê chính thức của đơn vị hành chính (<span class="arithmatex">\(P_u\)</span>) được phân bổ cho từng phần dấu vết công trình (<span class="arithmatex">\(b\)</span>) thuộc đơn vị hành chính <span class="arithmatex">\(u\)</span> theo tỷ lệ diện tích:</p>
+<p>Dân số thống kê chính thức của đơn vị hành chính (<span class="arithmatex">\(P_u\)</span>) được phân bổ cho từng footprint-part (<span class="arithmatex">\(b\)</span>) thuộc đơn vị hành chính <span class="arithmatex">\(u\)</span> theo tỷ lệ diện tích:</p>
 <div class="arithmatex">\[
 P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}
 \]</div>
@@ -1191,9 +1177,9 @@ P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}
 <p>Trong đó:</p>
 <ul>
 <li><span class="arithmatex">\(P_u\)</span>: Dân số thống kê chính thức của đơn vị hành chính <span class="arithmatex">\(u\)</span> (<code>POP_STAT</code>).</li>
-<li><span class="arithmatex">\(A_{b,u}\)</span>: Diện tích của phần dấu vết công trình <span class="arithmatex">\(b\)</span> nằm trong đơn vị hành chính <span class="arithmatex">\(u\)</span>.</li>
-<li><span class="arithmatex">\(\sum_j A_{j,u}\)</span>: Tổng diện tích của tất cả các phần dấu vết công trình nằm trong đơn vị hành chính <span class="arithmatex">\(u\)</span>.</li>
-<li><span class="arithmatex">\(P_{b,u}\)</span>: Dân số được phân bổ cho phần dấu vết công trình <span class="arithmatex">\(b\)</span> (lưu trong trường <code>POP_ALLOC</code>).</li>
+<li><span class="arithmatex">\(A_{b,u}\)</span>: Diện tích của footprint-part <span class="arithmatex">\(b\)</span> nằm trong đơn vị hành chính <span class="arithmatex">\(u\)</span>.</li>
+<li><span class="arithmatex">\(\sum_j A_{j,u}\)</span>: Tổng diện tích của tất cả các footprint-part nằm trong đơn vị hành chính <span class="arithmatex">\(u\)</span>.</li>
+<li><span class="arithmatex">\(P_{b,u}\)</span>: Dân số được phân bổ cho footprint-part <span class="arithmatex">\(b\)</span> (lưu trong trường <code>POP_ALLOC</code>).</li>
 </ul>
 </li>
 </ul>
@@ -1203,17 +1189,20 @@ P_{b,u} = P_u \times \frac{A_{b,u}}{\sum_j A_{j,u}}
 <p class="admonition-title">Lưu ý phương pháp luận về POP_ALLOC và Dấu vết công trình</p>
 <ol>
 <li><strong><code>POP_ALLOC</code></strong> là <strong>dân số được phân bổ theo không gian phục vụ mô hình hóa</strong>, KHÔNG phải là dân số quan sát trực tiếp, kiểm kê hộ tịch hay điều tra thực địa tại từng công trình.</li>
-<li><strong>Dấu vết công trình xây dựng</strong> KHÔNG đồng nhất hoàn toàn với nhà ở dân cư, số hộ gia đình hay nơi cư trú thực tế (vì có thể bao gồm nhà xưởng, công trình công cộng, thương mại, dịch vụ).</li>
+<li><strong>Dấu vết công trình xây dựng</strong> đại diện cho không gian xây dựng vật lý, KHÔNG đồng nhất hoàn toàn với nhà ở dân cư, số hộ gia đình hay nơi cư trú thực tế.</li>
 </ol>
 </div>
+<hr />
+<h3 id="24-cac-tham-so-phan-tich">2.4. Các tham số phân tích</h3>
+<p>Các tham số phân tích không phải là tệp dữ liệu không gian mà là các thiết lập ngưỡng được quản lý trong cửa sổ <strong>Cài đặt ⚙️ → Tùy chỉnh nâng cao</strong> (gồm ngưỡng MNDWI, ngưỡng SAVI, diện tích mảng xanh tối thiểu <span class="arithmatex">\(A_{\min}\)</span>, bán kính tối đa <span class="arithmatex">\(R_{\max}\)</span>, chỉ tiêu <span class="arithmatex">\(C_{\min}\)</span>, bước tìm kiếm <span class="arithmatex">\(\Delta d\)</span>, và sai số hội tụ dân số <span class="arithmatex">\(e\)</span>).</p>
 <hr />
 <h2 id="3-checklist-truoc-khi-phan-tich">3. Checklist trước khi phân tích</h2>
 <p>Trước khi nhấn nút <strong>Phân tích</strong>, hãy kiểm tra lại các mục sau:</p>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Hệ tọa độ chuẩn</strong>: Lớp ranh giới hành chính nên sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét) phù hợp với khu vực nghiên cứu.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Dữ liệu vector hợp lệ</strong>: Các lớp vector không bị lỗi tự cắt hình học (Self-intersection); có thể chạy công cụ <em>Fix Geometries</em> trong QGIS nếu cần.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Đầy đủ 4 nhóm dữ liệu</strong>: Đã chọn đủ 4 nhóm trên tab <em>Dữ liệu đầu vào</em>.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Kênh Sentinel-2 đầy đủ</strong>: Tối thiểu gồm các kênh B03, B04, B08, B11.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Hệ tọa độ phẳng dự chiếu</strong>: Lớp ranh giới hành chính và footprint công trình sử dụng hệ tọa độ phẳng dự chiếu (Projected CRS, đơn vị mét) phù hợp.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Dữ liệu vector hợp lệ</strong>: Các lớp vector có cấu trúc hình học hợp lệ (Valid Geometries).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Đầy đủ dữ liệu đầu vào</strong>: Đã chọn đầy đủ các kênh ảnh Sentinel-2, lớp ranh giới hành chính và lớp dấu vết công trình.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Kênh Sentinel-2 đầy đủ</strong>: Tối thiểu gồm các kênh bắt buộc B03, B04, B08, B11.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Trường dân số hợp lệ</strong>: Đã chọn đúng trường thuộc tính chứa số liệu dân số thống kê dạng số dương.</li>
 </ul>
 
