@@ -158,6 +158,6 @@ Khi hoàn thành (100%):
 - Các lớp được tự động áp dụng kiểu hiển thị (QML Style) chuyên nghiệp: mảng xanh màu xanh lá đậm, vùng phục vụ chung màu xanh rừng trong suốt, không gian xây dựng thiếu xanh màu đỏ tươi.
 
 <div class="guide-figure" markdown>
-![Các lớp kết quả được nạp tự động lên giao diện QGIS kèm kiểu dáng trực quan](images/ket_qua_qgis.png)
-<div class="guide-caption"><strong>Hình 4.</strong> Các lớp kết quả được nạp tự động lên giao diện QGIS kèm kiểu dáng trực quan</div>
+![Hộp thoại thông báo hoàn thành phân tích và tổng kết thời gian thực thi](images/thuc_thi_thanh_cong.png)
+<div class="guide-caption"><strong>Hình 4.</strong> Hộp thoại thông báo hoàn tất phân tích thành công kèm bảng tổng kết thời gian</div>
 </div>

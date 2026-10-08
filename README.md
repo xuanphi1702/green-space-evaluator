@@ -11,9 +11,9 @@ Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2,
 ## Tính năng chính
 
 - **Tiền xử lý và chuẩn hóa dữ liệu**: Tự động kiểm tra tính hợp lệ hình học các lớp vector, chuẩn hóa trường dân số thống kê của đơn vị hành chính thành `POP_STAT`, chuyển đổi và đồng bộ CRS dự chiếu (đơn vị mét) và tạo ảnh Sentinel-2 Stack 10 m (hỗ trợ lọc mây SCL).
-- **Trích xuất mảng xanh từ ảnh Sentinel-2**: Tính toán chỉ số phổ MNDWI (ngưỡng mặc định 0.000) và SAVI ($L=0.50$, ngưỡng mặc định 0.165), tự động bóc tách mặt nước, lọc mảng xanh theo diện tích tối thiểu ($A_{\min} = 5000\text{ m}^2$) và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
-- **Mô hình hóa vùng phục vụ mảng xanh**: Phân bổ dân số thống kê theo tỷ lệ diện tích xuống footprint-part (`POP_ALLOC`), xây dựng chỉ mục không gian `QgsSpatialIndex`, giới hạn dân số phục vụ tối đa ($P_{\max, i} = S_i / C_{\min}$) và áp dụng phương pháp tìm kiếm hai giai đoạn (khoanh vùng nghiệm theo bước $\Delta d = 50\text{ m}$ và tinh chỉnh nhị phân theo ngưỡng hội tụ $e = 1.0\text{ người}$) để xác định bán kính khả thi $R^* = R_{\text{low}}$ cho từng mảng xanh độc lập (`OUT_BUFFER`).
-- **Phân tích không gian xây dựng**: Hợp nhất các vùng phục vụ riêng thành vùng phục vụ chung `SERVICE_UNION` (loại trừ hoàn toàn đếm lặp vùng chồng lấn), phân rã không gian xây dựng thành `SERVED` (trong vùng phục vụ) và `OUTSIDE` (ngoài vùng phục vụ), bảo toàn dân số theo tỷ lệ diện tích (`POP_FRAGMENT` qua `SOURCE_POP_ALLOC`).
+- **Trích xuất mảng xanh từ ảnh Sentinel-2**: Tính toán chỉ số phổ MNDWI (ngưỡng 0.000) loại trừ mặt nước, tính SAVI ($L=0.50$, ngưỡng mặc định 0.165) bóc tách thảm thực vật, lọc mảng xanh theo diện tích tối thiểu ($A_{\min} = 5000\text{ m}^2$) và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
+- **Mô hình hóa vùng phục vụ mảng xanh**: Cắt chia footprint theo ranh giới hành chính và phân bổ dân số thống kê theo tỷ lệ diện tích (`POP_ALLOC`), xây dựng chỉ mục không gian `QgsSpatialIndex`, giới hạn dân số phục vụ tối đa ($P_{\max, i} = S_i / C_{\min}$) và áp dụng phương pháp tìm kiếm hai giai đoạn (Giai đoạn 1: Khoanh vùng nghiệm theo bước $\Delta d = 50\text{ m}$; Giai đoạn 2: Tinh chỉnh nghiệm bằng tìm kiếm nhị phân theo ngưỡng hội tụ $e = 1.0\text{ người}$) để xác định bán kính khả thi $R^* = R_{\text{low}}$ cho từng mảng xanh độc lập (`OUT_BUFFER`).
+- **Phân tích không gian xây dựng**: Hợp nhất các vùng phục vụ riêng (`OUT_BUFFER`) thành vùng phục vụ chung `SERVICE_UNION` (loại trừ hoàn toàn việc đếm lặp vùng chồng lấn), phân rã không gian xây dựng thành các phần diện tích xây dựng nằm trong vùng phục vụ (`SERVED`) và ngoài vùng phục vụ (`OUTSIDE`), bảo toàn dân số theo tỷ lệ diện tích (`POP_FRAGMENT` qua `SOURCE_POP_ALLOC`).
 - **Tổng hợp chỉ tiêu định lượng theo đơn vị hành chính**: Tự động tính toán 10 trường chỉ số thống kê theo từng phường/xã, thực hiện 8 phép kiểm tra tính toàn vẹn dữ liệu (**Balance Checks**) và hỗ trợ xuất bảng số liệu định dạng Excel (`.xlsx`) hoặc CSV (`.csv`).
 
 ---
@@ -29,13 +29,15 @@ Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2,
 
 ## 5 Sản phẩm đầu ra chính
 
-1. **Mảng xanh đô thị** (Raster GeoTIFF `.tif`): Lớp thực vật mảng xanh sau khi bóc tách, trừ mặt nước và lọc diện tích.
-2. **Vùng phục vụ mảng xanh (R\*)** (Vector Polygon): Phạm vi không gian đệm bán kính khả thi $R^*$ cho từng mảng xanh độc lập.
-3. **Không gian xây dựng trong vùng phục vụ** (Vector Polygon): Các phần diện tích công trình được phục vụ bởi mảng xanh đô thị (`SERVED`).
-4. **Không gian xây dựng ngoài vùng phục vụ** (Vector Polygon): Các phần diện tích công trình nằm ngoài vùng phục vụ mảng xanh (`OUTSIDE`).
-5. **Thống kê kết quả theo đơn vị hành chính** (Vector Polygon): Lớp ranh giới tích hợp 10 trường chỉ số định lượng đánh giá mức độ phục vụ mảng xanh.
+![Các sản phẩm chính sau khi chạy Plugin Green Space Evaluator](docs/images/ket_qua.png)
 
-*(Bảng thống kê Excel/CSV là sản phẩm báo cáo bổ sung tùy chọn theo cấu hình của người dùng).*
+1. **Mảng xanh đô thị** (Raster GeoTIFF `.tif`, `OUT_PARK`): Lớp thực vật mảng xanh sau khi bóc tách, trừ mặt nước và lọc diện tích.
+2. **Vùng phục vụ mảng xanh** (Vector Polygon, `SERVICE_UNION`): Vùng phục vụ chung được tạo bằng cách hợp nhất các vùng phục vụ riêng của từng mảng xanh theo bán kính khả thi $R^*$ (loại bỏ hoàn toàn đếm lặp diện tích chồng lấn).
+3. **Không gian xây dựng trong vùng phục vụ** (Vector Polygon, `SERVED`): Các phần diện tích công trình được phục vụ bởi mảng xanh đô thị kèm trường dân số phân bổ `POP_FRAGMENT`.
+4. **Không gian xây dựng ngoài vùng phục vụ** (Vector Polygon, `OUTSIDE`): Các phần diện tích công trình nằm ngoài vùng phục vụ mảng xanh.
+5. **Thống kê kết quả theo đơn vị hành chính** (Vector Polygon, `OUT_STATS`): Lớp ranh giới tích hợp 10 trường chỉ số định lượng đánh giá mức độ phục vụ mảng xanh.
+
+*(Lớp vùng phục vụ riêng `OUT_BUFFER` của từng mảng xanh là sản phẩm trung gian/bổ sung; Bảng thống kê Excel/CSV là sản phẩm báo cáo bổ sung tùy chọn theo cấu hình của người dùng).*
 
 ---
 
@@ -43,7 +45,7 @@ Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2,
 
 | Thành phần | Yêu cầu |
 |---|---|
-| **Phần mềm QGIS** | QGIS 3.28 LTR, 3.34 LTR hoặc 3.44+ |
+| **Phần mềm QGIS** | QGIS 3.44.12+ (khuyến nghị phiên bản chuẩn LTR) |
 | **Môi trường Python** | Python 3 tích hợp sẵn trong QGIS |
 | **Thư viện bắt buộc** | `gdal/osgeo`, `numpy`, `scipy`, `matplotlib` |
 | **Thư viện tùy chọn** | `openpyxl`, `pandas` (hỗ trợ xuất trực tiếp bảng báo cáo Excel `.xlsx`) |
