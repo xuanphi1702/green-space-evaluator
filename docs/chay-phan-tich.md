@@ -88,7 +88,7 @@ Chuyển sang thẻ **Sản phẩm đầu ra** để chỉ định đường d�
 
 ## 6. Chuỗi thực thi 5 Module
 
-Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread không gây đơ giao diện QGIS theo chuỗi 5 module liên hoàn:
+Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread không gây đơ giao diện QGIS theo chuỗi 5 module:
 
 ```
 [Module 1: Chuẩn bị dữ liệu] ➔ [Module 2: Phân tách mảng xanh] ➔ [Module 3: Vùng phục vụ riêng R*] ➔ [Module 4: Vùng phục vụ chung SERVICE_UNION] ➔ [Module 5: Thống kê Hành chính]

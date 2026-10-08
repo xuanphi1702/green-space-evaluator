@@ -85,7 +85,7 @@ Plugin dừng lại ở Module 1 và thông báo:
 - **Nguyên nhân**: Ngưỡng SAVI bị đặt quá cao hoặc tham số *Diện tích mảng xanh tối thiểu* ($A_{\min} = 5000\text{ m}^2$) quá lớn so với quy mô cây xanh thực tế trong khu vực.
 - **Cách xử lý**: Mở cửa sổ Cài đặt, giảm diện tích mảng xanh tối thiểu hoặc điều chỉnh lại ngưỡng SAVI.
 
-### 5.2. Trường hợp NO_SOLUTION ($R^* = 0\text{ m}$)
+### 5.2. Trường hợp NO_SOLUTION (R* = 0 m)
 - **Hiện tượng**: Trong bảng thống kê mảng xanh hoặc nhật ký tiến trình xuất hiện một số mảng xanh có trạng thái `NO_SOLUTION` và bán kính $R^* = 0\text{ m}$.
 - **Bản chất khoa học**: Đây **không phải là lỗi phần mềm**. `NO_SOLUTION` xảy ra khi tại $R = 0\text{ m}$, dân số ước tính trong vùng phục vụ đã lớn hơn $P_{\max}$ của mảng xanh ($P_i(0) > P_{\max, i}$). Khi đó, không tồn tại bán kính thỏa điều kiện trong miền $[0, R_{\max}]$. Bán kính phục vụ được gán bằng $0\text{ m}$. Trạng thái này phản ánh mối quan hệ giữa diện tích mảng xanh, dân số được phân bổ và mật độ không gian xây dựng quanh mảng xanh.
 - **Cách xử lý**:

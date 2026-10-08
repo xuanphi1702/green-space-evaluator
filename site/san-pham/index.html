@@ -1375,8 +1375,7 @@
 <h3 id="23-khong-gian-xay-dung-trong-vung-phuc-vu-out_served_res">2.3. Không gian xây dựng trong vùng phục vụ (<code>OUT_SERVED_RES</code>)</h3>
 <ul>
 <li><strong>Bản chất dữ liệu</strong>: Tập hợp các phần diện tích không gian xây dựng (<code>SERVED</code>) nằm bên trong vùng phục vụ chung <code>SERVICE_UNION</code>.</li>
-<li><strong>Cơ chế phân bổ dân số</strong>: Mỗi phần diện tích mang trường <code>POP_FRAGMENT</code> được phân bổ từ dân số nguồn <code>SOURCE_POP_ALLOC</code> theo tỷ lệ diện tích:
-  $<span class="arithmatex">\(\text{POP\_FRAGMENT} = \text{SOURCE\_POP\_ALLOC} \times \frac{\text{AREA\_M2}}{\text{SOURCE\_AREA\_M2}}\)</span>$</li>
+<li><strong>Cơ chế phân bổ dân số</strong>: Mỗi phần diện tích mang trường <code>POP_FRAGMENT</code> được phân bổ từ dân số nguồn <code>SOURCE_POP_ALLOC</code> theo tỷ lệ diện tích: <span class="arithmatex">\(\text{POP\_FRAGMENT} = \text{SOURCE\_POP\_ALLOC} \times \frac{\text{AREA\_M2}}{\text{SOURCE\_AREA\_M2}}\)</span>.</li>
 <li><strong>Ý nghĩa</strong>: Đại diện cho không gian xây dựng vật lý được tiếp cận dịch vụ mảng xanh theo mô hình khoảng cách hình học và chỉ tiêu diện tích mảng xanh tối thiểu (<span class="arithmatex">\(C_{\min}\)</span>).</li>
 </ul>
 <h3 id="24-khong-gian-xay-dung-ngoai-vung-phuc-vu-out_aff_res">2.4. Không gian xây dựng ngoài vùng phục vụ (<code>OUT_AFF_RES</code>)</h3>
@@ -1398,18 +1397,20 @@
 <li><strong>Chuẩn mã hóa</strong>: Tệp <code>.csv</code> được xuất dưới định dạng mã hóa <code>UTF-8-SIG</code>, đảm bảo mở trực tiếp bằng Microsoft Excel hiển thị tiếng Việt chuẩn xác không bị lỗi phông chữ.</li>
 </ul>
 <h3 id="32-bang-thong-ke-chi-tiet-theo-mang-xanh-out_patch_stats">3.2. Bảng thống kê chi tiết theo mảng xanh (<code>OUT_PATCH_STATS</code>)</h3>
-<p>Tệp thống kê chi tiết ở cấp độ từng mảng xanh gồm các trường thông tin chuẩn hóa:
-- <code>PATCH_ID</code>: Mã định danh số nguyên duy nhất của từng mảng xanh.
-- <code>AREA_M2</code>, <code>AREA_HA</code>: Diện tích mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span> và ha).
-- <code>P_MAX</code>: Dân số phục vụ tối đa theo diện tích: <span class="arithmatex">\(P_{\max, i} = S_i / C_{\min}\)</span>.
-- <code>P_RMIN</code>: Dân số phân bổ tiếp cận tại <span class="arithmatex">\(R = 0\text{ m}\)</span>.
-- <code>P_RMAX</code>: Dân số phân bổ tiếp cận tại <span class="arithmatex">\(R = R_{\max}\)</span>.
-- <code>R_STAR</code>: Bán kính phục vụ tối ưu tìm được (m).
-- <code>STATUS</code>: Trạng thái giải nghiệm (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).
-- <code>P_AT_RSTAR</code>: Dân số thực tế nằm trong vùng phục vụ riêng của mảng xanh ứng với bán kính <span class="arithmatex">\(R^*\)</span>.
-- <code>POP_GAP</code>: Độ lệch giữa dân số trần và dân số phục vụ thực tế (<span class="arithmatex">\(P_{\max, i} - P_{\text{at\_rstar}}\)</span>).
-- <code>POP_BRACKET</code>: Khoảng chênh lệch dân số giữa hai cận khi kết thúc tìm kiếm (<span class="arithmatex">\(P_{\text{high}} - P_{\text{low}}\)</span>).
-- <code>ITERATIONS</code>: Số vòng lặp tinh chỉnh nhị phân.</p>
+<p>Tệp thống kê chi tiết ở cấp độ từng mảng xanh gồm các trường thông tin chuẩn hóa:</p>
+<ul>
+<li><code>PATCH_ID</code>: Mã định danh số nguyên duy nhất của từng mảng xanh.</li>
+<li><code>AREA_M2</code>, <code>AREA_HA</code>: Diện tích mảng xanh (<span class="arithmatex">\(\text{m}^2\)</span> và ha).</li>
+<li><code>P_MAX</code>: Dân số phục vụ tối đa theo diện tích: <span class="arithmatex">\(P_{\max, i} = S_i / C_{\min}\)</span>.</li>
+<li><code>P_RMIN</code>: Dân số phân bổ tiếp cận tại <span class="arithmatex">\(R = 0\text{ m}\)</span>.</li>
+<li><code>P_RMAX</code>: Dân số phân bổ tiếp cận tại <span class="arithmatex">\(R = R_{\max}\)</span>.</li>
+<li><code>R_STAR</code>: Bán kính phục vụ khả thi tìm được (m).</li>
+<li><code>STATUS</code>: Trạng thái giải nghiệm (<code>RMAX</code>, <code>BINARY_SEARCH</code>, <code>NO_SOLUTION</code>).</li>
+<li><code>P_AT_RSTAR</code>: Dân số thực tế nằm trong vùng phục vụ riêng của mảng xanh ứng với bán kính <span class="arithmatex">\(R^*\)</span>.</li>
+<li><code>POP_GAP</code>: Độ lệch giữa dân số trần và dân số phục vụ thực tế (<span class="arithmatex">\(P_{\max, i} - P_{\text{at\_rstar}}\)</span>).</li>
+<li><code>POP_BRACKET</code>: Khoảng chênh lệch dân số giữa hai cận khi kết thúc tìm kiếm (<span class="arithmatex">\(P_{\text{high}} - P_{\text{low}}\)</span>).</li>
+<li><code>ITERATIONS</code>: Số vòng lặp tinh chỉnh nhị phân.</li>
+</ul>
 <hr />
 <h2 id="4-10-truong-thuoc-tinh-thong-ke-hanh-chinh">4. 10 trường thuộc tính thống kê hành chính</h2>
 <p>Bảng thuộc tính của lớp vector thống kê hành chính chứa đúng <strong>10 trường chỉ số định lượng chuẩn hóa</strong>:</p>

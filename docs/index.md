@@ -11,7 +11,7 @@
 
 **Green Space Evaluator** (tên hiển thị trong QGIS: *Urban Green Space Service Evaluator*) là Plugin chạy trên nền tảng QGIS, hỗ trợ tự động hóa toàn diện quy trình trích xuất mảng xanh đô thị từ ảnh vệ tinh Sentinel-2, mô hình hóa vùng phục vụ cho từng mảng xanh độc lập theo bán kính phục vụ $R^*$, hợp nhất thành vùng phục vụ mảng xanh chung (`SERVICE_UNION`), phân tích không gian xây dựng và tổng hợp kết quả theo từng đơn vị hành chính.
 
-Plugin giải quyết bài toán đánh giá mức độ phục vụ của mảng xanh dựa trên diện tích mảng xanh thực tế, dân số thống kê chính thức được phân bổ theo không gian công trình và khoảng cách hình học. Toàn bộ quy trình được thực hiện tự động và khép kín qua 5 giai đoạn: từ chuẩn bị dữ liệu, trích xuất quang phổ thực vật, phân bổ dân số không gian, xác định bán kính phục vụ tối ưu, phân rã không gian xây dựng đến tổng hợp thống kê và kiểm tra 8 điều kiện cân bằng dữ liệu.
+Plugin giải quyết bài toán đánh giá mức độ phục vụ của mảng xanh dựa trên diện tích mảng xanh thực tế, dân số thống kê chính thức được phân bổ theo không gian công trình và khoảng cách hình học. Toàn bộ quy trình được thực hiện tự động và khép kín qua 5 giai đoạn: từ chuẩn bị dữ liệu, trích xuất quang phổ thực vật, phân bổ dân số không gian, xác định bán kính phục vụ khả thi, phân rã không gian xây dựng đến tổng hợp thống kê và kiểm tra 8 điều kiện cân bằng dữ liệu.
 
 <div class="guide-figure" markdown>
 ![Giao diện chính Plugin Green Space Evaluator](images/giao_dien_chinh_plugin.png)
@@ -22,7 +22,7 @@ Plugin giải quyết bài toán đánh giá mức độ phục vụ của mản
 
 ## 2. Quy trình phân tích qua 5 Module
 
-Quy trình phân tích của Plugin gồm 5 module chức năng liên hoàn:
+Quy trình phân tích của Plugin gồm 5 module chức năng:
 
 1. **Module 1 — Chuẩn bị và kiểm tra dữ liệu đầu vào:** Tiếp nhận và kiểm tra cấu trúc hình học các lớp vector; chuẩn hóa trường dân số thống kê của đơn vị hành chính thành `POP_STAT`; thiết lập hệ tọa độ phẳng dự chiếu tham chiếu và tạo ảnh Sentinel-2 Stack 10 m.
 2. **Module 2 — Phân tách mảng xanh đô thị:** Tính toán các chỉ số quang học MNDWI và SAVI ($L = 0.5$); loại trừ mặt nước; bóc tách thực vật; lọc bỏ mảng xanh nhỏ có diện tích dưới ngưỡng $A_{\min} = 5.000\text{ m}^2$, định danh từng mảng xanh riêng biệt (`PATCH_ID`) và vector hóa thành các polygon mảng xanh đô thị.
@@ -98,7 +98,7 @@ Plugin tạo ra **5 sản phẩm đầu ra chính**:
 
 ---
 
-## 7. Lưu ý phương pháp luận cốt lõi
+## 7. Lưu ý phương pháp luận
 
 !!! warning "Các nguyên tắc phương pháp luận cần lưu ý"
     - **Dân số phân bổ (`POP_ALLOC`, `POP_FRAGMENT`):** Dân số được phân bổ theo tỷ lệ diện tích dấu vết công trình từ dân số thống kê chính thức của đơn vị hành chính. Đây là **dân số được phân bổ theo không gian** phục vụ mô hình hóa, không phải dân số quan sát hoặc kiểm kê thực tế tại từng công trình.

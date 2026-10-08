@@ -2,7 +2,7 @@
 
 **Green Space Evaluator** (tên hiển thị trong QGIS: *Urban Green Space Service Evaluator*) là Plugin chạy trên nền tảng QGIS hỗ trợ tự động hóa toàn diện quy trình đánh giá mức độ phục vụ của mảng xanh đô thị.
 
-Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2, dữ liệu ranh giới hành chính và dân số thống kê, lớp công viên/vườn hoa và dấu vết công trình xây dựng (footprint); mô hình hóa vùng phục vụ cho từng mảng xanh độc lập theo khoảng cách Euclid và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$); phân tích không gian xây dựng và tổng hợp 10 trường chỉ số định lượng theo đơn vị hành chính.
+Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2, dữ liệu ranh giới hành chính kèm dân số thống kê, và dấu vết công trình xây dựng (building footprints); mô hình hóa vùng phục vụ cho từng mảng xanh độc lập theo bán kính khả thi $R^*$ dựa trên dân số phân bổ (`POP_ALLOC`) và chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$); hợp nhất vùng phục vụ chung (`SERVICE_UNION`), phân tích không gian xây dựng (`SERVED`/`OUTSIDE`) và tổng hợp 10 trường chỉ số định lượng theo đơn vị hành chính.
 
 ![Giao diện chính của Plugin Green Space Evaluator](docs/images/giao_dien_chinh_plugin.png)
 
@@ -10,10 +10,10 @@ Plugin tích hợp chuỗi 5 module xử lý từ ảnh viễn thám Sentinel-2,
 
 ## Tính năng chính
 
-- **Tiền xử lý và chuẩn hóa dữ liệu**: Tự động kiểm tra tính hợp lệ hình học các lớp vector, chuẩn hóa trường dân số thống kê thành `POP_STAT`, chuyển đổi và đồng bộ CRS dự chiếu (đơn vị mét) và tạo ảnh Sentinel-2 Stack 10 m (hỗ trợ lọc mây SCL).
+- **Tiền xử lý và chuẩn hóa dữ liệu**: Tự động kiểm tra tính hợp lệ hình học các lớp vector, chuẩn hóa trường dân số thống kê của đơn vị hành chính thành `POP_STAT`, chuyển đổi và đồng bộ CRS dự chiếu (đơn vị mét) và tạo ảnh Sentinel-2 Stack 10 m (hỗ trợ lọc mây SCL).
 - **Trích xuất mảng xanh từ ảnh Sentinel-2**: Tính toán chỉ số phổ MNDWI (ngưỡng mặc định 0.000) và SAVI ($L=0.50$, ngưỡng mặc định 0.165), tự động bóc tách mặt nước, lọc mảng xanh theo diện tích tối thiểu ($A_{\min} = 5000\text{ m}^2$) và định danh từng mảng xanh riêng biệt (`PATCH_ID`).
-- **Mô hình hóa vùng phục vụ mảng xanh**: Phân bổ dân số thống kê xuống dấu vết công trình xây dựng (`POP_BUILDING`), xác định khoảng cách vùng phục vụ theo bán kính Euclid từ biên mảng xanh, giới hạn dân số phục vụ tối đa ($P_{\max, i} = S_i / C_{\min}$) và áp dụng thuật toán tìm kiếm hai giai đoạn (dò thô $\Delta d = 50\text{ m}$, chia đôi nhị phân sai số $e = 1.0\text{ người}$) để xác định bán kính khả thi $R^* = R_{\text{low}}$ cho từng mảng xanh độc lập.
-- **Phân tích không gian xây dựng**: Hợp nhất hình học vùng phục vụ thành `SERVICE_UNION`, phân rã không gian xây dựng thành `SERVED` (trong vùng phục vụ) và `OUTSIDE` (ngoài vùng phục vụ), bảo toàn dân số theo tỷ lệ diện tích (`POP_FRAGMENT` qua `SOURCE_POP_ALLOC`) mà không phụ thuộc gán độc quyền mảng xanh gần nhất.
+- **Mô hình hóa vùng phục vụ mảng xanh**: Phân bổ dân số thống kê theo tỷ lệ diện tích xuống footprint-part (`POP_ALLOC`), xây dựng chỉ mục không gian `QgsSpatialIndex`, giới hạn dân số phục vụ tối đa ($P_{\max, i} = S_i / C_{\min}$) và áp dụng phương pháp tìm kiếm hai giai đoạn (khoanh vùng nghiệm theo bước $\Delta d = 50\text{ m}$ và tinh chỉnh nhị phân theo ngưỡng hội tụ $e = 1.0\text{ người}$) để xác định bán kính khả thi $R^* = R_{\text{low}}$ cho từng mảng xanh độc lập (`OUT_BUFFER`).
+- **Phân tích không gian xây dựng**: Hợp nhất các vùng phục vụ riêng thành vùng phục vụ chung `SERVICE_UNION` (loại trừ hoàn toàn đếm lặp vùng chồng lấn), phân rã không gian xây dựng thành `SERVED` (trong vùng phục vụ) và `OUTSIDE` (ngoài vùng phục vụ), bảo toàn dân số theo tỷ lệ diện tích (`POP_FRAGMENT` qua `SOURCE_POP_ALLOC`).
 - **Tổng hợp chỉ tiêu định lượng theo đơn vị hành chính**: Tự động tính toán 10 trường chỉ số thống kê theo từng phường/xã, thực hiện 8 phép kiểm tra tính toàn vẹn dữ liệu (**Balance Checks**) và hỗ trợ xuất bảng số liệu định dạng Excel (`.xlsx`) hoặc CSV (`.csv`).
 
 ---

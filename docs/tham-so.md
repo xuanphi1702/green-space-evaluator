@@ -51,6 +51,7 @@ P_{\max, i} = \frac{S_i}{C_{\min}}
 $$
 
 Trong đó:
+
 - $P_{\max, i}$: Dân số phục vụ tối đa của mảng xanh $i$ (người).
 - $S_i$: Diện tích mảng xanh $i$ ($\text{m}^2$).
 - $C_{\min}$: Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($6.0\text{ m}^2/\text{người}$).
@@ -64,19 +65,15 @@ Trong đó:
 
 Thuật toán xác định bán kính phục vụ $R^*$ qua phương pháp tìm kiếm hai giai đoạn:
 
-1. **Đánh giá hai điểm mút và điều kiện biên**:
-   - Nếu $P_i(0) > P_{\max, i}$: Mảng xanh quá tải ngay tại nguồn $\rightarrow$ Trạng thái `NO_SOLUTION`, gán $R^* = 0\text{ m}$.
-   - Nếu $P_i(R_{\max}) \le P_{\max, i}$: Mảng xanh đủ diện tích phục vụ toàn bộ dân số lân cận đến cự ly tối đa $\rightarrow$ Trạng thái `RMAX`, gán $R^* = R_{\max}$.
-   - Nếu $P_i(0) \le P_{\max, i} < P_i(R_{\max})$: Tồn tại nghiệm trong khoảng $(0, R_{\max}) \rightarrow$ Trạng thái `BINARY_SEARCH`, kích hoạt tìm kiếm hai giai đoạn:
-
-2. **Giai đoạn 1 — Khoanh vùng nghiệm**:
-   - Bắt đầu từ $R_{\text{high}} = R_{\max}$ và giảm dần theo bước $\Delta d = 50\text{ m}$ ($R_{\text{candidate}} = R_{\text{high}} - \Delta d$) cho đến khi tìm được cặp cận $[R_{\text{low}}, R_{\text{high}}]$ thỏa mãn:
-     $$P_i(R_{\text{low}}) \le P_{\max, i} < P_i(R_{\text{high}})$$
-
-3. **Giai đoạn 2 — Tinh chỉnh nghiệm bằng tìm kiếm nhị phân**:
-   - Thu hẹp khoảng $[R_{\text{low}}, R_{\text{high}}]$ với điểm giữa $R_{\text{mid}} = (R_{\text{low}} + R_{\text{high}}) / 2$ cho đến khi chênh lệch dân số giữa hai cận thỏa điều kiện dừng hội tụ số học:
-     $$P_i(R_{\text{high}}) - P_i(R_{\text{low}}) \le e \quad (\text{với } e = 1.0\text{ người})$$
-   - **Nghiệm bán kính khả thi** được chọn là $R^* = R_{\text{low}}$ (cận dưới khả thi của khoảng nghiệm, đảm bảo dân số phục vụ thực tế không vượt quá sức chứa tối đa $P_{\max, i}$).
+1. **Đánh giá hai điểm nút và điều kiện biên:**
+    - **Trường hợp 1:** Nếu $P_i(0) > P_{\max, i}$: Mảng xanh quá tải ngay tại nguồn $\rightarrow$ Trạng thái `NO_SOLUTION`, gán $R^* = 0\text{ m}$.
+    - **Trường hợp 2:** Nếu $P_i(R_{\max}) \le P_{\max, i}$: Mảng xanh đủ diện tích phục vụ toàn bộ dân số lân cận đến cự ly tối đa $\rightarrow$ Trạng thái `RMAX`, gán $R^* = R_{\max}$.
+    - **Trường hợp 3:** Nếu $P_i(0) \le P_{\max, i} < P_i(R_{\max})$: Tồn tại nghiệm trong khoảng $(0, R_{\max}) \rightarrow$ Trạng thái `BINARY_SEARCH`, kích hoạt tìm kiếm hai giai đoạn:
+2. **Giai đoạn 1 — Khoanh vùng nghiệm:**
+    - Bắt đầu từ $R_{\text{high}} = R_{\max}$ và giảm dần theo bước $\Delta d = 50\text{ m}$ ($R_{\text{candidate}} = R_{\text{high}} - \Delta d$) cho đến khi tìm được cặp cận $[R_{\text{low}}, R_{\text{high}}]$ thỏa mãn: $P_i(R_{\text{low}}) \le P_{\max, i} < P_i(R_{\text{high}})$.
+3. **Giai đoạn 2 — Tinh chỉnh nghiệm bằng tìm kiếm nhị phân:**
+    - Thu hẹp khoảng $[R_{\text{low}}, R_{\text{high}}]$ với điểm giữa $R_{\text{mid}} = (R_{\text{low}} + R_{\text{high}}) / 2$ cho đến khi chênh lệch dân số giữa hai cận thỏa điều kiện dừng hội tụ số học: $P_i(R_{\text{high}}) - P_i(R_{\text{low}}) \le e$ (với $e = 1.0\text{ người}$).
+    - **$\rightarrow$ Nghiệm bán kính khả thi:** Được chọn là $R^* = R_{\text{low}}$ (cận dưới khả thi của khoảng nghiệm, đảm bảo dân số phục vụ thực tế không vượt quá sức chứa tối đa $P_{\max, i}$).
 
 !!! note "Bản chất khái niệm bán kính phục vụ R*"
     $R^*$ là bán kính phục vụ được xác định riêng cho từng mảng xanh dựa trên diện tích mảng xanh đó, mật độ dân số phân bổ xung quanh và các tham số $C_{\min}, R_{\max}, \Delta d, e$. Nghiệm bán kính khả thi được chọn là $R^* = R_{\text{low}}$ (cận dưới khả thi của khoảng nghiệm đảm bảo dân số phục vụ thực tế không vượt quá $P_{\max, i}$).
@@ -86,24 +83,21 @@ Thuật toán xác định bán kính phục vụ $R^*$ qua phương pháp tìm 
 ## 4. Khi nào nên thay đổi tham số?
 
 ### 🟢 Có thể chủ động thay đổi
+- **Ngưỡng MNDWI (`0.000`) và Ngưỡng SAVI (`0.165`)**: Giá trị mặc định được khảo sát trên dữ liệu thực nghiệm khu vực TP. Biên Hòa (năm 2026). Khi nghiên cứu khu vực địa lý khác hoặc thời điểm ảnh khác, người dùng nên chủ động điều chỉnh ngưỡng phân tách mặt nước và bóc tách thực vật để phù hợp với đặc trưng ảnh vệ tinh và hiện trạng thực địa.
 - **Bán kính phục vụ tối đa ($R_{\max}$)**: Khi cần mở rộng hoặc thu hẹp miền tìm kiếm phù hợp với cự ly nghiên cứu của đề tài.
 - **Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu ($C_{\min}$)**: Khi áp dụng các chỉ tiêu quy chuẩn khác nhau (ví dụ: $4.0$, $6.0$, $8.0\text{ m}^2/\text{người}$) hoặc kịch bản nghiên cứu so sánh.
 - **Diện tích lọc mảng xanh tối thiểu ($A_{\min}$)**: Khi cần điều chỉnh quy mô mảng xanh phù hợp với hiện trạng khu vực.
 
-### 🟡 Nên cân nhắc kỹ
-- **Bước tìm kiếm bán kính ($\Delta d$)**: Mặc định $50\text{ m}$ giúp cân bằng tối ưu giữa số bước khoanh vùng và số phép tính giao cắt hình học.
-- **Ngưỡng hội tụ dân số ($e$)**: Mặc định $1.0\text{ người}$ đảm bảo độ chính xác số học cao trong tìm kiếm nhị phân.
-
-### 🔵 Nên giữ mặc định
-- **Ngưỡng MNDWI (`0.000`)**: Chuẩn phân tách mặt nước.
-- **Hệ số $L$ (`0.50`)**: Hiệu chỉnh phản xạ nền đất.
-- **Ngưỡng SAVI (`0.165`)**: Chuẩn bóc tách thực vật.
+### 🟡 Nên cân nhắc
+- **Hệ số hiệu chỉnh nền đất SAVI ($L = 0.50$)**: Giá trị chuẩn cho thảm thực vật có độ phủ trung bình; chỉ nên cân nhắc thay đổi nếu nền đất trơ trọi hoặc độ che phủ thực vật rất rậm rạp.
+- **Bước tìm kiếm bán kính ($\Delta d = 50.0\text{ m}$)**: Cấu hình khuyến nghị phù hợp trong các cấu hình đã thử nghiệm, giúp cân bằng giữa số bước khoanh vùng và số phép tính giao cắt hình học.
+- **Ngưỡng sai số hội tụ dân số ($e = 1.0\text{ người}$)**: Được sử dụng làm ngưỡng hội tụ số học của thuật toán tìm kiếm nhị phân (điều kiện dừng: $P(R_{\text{high}}) - P(R_{\text{low}}) \le e$, đơn vị: người). Đây là tham số hội tụ số học của thuật toán, không phải tiêu chuẩn QCVN.
 
 ---
 
 ## 5. Tính lan truyền của tham số
 
-!!! warning "Lưu ý tính liên hoàn giữa các module"
+!!! warning "Lưu ý mối liên hệ giữa các module"
     Các tham số trong Plugin có mối liên hệ chuỗi chặt chẽ:
 
     1. Thay đổi ngưỡng **MNDWI** hoặc **SAVI** sẽ thay đổi diện tích mảng xanh $S_i$.

@@ -40,7 +40,7 @@ Trang này tổng hợp các lưu ý phương pháp luận cốt lõi, phạm vi
 
 ---
 
-## 5. Ý nghĩa bán kính phục vụ khả thi $R^*$ và giới hạn $R_{\max}$
+## 5. Ý nghĩa bán kính phục vụ khả thi R* và giới hạn R_max
 
 !!! note "Bán kính phục vụ khả thi của mảng xanh"
     1. **Tính độc lập của từng mảng xanh:** Mỗi mảng xanh có dân số phục vụ tối đa riêng $P_{\max, i} = S_i / C_{\min}$ và được xác định một bán kính phục vụ $R_i^*$ riêng trong khoảng $[0, R_{\max}]$.
