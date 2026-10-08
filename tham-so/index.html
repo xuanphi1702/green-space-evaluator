@@ -720,21 +720,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#nen-can-nhac-ky" class="md-nav__link">
+  <a href="#nen-can-nhac" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🟡 Nên cân nhắc kỹ
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nen-giu-mac-inh" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔵 Nên giữ mặc định
+        🟡 Nên cân nhắc
       
     </span>
   </a>
@@ -1153,21 +1142,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#nen-can-nhac-ky" class="md-nav__link">
+  <a href="#nen-can-nhac" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🟡 Nên cân nhắc kỹ
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nen-giu-mac-inh" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔵 Nên giữ mặc định
+        🟡 Nên cân nhắc
       
     </span>
   </a>
@@ -1308,10 +1286,12 @@
 <div class="arithmatex">\[
 P_{\max, i} = \frac{S_i}{C_{\min}}
 \]</div>
-<p>Trong đó:
-- <span class="arithmatex">\(P_{\max, i}\)</span>: Dân số phục vụ tối đa của mảng xanh <span class="arithmatex">\(i\)</span> (người).
-- <span class="arithmatex">\(S_i\)</span>: Diện tích mảng xanh <span class="arithmatex">\(i\)</span> (<span class="arithmatex">\(\text{m}^2\)</span>).
-- <span class="arithmatex">\(C_{\min}\)</span>: Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(6.0\text{ m}^2/\text{người}\)</span>).</p>
+<p>Trong đó:</p>
+<ul>
+<li><span class="arithmatex">\(P_{\max, i}\)</span>: Dân số phục vụ tối đa của mảng xanh <span class="arithmatex">\(i\)</span> (người).</li>
+<li><span class="arithmatex">\(S_i\)</span>: Diện tích mảng xanh <span class="arithmatex">\(i\)</span> (<span class="arithmatex">\(\text{m}^2\)</span>).</li>
+<li><span class="arithmatex">\(C_{\min}\)</span>: Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(6.0\text{ m}^2/\text{người}\)</span>).</li>
+</ul>
 <h3 id="32-gioi-han-tren-cua-mien-tim-kiem-r_max">3.2. Giới hạn trên của miền tìm kiếm (<span class="arithmatex">\(R_{\max}\)</span>)</h3>
 <ul>
 <li><strong><span class="arithmatex">\(R_{\max}\)</span> (Bán kính phục vụ tối đa)</strong>: Đóng vai trò là <strong>giới hạn trên của miền tìm kiếm</strong> <span class="arithmatex">\([0, R_{\max}]\)</span> trong thuật toán (mặc định <span class="arithmatex">\(300.0\text{ m}\)</span>).</li>
@@ -1320,25 +1300,21 @@ P_{\max, i} = \frac{S_i}{C_{\min}}
 <h3 id="33-phuong-phap-tim-kiem-hai-giai-oan-xac-inh-ban-kinh-kha-thi-r">3.3. Phương pháp tìm kiếm hai giai đoạn xác định bán kính khả thi (<span class="arithmatex">\(R^*\)</span>)</h3>
 <p>Thuật toán xác định bán kính phục vụ <span class="arithmatex">\(R^*\)</span> qua phương pháp tìm kiếm hai giai đoạn:</p>
 <ol>
-<li><strong>Đánh giá hai điểm mút và điều kiện biên</strong>:</li>
-<li>Nếu <span class="arithmatex">\(P_i(0) &gt; P_{\max, i}\)</span>: Mảng xanh quá tải ngay tại nguồn <span class="arithmatex">\(\rightarrow\)</span> Trạng thái <code>NO_SOLUTION</code>, gán <span class="arithmatex">\(R^* = 0\text{ m}\)</span>.</li>
-<li>Nếu <span class="arithmatex">\(P_i(R_{\max}) \le P_{\max, i}\)</span>: Mảng xanh đủ diện tích phục vụ toàn bộ dân số lân cận đến cự ly tối đa <span class="arithmatex">\(\rightarrow\)</span> Trạng thái <code>RMAX</code>, gán <span class="arithmatex">\(R^* = R_{\max}\)</span>.</li>
-<li>
-<p>Nếu <span class="arithmatex">\(P_i(0) \le P_{\max, i} &lt; P_i(R_{\max})\)</span>: Tồn tại nghiệm trong khoảng <span class="arithmatex">\((0, R_{\max}) \rightarrow\)</span> Trạng thái <code>BINARY_SEARCH</code>, kích hoạt tìm kiếm hai giai đoạn:</p>
+<li><strong>Đánh giá hai điểm nút và điều kiện biên:</strong><ul>
+<li><strong>Trường hợp 1:</strong> Nếu <span class="arithmatex">\(P_i(0) &gt; P_{\max, i}\)</span>: Mảng xanh quá tải ngay tại nguồn <span class="arithmatex">\(\rightarrow\)</span> Trạng thái <code>NO_SOLUTION</code>, gán <span class="arithmatex">\(R^* = 0\text{ m}\)</span>.</li>
+<li><strong>Trường hợp 2:</strong> Nếu <span class="arithmatex">\(P_i(R_{\max}) \le P_{\max, i}\)</span>: Mảng xanh đủ diện tích phục vụ toàn bộ dân số lân cận đến cự ly tối đa <span class="arithmatex">\(\rightarrow\)</span> Trạng thái <code>RMAX</code>, gán <span class="arithmatex">\(R^* = R_{\max}\)</span>.</li>
+<li><strong>Trường hợp 3:</strong> Nếu <span class="arithmatex">\(P_i(0) \le P_{\max, i} &lt; P_i(R_{\max})\)</span>: Tồn tại nghiệm trong khoảng <span class="arithmatex">\((0, R_{\max}) \rightarrow\)</span> Trạng thái <code>BINARY_SEARCH</code>, kích hoạt tìm kiếm hai giai đoạn:</li>
+</ul>
 </li>
-<li>
-<p><strong>Giai đoạn 1 — Khoanh vùng nghiệm</strong>:</p>
+<li><strong>Giai đoạn 1 — Khoanh vùng nghiệm:</strong><ul>
+<li>Bắt đầu từ <span class="arithmatex">\(R_{\text{high}} = R_{\max}\)</span> và giảm dần theo bước <span class="arithmatex">\(\Delta d = 50\text{ m}\)</span> (<span class="arithmatex">\(R_{\text{candidate}} = R_{\text{high}} - \Delta d\)</span>) cho đến khi tìm được cặp cận <span class="arithmatex">\([R_{\text{low}}, R_{\text{high}}]\)</span> thỏa mãn: <span class="arithmatex">\(P_i(R_{\text{low}}) \le P_{\max, i} &lt; P_i(R_{\text{high}})\)</span>.</li>
+</ul>
 </li>
-<li>
-<p>Bắt đầu từ <span class="arithmatex">\(R_{\text{high}} = R_{\max}\)</span> và giảm dần theo bước <span class="arithmatex">\(\Delta d = 50\text{ m}\)</span> (<span class="arithmatex">\(R_{\text{candidate}} = R_{\text{high}} - \Delta d\)</span>) cho đến khi tìm được cặp cận <span class="arithmatex">\([R_{\text{low}}, R_{\text{high}}]\)</span> thỏa mãn:
-     $<span class="arithmatex">\(P_i(R_{\text{low}}) \le P_{\max, i} &lt; P_i(R_{\text{high}})\)</span>$</p>
+<li><strong>Giai đoạn 2 — Tinh chỉnh nghiệm bằng tìm kiếm nhị phân:</strong><ul>
+<li>Thu hẹp khoảng <span class="arithmatex">\([R_{\text{low}}, R_{\text{high}}]\)</span> với điểm giữa <span class="arithmatex">\(R_{\text{mid}} = (R_{\text{low}} + R_{\text{high}}) / 2\)</span> cho đến khi chênh lệch dân số giữa hai cận thỏa điều kiện dừng hội tụ số học: <span class="arithmatex">\(P_i(R_{\text{high}}) - P_i(R_{\text{low}}) \le e\)</span> (với <span class="arithmatex">\(e = 1.0\text{ người}\)</span>).</li>
+<li><strong><span class="arithmatex">\(\rightarrow\)</span> Nghiệm bán kính khả thi:</strong> Được chọn là <span class="arithmatex">\(R^* = R_{\text{low}}\)</span> (cận dưới khả thi của khoảng nghiệm, đảm bảo dân số phục vụ thực tế không vượt quá sức chứa tối đa <span class="arithmatex">\(P_{\max, i}\)</span>).</li>
+</ul>
 </li>
-<li>
-<p><strong>Giai đoạn 2 — Tinh chỉnh nghiệm bằng tìm kiếm nhị phân</strong>:</p>
-</li>
-<li>Thu hẹp khoảng <span class="arithmatex">\([R_{\text{low}}, R_{\text{high}}]\)</span> với điểm giữa <span class="arithmatex">\(R_{\text{mid}} = (R_{\text{low}} + R_{\text{high}}) / 2\)</span> cho đến khi chênh lệch dân số giữa hai cận thỏa điều kiện dừng hội tụ số học:
-     $<span class="arithmatex">\(P_i(R_{\text{high}}) - P_i(R_{\text{low}}) \le e \quad (\text{với } e = 1.0\text{ người})\)</span>$</li>
-<li><strong>Nghiệm bán kính khả thi</strong> được chọn là <span class="arithmatex">\(R^* = R_{\text{low}}\)</span> (cận dưới khả thi của khoảng nghiệm, đảm bảo dân số phục vụ thực tế không vượt quá sức chứa tối đa <span class="arithmatex">\(P_{\max, i}\)</span>).</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Bản chất khái niệm bán kính phục vụ R*</p>
@@ -1348,25 +1324,21 @@ P_{\max, i} = \frac{S_i}{C_{\min}}
 <h2 id="4-khi-nao-nen-thay-oi-tham-so">4. Khi nào nên thay đổi tham số?</h2>
 <h3 id="co-the-chu-ong-thay-oi">🟢 Có thể chủ động thay đổi</h3>
 <ul>
+<li><strong>Ngưỡng MNDWI (<code>0.000</code>) và Ngưỡng SAVI (<code>0.165</code>)</strong>: Giá trị mặc định được khảo sát trên dữ liệu thực nghiệm khu vực TP. Biên Hòa (năm 2026). Khi nghiên cứu khu vực địa lý khác hoặc thời điểm ảnh khác, người dùng nên chủ động điều chỉnh ngưỡng phân tách mặt nước và bóc tách thực vật để phù hợp với đặc trưng ảnh vệ tinh và hiện trạng thực địa.</li>
 <li><strong>Bán kính phục vụ tối đa (<span class="arithmatex">\(R_{\max}\)</span>)</strong>: Khi cần mở rộng hoặc thu hẹp miền tìm kiếm phù hợp với cự ly nghiên cứu của đề tài.</li>
 <li><strong>Chỉ tiêu diện tích mảng xanh bình quân đầu người tối thiểu (<span class="arithmatex">\(C_{\min}\)</span>)</strong>: Khi áp dụng các chỉ tiêu quy chuẩn khác nhau (ví dụ: <span class="arithmatex">\(4.0\)</span>, <span class="arithmatex">\(6.0\)</span>, <span class="arithmatex">\(8.0\text{ m}^2/\text{người}\)</span>) hoặc kịch bản nghiên cứu so sánh.</li>
 <li><strong>Diện tích lọc mảng xanh tối thiểu (<span class="arithmatex">\(A_{\min}\)</span>)</strong>: Khi cần điều chỉnh quy mô mảng xanh phù hợp với hiện trạng khu vực.</li>
 </ul>
-<h3 id="nen-can-nhac-ky">🟡 Nên cân nhắc kỹ</h3>
+<h3 id="nen-can-nhac">🟡 Nên cân nhắc</h3>
 <ul>
-<li><strong>Bước tìm kiếm bán kính (<span class="arithmatex">\(\Delta d\)</span>)</strong>: Mặc định <span class="arithmatex">\(50\text{ m}\)</span> giúp cân bằng tối ưu giữa số bước khoanh vùng và số phép tính giao cắt hình học.</li>
-<li><strong>Ngưỡng hội tụ dân số (<span class="arithmatex">\(e\)</span>)</strong>: Mặc định <span class="arithmatex">\(1.0\text{ người}\)</span> đảm bảo độ chính xác số học cao trong tìm kiếm nhị phân.</li>
-</ul>
-<h3 id="nen-giu-mac-inh">🔵 Nên giữ mặc định</h3>
-<ul>
-<li><strong>Ngưỡng MNDWI (<code>0.000</code>)</strong>: Chuẩn phân tách mặt nước.</li>
-<li><strong>Hệ số <span class="arithmatex">\(L\)</span> (<code>0.50</code>)</strong>: Hiệu chỉnh phản xạ nền đất.</li>
-<li><strong>Ngưỡng SAVI (<code>0.165</code>)</strong>: Chuẩn bóc tách thực vật.</li>
+<li><strong>Hệ số hiệu chỉnh nền đất SAVI (<span class="arithmatex">\(L = 0.50\)</span>)</strong>: Giá trị chuẩn cho thảm thực vật có độ phủ trung bình; chỉ nên cân nhắc thay đổi nếu nền đất trơ trọi hoặc độ che phủ thực vật rất rậm rạp.</li>
+<li><strong>Bước tìm kiếm bán kính (<span class="arithmatex">\(\Delta d = 50.0\text{ m}\)</span>)</strong>: Cấu hình khuyến nghị phù hợp trong các cấu hình đã thử nghiệm, giúp cân bằng giữa số bước khoanh vùng và số phép tính giao cắt hình học.</li>
+<li><strong>Ngưỡng sai số hội tụ dân số (<span class="arithmatex">\(e = 1.0\text{ người}\)</span>)</strong>: Được sử dụng làm ngưỡng hội tụ số học của thuật toán tìm kiếm nhị phân (điều kiện dừng: <span class="arithmatex">\(P(R_{\text{high}}) - P(R_{\text{low}}) \le e\)</span>, đơn vị: người). Đây là tham số hội tụ số học của thuật toán, không phải tiêu chuẩn QCVN.</li>
 </ul>
 <hr />
 <h2 id="5-tinh-lan-truyen-cua-tham-so">5. Tính lan truyền của tham số</h2>
 <div class="admonition warning">
-<p class="admonition-title">Lưu ý tính liên hoàn giữa các module</p>
+<p class="admonition-title">Lưu ý mối liên hệ giữa các module</p>
 <p>Các tham số trong Plugin có mối liên hệ chuỗi chặt chẽ:</p>
 <ol>
 <li>Thay đổi ngưỡng <strong>MNDWI</strong> hoặc <strong>SAVI</strong> sẽ thay đổi diện tích mảng xanh <span class="arithmatex">\(S_i\)</span>.</li>

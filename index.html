@@ -462,10 +462,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-luu-y-phuong-phap-luan-cot-loi" class="md-nav__link">
+  <a href="#7-luu-y-phuong-phap-luan" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Lưu ý phương pháp luận cốt lõi
+        7. Lưu ý phương pháp luận
       
     </span>
   </a>
@@ -1005,10 +1005,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-luu-y-phuong-phap-luan-cot-loi" class="md-nav__link">
+  <a href="#7-luu-y-phuong-phap-luan" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Lưu ý phương pháp luận cốt lõi
+        7. Lưu ý phương pháp luận
       
     </span>
   </a>
@@ -1045,14 +1045,14 @@
 <hr />
 <h2 id="1-gioi-thieu">1. Giới thiệu</h2>
 <p><strong>Green Space Evaluator</strong> (tên hiển thị trong QGIS: <em>Urban Green Space Service Evaluator</em>) là Plugin chạy trên nền tảng QGIS, hỗ trợ tự động hóa toàn diện quy trình trích xuất mảng xanh đô thị từ ảnh vệ tinh Sentinel-2, mô hình hóa vùng phục vụ cho từng mảng xanh độc lập theo bán kính phục vụ <span class="arithmatex">\(R^*\)</span>, hợp nhất thành vùng phục vụ mảng xanh chung (<code>SERVICE_UNION</code>), phân tích không gian xây dựng và tổng hợp kết quả theo từng đơn vị hành chính.</p>
-<p>Plugin giải quyết bài toán đánh giá mức độ phục vụ của mảng xanh dựa trên diện tích mảng xanh thực tế, dân số thống kê chính thức được phân bổ theo không gian công trình và khoảng cách hình học. Toàn bộ quy trình được thực hiện tự động và khép kín qua 5 giai đoạn: từ chuẩn bị dữ liệu, trích xuất quang phổ thực vật, phân bổ dân số không gian, xác định bán kính phục vụ tối ưu, phân rã không gian xây dựng đến tổng hợp thống kê và kiểm tra 8 điều kiện cân bằng dữ liệu.</p>
+<p>Plugin giải quyết bài toán đánh giá mức độ phục vụ của mảng xanh dựa trên diện tích mảng xanh thực tế, dân số thống kê chính thức được phân bổ theo không gian công trình và khoảng cách hình học. Toàn bộ quy trình được thực hiện tự động và khép kín qua 5 giai đoạn: từ chuẩn bị dữ liệu, trích xuất quang phổ thực vật, phân bổ dân số không gian, xác định bán kính phục vụ khả thi, phân rã không gian xây dựng đến tổng hợp thống kê và kiểm tra 8 điều kiện cân bằng dữ liệu.</p>
 <div class="guide-figure">
 <p><img alt="Giao diện chính Plugin Green Space Evaluator" src="images/giao_dien_chinh_plugin.png" /></p>
 <div class="guide-caption"><strong>Hình 1.</strong> Giao diện chính của Plugin Green Space Evaluator trên QGIS</div>
 </div>
 <hr />
 <h2 id="2-quy-trinh-phan-tich-qua-5-module">2. Quy trình phân tích qua 5 Module</h2>
-<p>Quy trình phân tích của Plugin gồm 5 module chức năng liên hoàn:</p>
+<p>Quy trình phân tích của Plugin gồm 5 module chức năng:</p>
 <ol>
 <li><strong>Module 1 — Chuẩn bị và kiểm tra dữ liệu đầu vào:</strong> Tiếp nhận và kiểm tra cấu trúc hình học các lớp vector; chuẩn hóa trường dân số thống kê của đơn vị hành chính thành <code>POP_STAT</code>; thiết lập hệ tọa độ phẳng dự chiếu tham chiếu và tạo ảnh Sentinel-2 Stack 10 m.</li>
 <li><strong>Module 2 — Phân tách mảng xanh đô thị:</strong> Tính toán các chỉ số quang học MNDWI và SAVI (<span class="arithmatex">\(L = 0.5\)</span>); loại trừ mặt nước; bóc tách thực vật; lọc bỏ mảng xanh nhỏ có diện tích dưới ngưỡng <span class="arithmatex">\(A_{\min} = 5.000\text{ m}^2\)</span>, định danh từng mảng xanh riêng biệt (<code>PATCH_ID</code>) và vector hóa thành các polygon mảng xanh đô thị.</li>
@@ -1189,7 +1189,7 @@
 <p><em>Lưu ý:</em> Vùng phục vụ riêng của từng mảng xanh (<code>OUT_BUFFER</code>) là sản phẩm bổ sung / trung gian phục vụ kiểm tra chi tiết. Bảng số liệu thống kê chi tiết định dạng Excel (<code>.xlsx</code>) hoặc CSV (<code>.csv</code>) là sản phẩm báo cáo bổ sung tùy chọn.</p>
 <p>👉 Xem chi tiết cấu trúc trường và sản phẩm: <a href="san-pham/">Sản phẩm &amp; chỉ tiêu thống kê</a></p>
 <hr />
-<h2 id="7-luu-y-phuong-phap-luan-cot-loi">7. Lưu ý phương pháp luận cốt lõi</h2>
+<h2 id="7-luu-y-phuong-phap-luan">7. Lưu ý phương pháp luận</h2>
 <div class="admonition warning">
 <p class="admonition-title">Các nguyên tắc phương pháp luận cần lưu ý</p>
 <ul>
