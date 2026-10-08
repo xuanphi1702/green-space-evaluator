@@ -38,7 +38,7 @@ Năm sản phẩm chính được cấu hình tại thẻ **Sản phẩm đầu 
 
 ### 2.3. Không gian xây dựng trong vùng phục vụ (`OUT_SERVED_RES`)
 - **Bản chất dữ liệu**: Tập hợp các phần diện tích không gian xây dựng (`SERVED`) nằm bên trong vùng phục vụ chung `SERVICE_UNION`.
-- **Cơ chế phân bổ dân số**: Mỗi phần diện tích mang trường `POP_FRAGMENT` được phân bổ từ dân số nguồn `SOURCE_POP_ALLOC` theo tỷ lệ diện tích: $\text{POP\_FRAGMENT} = \text{SOURCE\_POP\_ALLOC} \times \frac{\text{AREA\_M2}}{\text{SOURCE\_AREA\_M2}}$.
+- **Cơ chế phân bổ dân số**: Mỗi phần diện tích mang trường `POP_FRAGMENT` được phân bổ từ dân số nguồn `SOURCE_POP_ALLOC` theo tỷ lệ diện tích: $\text{POP_FRAGMENT} = \text{SOURCE_POP_ALLOC} \times \frac{\text{AREA_M2}}{\text{SOURCE_AREA_M2}}$.
 - **Ý nghĩa**: Đại diện cho không gian xây dựng vật lý được tiếp cận dịch vụ mảng xanh theo mô hình khoảng cách hình học và chỉ tiêu diện tích mảng xanh tối thiểu ($C_{\min}$).
 
 ### 2.4. Không gian xây dựng ngoài vùng phục vụ (`OUT_AFF_RES`)
@@ -70,7 +70,7 @@ Tệp thống kê chi tiết ở cấp độ từng mảng xanh gồm các trư�
 - `R_STAR`: Bán kính phục vụ khả thi tìm được (m).
 - `STATUS`: Trạng thái giải nghiệm (`RMAX`, `BINARY_SEARCH`, `NO_SOLUTION`).
 - `P_AT_RSTAR`: Dân số thực tế nằm trong vùng phục vụ riêng của mảng xanh ứng với bán kính $R^*$.
-- `POP_GAP`: Độ lệch giữa dân số trần và dân số phục vụ thực tế ($P_{\max, i} - P_{\text{at\_rstar}}$).
+- `POP_GAP`: Độ lệch giữa dân số trần và dân số phục vụ thực tế ($P_{\max, i} - P_{\text{at_rstar}}$).
 - `POP_BRACKET`: Khoảng chênh lệch dân số giữa hai cận khi kết thúc tìm kiếm ($P_{\text{high}} - P_{\text{low}}$).
 - `ITERATIONS`: Số vòng lặp tinh chỉnh nhị phân.
 

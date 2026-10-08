@@ -125,12 +125,12 @@ Khi nhấn nút **Phân tích**, thuật toán chạy ngầm qua Worker Thread k
 
 Plugin tích hợp cơ chế tự động kiểm tra đối soát số liệu khắt khe bằng giá trị thực độ chính xác cao (Raw Full-Precision) trước khi kết thúc:
 
-1. **Cân bằng dân số toàn cục (Global Population Balance)**: Tổng dân số phân bổ trên các phần diện tích xây dựng bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính ($\sum \text{raw\_T\_DanSo} = \sum \text{raw\_D\_DaPhucVu} + \sum \text{raw\_D\_ThieuXanh}$).
+1. **Cân bằng dân số toàn cục (Global Population Balance)**: Tổng dân số phân bổ trên các phần diện tích xây dựng bằng đúng tổng dân số thống kê ban đầu của đơn vị hành chính ($\sum \text{raw_T_DanSo} = \sum \text{raw_D_DaPhucVu} + \sum \text{raw_D_ThieuXanh}$).
 2. **Cân bằng dân số theo phường (Ward-level Population Balance)**: Dân số được phân bổ trong từng phường khớp chính xác với tổng dân số phục vụ và thiếu xanh của phường đó.
 3. **Cân bằng diện tích xây dựng theo phường (Ward Area Balance)**: Tổng diện tích xây dựng được phục vụ và diện tích xây dựng thiếu xanh bằng đúng tổng diện tích xây dựng của phường/xã.
 4. **Cân bằng tổng diện tích không gian xây dựng (Global Area Balance)**: Tổng diện tích các phần diện tích xây dựng `SERVED` và `OUTSIDE` sau khi phân cắt bằng đúng tổng diện tích footprint nguồn đầu vào ($|\Delta A| \le 0.01\text{ m}^2$).
 5. **Cân bằng diện tích mảng xanh gốc (Green-space Area Balance)**: Tổng diện tích mảng xanh phân bổ cho các đơn vị hành chính khớp với tổng diện tích mảng xanh gốc trong phạm vi ranh giới hành chính.
-6. **Cân bằng dân số vùng phục vụ (Service Union Population Balance)**: Kiểm tra tính nhất quán giữa tổng dân số phục vụ cấp phường ($\sum \text{raw\_D\_DaPhucVu}$) và tổng `POP_FRAGMENT` của lớp `SERVED` toàn cục. Đồng thời ghi nhận lượng dân số bị đếm lặp nếu chỉ cộng rời rạc các vùng phục vụ riêng `OUT_BUFFER`.
+6. **Cân bằng dân số vùng phục vụ (Service Union Population Balance)**: Kiểm tra tính nhất quán giữa tổng dân số phục vụ cấp phường ($\sum \text{raw_D_DaPhucVu}$) và tổng `POP_FRAGMENT` của lớp `SERVED` toàn cục. Đồng thời ghi nhận lượng dân số bị đếm lặp nếu chỉ cộng rời rạc các vùng phục vụ riêng `OUT_BUFFER`.
 7. **Kiểm tra tính đầy đủ footprint-part đầu vào (Footprint-part Completeness)**: Kiểm tra toàn bộ footprint-part đầu vào được bảo toàn khi phân chia thành `SERVED` và `OUTSIDE`, không bị thiếu hoặc phát sinh phần tử ngoài tập đầu vào ($\text{Unique}(\text{SERVED} \cup \text{OUTSIDE}) \equiv \text{Input Footprint Parts}$).
 8. **Tính đầy đủ và hợp lệ logic thuộc tính (Attribute Logic)**: Kiểm tra tất cả các chỉ tiêu thuộc tính nằm trong miền giá trị hợp lệ (tỷ lệ 0-100%, diện tích $\ge 0$, dân số $\ge 0$).
 
